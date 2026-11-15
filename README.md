@@ -134,9 +134,9 @@ verificador incluido (ver [docs/VERIFICAR_HUELLAS.md](docs/VERIFICAR_HUELLAS.md)
 ## 🩹 Lista de parches publicada
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.1.1](https://github.com/Minecraco/Parche-facemoji/releases/tag/v1.1.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;5 patches total
+> **[v1.2.0](https://github.com/Minecraco/Parche-facemoji/releases/tag/v1.2.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;6 patches total
 <details open>
-<summary>📦 Facemoji AI Emoji Keyboard&nbsp;&nbsp;•&nbsp;&nbsp;5 patches</summary>
+<summary>📦 Facemoji AI Emoji Keyboard&nbsp;&nbsp;•&nbsp;&nbsp;6 patches</summary>
 <br>
 
 **Package name:** `com.simejikeyboard`
@@ -149,10 +149,11 @@ verificador incluido (ver [docs/VERIFICAR_HUELLAS.md](docs/VERIFICAR_HUELLAS.md)
 
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|
-| [Ajustes de Minecraco](#ajustes-de-minecraco) | Anade una pantalla "Ajustes de Minecraco" para activar y desactivar los parches de anuncios, VIP y rastreo sin volver a parchear. Se abre desde los ajustes avanzados de Facemoji y tambien con su propio icono en el cajon de aplicaciones. |  |
+| [Ajustes Minecraco](#ajustes-minecraco) | Anade una pantalla "Ajustes Minecraco" para activar y desactivar los parches de anuncios, VIP y rastreo sin volver a parchear. Se abre desde los ajustes avanzados de Facemoji y tambien con su propio icono en el cajon de aplicaciones. |  |
 | [Desactivar rastreo](#desactivar-rastreo) | Deja de enviar los eventos de Firebase Analytics, Crashlytics, Facebook y AppsFlyer. Desactiva tambien el envio de registros de fallos. |  |
 | [Desbloquear VIP](#desbloquear-vip) | Marca como gratuitos las fuentes de color, las series de stickers, los TextBomb y las frases del teclado Rizz que la app reserva a la suscripcion, y da por hechos los desbloqueos por video. Se puede activar o desactivar en los ajustes de Minecraco. |  |
 | [Eliminar anuncios](#eliminar-anuncios) | Apaga las sugerencias patrocinadas que la app inserta en el teclado. Se puede activar o desactivar en los ajustes de Minecraco sin volver a parchear. En la version 3.7.0 la publicidad a pantalla completa la sirve Pangle con las clases renombradas, por lo que ese formato no se puede bloquear de forma estable. |  |
+| [Marcar la version como Mod](#marcar-la-version-como-mod) | Anyade el sufijo -Mod al nombre de la version de la app (3.7.0 -> 3.7.0-Mod) para distinguir la copia parcheada de la original. |  |
 | [Quitar permiso de ID de publicidad](#quitar-permiso-de-id-de-publicidad) | Elimina el permiso AD_ID del manifiesto para que la app no pueda leer el identificador de publicidad del dispositivo. |  |
 
 </details>

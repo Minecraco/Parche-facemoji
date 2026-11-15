@@ -1,3 +1,9 @@
+## [1.2.0](https://github.com/Minecraco/Parche-facemoji/compare/v1.1.1...v1.2.0) (2026-11-15)
+
+### ✨ New Features
+
+* fila Ajustes Minecraco la primera en los ajustes y version 3.7.0-Mod ([e9d34fe](https://github.com/Minecraco/Parche-facemoji/commit/e9d34fe4e5fb46b0844afb78ab087d9ff9d3e020))
+
 ## [1.1.1](https://github.com/Minecraco/Parche-facemoji/compare/v1.1.0...v1.1.1) (2026-11-15)
 
 ### 🐛 Bug Fixes

@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-11-15T16:57:14",
-  "description": "## [1.1.1](https://github.com/Minecraco/Parche-facemoji/compare/v1.1.0...v1.1.1) (2026-11-15)\n\n### 🐛 Bug Fixes\n\n* acceso a los ajustes del parche por icono propio y 3.7.0 marcada como compatible ([74b1b34](https://github.com/Minecraco/Parche-facemoji/commit/74b1b34927f8b77d8d1e557d1f3483d519cf40eb))\n* marcar la 3.7.0 como compatible (ya esta verificada) y buscar la pantalla de ajustes real ([39fbfb2](https://github.com/Minecraco/Parche-facemoji/commit/39fbfb26fcff85634d0469c60f83eb32eb9c8f49))",
-  "download_url": "https://github.com/Minecraco/Parche-facemoji/releases/download/v1.1.1/patches-1.1.1.mpp",
+  "created_at": "2026-11-15T17:26:25",
+  "description": "## [1.2.0](https://github.com/Minecraco/Parche-facemoji/compare/v1.1.1...v1.2.0) (2026-11-15)\n\n### ✨ New Features\n\n* fila Ajustes Minecraco la primera en los ajustes y version 3.7.0-Mod ([e9d34fe](https://github.com/Minecraco/Parche-facemoji/commit/e9d34fe4e5fb46b0844afb78ab087d9ff9d3e020))",
+  "download_url": "https://github.com/Minecraco/Parche-facemoji/releases/download/v1.2.0/patches-1.2.0.mpp",
   "signature_download_url": "",
-  "version": "1.1.1"
+  "version": "1.2.0"
 }
