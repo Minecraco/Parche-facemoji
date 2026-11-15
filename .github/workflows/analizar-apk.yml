@@ -28,7 +28,7 @@ jobs:
       - name: Descargar la APK del Drive
         run: gdown "https://drive.google.com/uc?id=${APKM_FILE_ID}" -O facemoji.apkm 2>&1 | tail -1
       - name: Quien llama a V2 G2 E2
-        run: python tools/analizar_apk.py facemoji.apkm --llamadas '->(V2|G2|E2)\(' --llamadas-clases '^Lcom/baidu/simeji/skins/' > analisis/d6-quien-llama-clics.txt 2>&1 || true
+        run: python tools/analizar_apk.py facemoji.apkm --llamadas='->(V2|G2|E2)\(' --llamadas-clases='^Lcom/baidu/simeji/' > analisis/d6-quien-llama-clics.txt 2>&1 || true
       - name: Adaptador de la lista
         run: python tools/analizar_apk.py facemoji.apkm --smali '^Lcom/baidu/simeji/skins/u0;$' > analisis/d7-adaptador.txt 2>&1 || true
       - name: Publicar
