@@ -97,6 +97,16 @@ MARCADORES = {
 # --------------------------------------------------------------------------------------
 # Lectura de la APK
 # --------------------------------------------------------------------------------------
+def silenciar_androguard() -> None:
+    """androguard 4.x escribe su log DEBUG por stderr; aqui solo estorba."""
+    try:
+        from loguru import logger as loguru_logger  # type: ignore
+
+        loguru_logger.remove()
+    except Exception:
+        pass
+
+
 def dex_blobs(path: Path) -> dict[str, bytes]:
     """Devuelve {nombre: bytes} de todos los DEX, entrando en APKs si es un APKM/XAPK."""
     blobs: dict[str, bytes] = {}
@@ -478,6 +488,73 @@ def smali(dex_por_nombre: dict[str, bytes], patron: str, limite: int = 1500) -> 
                         return
 
 
+def subclases(dex_por_nombre: dict[str, bytes], patron: str) -> None:
+    """Lista las clases cuyo padre coincide con el patron."""
+    DEX = cargar_androguard()
+    if DEX is None:
+        sys.exit("Esta opcion necesita androguard: pip install androguard")
+
+    regex = re.compile(patron)
+    encontradas = 0
+
+    for blob in dex_por_nombre.values():
+        try:
+            dex = DEX(blob)
+        except Exception:
+            continue
+        for clase in dex.get_classes():
+            try:
+                padre = clase.get_superclassname()
+            except Exception:
+                continue
+            if padre and regex.search(padre):
+                print(f"{clase.get_name()}  extends  {padre}")
+                encontradas += 1
+
+    print(f"\n{encontradas} clases")
+
+
+def usa_clase(dex_por_nombre: dict[str, bytes], patron: str, limite: int = 200) -> None:
+    """Lista las clases que mencionan un tipo (const-class, new-instance, ...)."""
+    DEX = cargar_androguard()
+    if DEX is None:
+        sys.exit("Esta opcion necesita androguard: pip install androguard")
+
+    regex = re.compile(patron)
+    vistas: set[str] = set()
+
+    for blob in dex_por_nombre.values():
+        try:
+            dex = DEX(blob)
+        except Exception:
+            continue
+        for clase in dex.get_classes():
+            if regex.search(clase.get_name()):
+                continue
+            for metodo in clase.get_methods():
+                try:
+                    if metodo.get_code() is None:
+                        continue
+                    instrucciones = metodo.get_instructions()
+                except Exception:
+                    continue
+                for instruccion in instrucciones:
+                    try:
+                        salida = instruccion.get_output()
+                    except Exception:
+                        continue
+                    if not regex.search(salida):
+                        continue
+                    clave = f"{clase.get_name()}  ({metodo.get_name()}{metodo.get_descriptor()})"
+                    if clave in vistas:
+                        break
+                    vistas.add(clave)
+                    print(clave)
+                    if len(vistas) >= limite:
+                        print(f"\n(limite de {limite} alcanzado)")
+                        return
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Comprueba las huellas de los parches de Parche Facemoji sobre una APK.",
@@ -519,6 +596,16 @@ def main() -> None:
         help="Imprime el bytecode de las clases cuyo descriptor coincide (requiere androguard)",
     )
     parser.add_argument(
+        "--subclases",
+        metavar="REGEX",
+        help="Lista las clases cuyo padre coincide (requiere androguard)",
+    )
+    parser.add_argument(
+        "--usa-clase",
+        metavar="REGEX",
+        help="Lista las clases que mencionan ese tipo en su codigo (requiere androguard)",
+    )
+    parser.add_argument(
         "--vip",
         action="store_true",
         help="Busca el codigo de suscripcion VIP (cadenas y metodos candidatos)",
@@ -527,6 +614,8 @@ def main() -> None:
 
     if not args.apk.is_file():
         sys.exit(f"No existe el fichero: {args.apk}")
+
+    silenciar_androguard()
 
     dex_por_nombre = dex_blobs(args.apk)
     cadenas: set[str] = set()
@@ -537,7 +626,8 @@ def main() -> None:
 
     if not any(
         (args.informe, args.comprobar, args.buscar, args.clases, args.clases_regex,
-         args.metodos, args.metodos_nombre, args.llamadas, args.smali, args.vip)
+         args.metodos, args.metodos_nombre, args.llamadas, args.smali, args.vip,
+         args.subclases, args.usa_clase)
     ):
         args.informe = True
 
@@ -559,6 +649,12 @@ def main() -> None:
         llamadas(dex_por_nombre, args.llamadas, args.llamadas_clases)
     if args.smali:
         smali(dex_por_nombre, args.smali)
+    if args.subclases:
+        subclases(dex_por_nombre, args.subclases)
+
+    if args.usa_clase:
+        usa_clase(dex_por_nombre, args.usa_clase)
+
     if args.vip:
         analizar_vip(dex_por_nombre, cadenas)
 

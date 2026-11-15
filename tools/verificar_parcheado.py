@@ -31,6 +31,16 @@ COMPROBACIONES = [
         "Rastreo: el gancho pregunta por el ajuste antes de neutralizar el envio",
     ),
     (
+        r"^Lcom/baidu/simeji/skins/v0;",
+        "agregarFilaEnLista",
+        "Ajustes: la lista real (SettingFragment) mete la fila la primera",
+    ),
+    (
+        r"^Lcom/baidu/simeji/skins/v0;",
+        "esNuestraFila",
+        "Ajustes: el toque de la fila abre los ajustes del parche",
+    ),
+    (
         r"^Lef/n;",
         "agregarEntrada",
         "Ajustes: la pantalla principal (SettingsMainFragment) anyade la fila del parche",

@@ -2,10 +2,11 @@ package app.parchefacemoji.patches.facemoji.settings
 
 import app.morphe.patcher.Fingerprint
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
-import app.morphe.patcher.patch.PatchException
 import app.morphe.patcher.patch.patch
 import app.morphe.patcher.patch.resourceXml
 import app.parchefacemoji.patches.facemoji.shared.Constants.COMPATIBILITY_FACEMOJI
+import app.parchefacemoji.patches.facemoji.shared.registroLibre
+import com.android.tools.smali.dexlib2.Opcode
 import java.util.logging.Logger
 
 private val logger = Logger.getLogger("ParcheFacemoji")
@@ -16,11 +17,6 @@ private const val ENTRY_CLASS = "Lapp/parchefacemoji/extension/facemoji/settings
 /** Clase de la pantalla de ajustes del parche. */
 private const val SETTINGS_ACTIVITY = "app.parchefacemoji.extension.facemoji.settings.SettingsActivity"
 
-/**
- * Pantalla de ajustes avanzados de Facemoji (`SettingsAdvancedFragment`), que hereda de
- * `android.preference.PreferenceFragment`. Se engancha `onResume()` porque en ese momento la
- * lista de preferencias ya esta creada.
- */
 /**
  * Pantalla de ajustes principal de Facemoji: la que se ve al abrir *Ajustes* (Idiomas, Entrada,
  * Estilo De Emoji, ...). Vive en una clase ofuscada, `Lef/n`, pero tambien es un
@@ -38,6 +34,27 @@ internal object SettingsAdvancedOnResumeFingerprint : Fingerprint(
     definingClass = "Lcom/baidu/simeji/settings/SettingsAdvancedFragment;",
     name = "onResume",
     returnType = "V",
+)
+
+/**
+ * Pantalla de ajustes que se ve de verdad en la app: la construye `SettingFragment`, que en la
+ * 3.7.0 es la clase ofuscada `Lcom/baidu/simeji/skins/v0`.
+ *
+ * No usa preferencias: monta un `RecyclerView` con filas del modelo `La9/b`, guardadas en un
+ * `ArrayList`. El metodo `u2` (el `onViewCreated`) es donde se llena esa lista, asi que se
+ * engancha justo donde termina, para meter nuestra fila la primera.
+ */
+internal object SettingsListBuildFingerprint : Fingerprint(
+    definingClass = "Lcom/baidu/simeji/skins/v0;",
+    name = "u2",
+    returnType = "V",
+)
+
+/** Manejador del toque de una fila de la pantalla de ajustes de la app (`SettingFragment.V2`). */
+internal object SettingsListClickFingerprint : Fingerprint(
+    definingClass = "Lcom/baidu/simeji/skins/v0;",
+    name = "V2",
+    returnType = "Lkotlin/Unit;",
 )
 
 /**
@@ -99,7 +116,62 @@ val settingsScreenPatch = patch(
             }
         }
 
-        // 2. Anadir la fila a las pantallas de ajustes de la app.
+        // 2. Anadir la fila a la lista de la pantalla de ajustes que se ve en la app.
+        val lista = SettingsListBuildFingerprint.matchAllOrNull().orEmpty()
+        val clics = SettingsListClickFingerprint.matchAllOrNull().orEmpty()
+
+        lista.forEach { match ->
+            val implementacion = match.method.implementation
+
+            if (implementacion == null) {
+                logger.warning("El metodo que construye la lista no tiene codigo; se omite")
+            } else {
+                val ultimoRetorno = implementacion.instructions.indexOfLast {
+                    it.opcode == Opcode.RETURN_VOID
+                }
+
+                val indice = if (ultimoRetorno >= 0) {
+                    ultimoRetorno
+                } else {
+                    implementacion.instructions.size
+                }
+
+                match.method.addInstructions(
+                    indice,
+                    """
+                        invoke-static {p0}, $ENTRY_CLASS->agregarFilaEnLista(Ljava/lang/Object;)V
+                    """,
+                )
+
+                logger.info("Fila anyadida a la lista de ajustes de la app")
+            }
+        }
+
+        clics.forEach { match ->
+            val original = match.originalMethod
+            val registro = original.implementation?.registroLibre(original)
+
+            if (registro == null) {
+                logger.warning("El manejador de pulsaciones no tiene registros libres; se omite")
+            } else {
+                match.method.addInstructions(
+                    0,
+                    """
+                        invoke-static {p2}, $ENTRY_CLASS->esNuestraFila(Ljava/lang/Object;)Z
+                        move-result v$registro
+                        if-eqz v$registro, :parche_facemoji_seguir
+                        invoke-static {p1}, $ENTRY_CLASS->abrirDesde(Landroid/view/View;)V
+                        sget-object v$registro, Lkotlin/Unit;->INSTANCE:Lkotlin/Unit;
+                        return-object v$registro
+                        :parche_facemoji_seguir
+                    """,
+                )
+
+                logger.info("Pulsacion de la fila conectada con la pantalla de ajustes")
+            }
+        }
+
+        // 3. Anadir la fila a las pantallas de ajustes con preferencias (via secundaria).
         val pantallas = linkedMapOf(
             "principal (SettingsMainFragment)" to SettingsMainOnResumeFingerprint,
             "avanzados (SettingsAdvancedFragment)" to SettingsAdvancedOnResumeFingerprint,
@@ -107,11 +179,19 @@ val settingsScreenPatch = patch(
 
         val total = pantallas.values.sumOf { it.size }
 
-        if (total == 0) {
-            throw PatchException(
-                "No se ha encontrado ninguna pantalla de ajustes de Facemoji en esta version. " +
-                        "Desactiva este parche o abre una incidencia en " +
-                        "https://github.com/Minecraco/Parche-facemoji/issues indicando la version.",
+        // Nunca se aborta: aunque no se encuentre la lista, la actividad del manifiesto queda
+        // declarada y los ajustes siguen siendo accesibles con su propio icono.
+        if (lista.isEmpty()) {
+            logger.severe(
+                "No se ha encontrado la lista de ajustes principal (SettingFragment). " +
+                        "Queda el icono propio y la fila de los ajustes avanzados.",
+            )
+        }
+
+        if (total == 0 && lista.isEmpty()) {
+            logger.severe(
+                "Esta version de Facemoji no se parece a la 3.7.0 analizada: ninguna pantalla de " +
+                        "ajustes coincide. Abre una incidencia indicando la version exacta.",
             )
         }
 
