@@ -78,6 +78,21 @@ jobs:
             | grep -A 30 -E '\\.method (b|c|m|n|o)\\(\\)Z' \
             | head -n 500 | tee analisis/62-smali-gate.txt || true
 
+      # Diagnostico temporal: compila los parches aqui, que este workflow si sabe
+      # publicar resultados en la rama. Se elimina junto con el resto del puente.
+      - name: Compilar los parches
+        if: always()
+        continue-on-error: true
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set +e
+          chmod +x gradlew
+          ./gradlew buildAndroid --no-daemon > analisis/70-build.txt 2>&1
+          echo "codigo de salida: $?" >> analisis/70-build.txt
+          tail -n 150 analisis/70-build.txt > analisis/70-build-tail.txt
+
       - name: Publicar los informes en la rama
         run: |
           rm -f facemoji.apkm
