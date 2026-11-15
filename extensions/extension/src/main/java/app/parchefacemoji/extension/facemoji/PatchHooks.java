@@ -2,6 +2,8 @@ package app.parchefacemoji.extension.facemoji;
 
 import android.util.Log;
 
+import app.parchefacemoji.extension.facemoji.settings.PatchPreferences;
+
 /**
  * Punto de entrada de la extension que se inyecta en Facemoji.
  *
@@ -39,12 +41,32 @@ public final class PatchHooks {
     }
 
     /**
-     * Indica si los anuncios deben bloquearse siempre.
+     * Indica si el parche de anuncios debe actuar.
      *
-     * Se deja como metodo (en lugar de un valor incrustado en el smali) para poder
-     * anadir mas adelante un ajuste de usuario sin volver a tocar los parches.
+     * El smali lo consulta al principio del metodo parcheado: si devuelve `false`, se deja
+     * pasar el codigo original de la app (el parche queda desactivado sin desinstalar nada).
      */
+    public static boolean esAnunciosActivo() {
+        return PatchPreferences.anuncios();
+    }
+
+    /** Indica si el parche de VIP debe actuar. */
+    public static boolean esVipActivo() {
+        return PatchPreferences.vip();
+    }
+
+    /** Indica si el parche de rastreo debe actuar. */
+    public static boolean esRastreoActivo() {
+        return PatchPreferences.rastreo();
+    }
+
+    /**
+     * Compatibilidad con los parches antiguos, que preguntaban por este nombre.
+     *
+     * @deprecated usa {@link #esAnunciosActivo()}.
+     */
+    @Deprecated
     public static boolean shouldBlockAds() {
-        return true;
+        return esAnunciosActivo();
     }
 }

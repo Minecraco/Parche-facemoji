@@ -58,6 +58,9 @@ HUELLAS = {
         ("Lcom/gbu/ime/kmm/biz/chatgpt/bean/rizzKeyboard/RizzConfigInfoDetail2;", "isVip"),
         ("Lcom/gbu/ime/kmm/biz/chatgpt/bean/rizzKeyboard/RizzIceBreakerConfigInfoDetail;", "isVip"),
     ],
+    "Ajustes de Minecraco": [
+        ("Lcom/baidu/simeji/settings/SettingsAdvancedFragment;", "onResume"),
+    ],
     "Desactivar rastreo": [
         ("Lcom/google/firebase/analytics/FirebaseAnalytics;", "logEvent"),
         ("Lcom/google/firebase/analytics/FirebaseAnalytics;", "setUserProperty"),
