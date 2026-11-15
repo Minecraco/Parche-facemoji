@@ -1,0 +1,93 @@
+name: Analizar APK de Facemoji
+
+# Puente temporal: el sandbox de desarrollo no tiene salida a Google Drive, pero Actions si.
+# Descarga la APK publica, ejecuta consultas con tools/analizar_apk.py y deja los informes
+# en la rama para poder leerlos desde el repositorio.
+
+on:
+  push:
+    paths:
+      - 'analisis/TRIGGER'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  APKM_FILE_ID: 1jddpsPYRfpOKYaqKvEhuMeYjRHQacOZR
+
+jobs:
+  analizar:
+    name: Analizar la APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install gdown androguard
+
+      - name: Descargar la APK del Drive
+        run: |
+          set +e
+          gdown "https://drive.google.com/uc?id=${APKM_FILE_ID}" -O facemoji.apkm 2>&1 | tail -1
+          if [ -f facemoji.apkm ]; then
+            echo "descarga: correcta ($(stat -c%s facemoji.apkm) bytes)" > analisis/90-descarga.txt
+          else
+            echo "descarga: FALLIDA" > analisis/90-descarga.txt
+          fi
+
+      - name: Todas las clases de ajustes
+        if: hashFiles('facemoji.apkm') != ''
+        run: |
+          python tools/analizar_apk.py facemoji.apkm \
+            --clases-regex '^Lcom/baidu/simeji/settings/[^$]*;' \
+            | head -n 600 | tee analisis/a1-clases-settings.txt || true
+
+      - name: Quien usa PreferenceFragment
+        if: hashFiles('facemoji.apkm') != ''
+        timeout-minutes: 30
+        run: |
+          python tools/analizar_apk.py facemoji.apkm \
+            --llamadas 'addPreferencesFromResource' \
+            | head -n 400 | tee analisis/a2-usuarios-preferencias.txt || true
+
+      - name: Clases de ajustes en el modulo KMM
+        if: hashFiles('facemoji.apkm') != ''
+        run: |
+          python tools/analizar_apk.py facemoji.apkm \
+            --clases-regex '(?i)^L(com/gbu/ime/kmm|com/baidu/simeji)/[^$]*(setting|pref)[^$]*;' \
+            | head -n 600 | tee analisis/a3-clases-ajustes-todas.txt || true
+
+      - name: Bytecode de SettingsActivity
+        if: hashFiles('facemoji.apkm') != ''
+        run: |
+          python tools/analizar_apk.py facemoji.apkm \
+            --smali '^Lcom/baidu/simeji/settings/SettingsActivity;' \
+            | head -n 900 | tee analisis/a4-smali-settingsactivity.txt || true
+
+      - name: Quien abre SettingsActivity
+        if: hashFiles('facemoji.apkm') != ''
+        timeout-minutes: 30
+        run: |
+          python tools/analizar_apk.py facemoji.apkm \
+            --llamadas 'Lcom/baidu/simeji/settings/SettingsActivity;' \
+            --llamadas-clases '^Lcom/baidu/simeji/' \
+            | head -n 300 | tee analisis/a5-llamadas-settingsactivity.txt || true
+
+      - name: Publicar los informes en la rama
+        if: always()
+        run: |
+          rm -f facemoji.apkm
+          git config user.name "analisis-apk"
+          git config user.email "noreply@example.com"
+          git add analisis
+          git commit -m "chore: informe de analisis de las pantallas de ajustes" || echo "sin cambios"
+          git push

@@ -22,13 +22,12 @@ object Constants {
             // Version objetivo del desarrollo (APKMirror la publica como BUNDLE, ".apkm").
             AppTarget(
                 version = "3.7.0",
-                // Huellas comprobadas contra la APK 3.7.0 real (2 arquitecturas, APKMirror):
-                // todos los objetivos de los parches existen en esa compilacion. Falta la
-                // prueba en un dispositivo, por eso sigue siendo experimental.
-                // Ver docs/VERIFICAR_HUELLAS.md y analisis/*.txt
-                isExperimental = true,
-                description = "Version objetivo. Huellas verificadas sobre la APK real; " +
-                        "falta la prueba en dispositivo.",
+                // Huellas comprobadas contra la APK 3.7.0 real (2 arquitecturas, APKMirror) y
+                // parcheo verificado en CI: el bundle se aplica a esa APK, se genera el APK
+                // parcheado y las inyecciones estan en su clase (analisis/96-verificacion-apk.txt).
+                isExperimental = false,
+                description = "Version objetivo. Huellas y parcheo verificados en CI; " +
+                        "el aspecto final no se ha revisado en dispositivo.",
             ),
             // En 3.7.0 los metodos objetivo tienen nombre propio (beans y gestores), pero
             // R8 puede cambiarlos en una version futura: se deja abierta como experimental.
