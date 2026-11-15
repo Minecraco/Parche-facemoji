@@ -384,6 +384,84 @@ def llamadas(
     print(f"\n{len(vistos)} metodos coinciden con {patron}")
 
 
+def metodos_por_nombre(
+    dex_por_nombre: dict[str, bytes],
+    patron: str,
+    limite: int = 400,
+) -> None:
+    """Lista metodos cuyo NOMBRE coincide con una expresion regular, en cualquier clase.
+
+    Sirve para localizar APIs de SDKs cuyo paquete se ha ofuscado: el nombre del metodo
+    suele sobrevivir cuando el SDK declara reglas de proguard para su API publica.
+    """
+    DEX = cargar_androguard()
+    if DEX is None:
+        sys.exit("Esta opcion necesita androguard: pip install androguard")
+
+    regex = re.compile(patron)
+    vistos: set[tuple[str, str]] = set()
+
+    for blob in dex_por_nombre.values():
+        try:
+            dex = DEX(blob)
+        except Exception:
+            continue
+        for clase in dex.get_classes():
+            clase_desc = clase.get_name()
+            for metodo in clase.get_methods():
+                nombre = metodo.get_name()
+                if not regex.search(nombre):
+                    continue
+                clave = (clase_desc, nombre)
+                if clave in vistos:
+                    continue
+                vistos.add(clave)
+                print(f"{clase_desc}->{nombre}{metodo.get_descriptor()}")
+                if len(vistos) >= limite:
+                    print(f"\n{len(vistos)} metodos (limite alcanzado)")
+                    return
+
+    print(f"\n{len(vistos)} metodos coinciden con {patron}")
+
+
+def smali(dex_por_nombre: dict[str, bytes], patron: str, limite: int = 1500) -> None:
+    """Imprime el bytecode de los metodos de las clases que coinciden con el patron."""
+    DEX = cargar_androguard()
+    if DEX is None:
+        sys.exit("Esta opcion necesita androguard: pip install androguard")
+
+    regex = re.compile(patron)
+    lineas = 0
+
+    for blob in dex_por_nombre.values():
+        try:
+            dex = DEX(blob)
+        except Exception:
+            continue
+        for clase in dex.get_classes():
+            clase_desc = clase.get_name()
+            if not regex.search(clase_desc):
+                continue
+            print(f"\n### {clase_desc}")
+            for metodo in clase.get_methods():
+                try:
+                    if metodo.get_code() is None:
+                        continue
+                    instrucciones = metodo.get_instructions()
+                except Exception:
+                    continue
+                print(f"  .method {metodo.get_name()}{metodo.get_descriptor()}")
+                for instruccion in instrucciones:
+                    try:
+                        print(f"      {instruccion.get_output().strip()}")
+                    except Exception:
+                        continue
+                    lineas += 1
+                    if lineas >= limite:
+                        print(f"\n(limite de {limite} lineas alcanzado)")
+                        return
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Comprueba las huellas de los parches de Parche Facemoji sobre una APK.",
@@ -415,6 +493,16 @@ def main() -> None:
         help="Restringe la busqueda de llamadas a estas clases",
     )
     parser.add_argument(
+        "--metodos-nombre",
+        metavar="REGEX",
+        help="Lista metodos cuyo nombre coincide, en cualquier clase (requiere androguard)",
+    )
+    parser.add_argument(
+        "--smali",
+        metavar="REGEX",
+        help="Imprime el bytecode de las clases cuyo descriptor coincide (requiere androguard)",
+    )
+    parser.add_argument(
         "--vip",
         action="store_true",
         help="Busca el codigo de suscripcion VIP (cadenas y metodos candidatos)",
@@ -433,7 +521,7 @@ def main() -> None:
 
     if not any(
         (args.informe, args.comprobar, args.buscar, args.clases, args.clases_regex,
-         args.metodos, args.llamadas, args.vip)
+         args.metodos, args.metodos_nombre, args.llamadas, args.smali, args.vip)
     ):
         args.informe = True
 
@@ -449,8 +537,12 @@ def main() -> None:
         clases_regex(dex_por_nombre, args.clases_regex)
     if args.metodos:
         metodos_de(dex_por_nombre, args.metodos)
+    if args.metodos_nombre:
+        metodos_por_nombre(dex_por_nombre, args.metodos_nombre)
     if args.llamadas:
         llamadas(dex_por_nombre, args.llamadas, args.llamadas_clases)
+    if args.smali:
+        smali(dex_por_nombre, args.smali)
     if args.vip:
         analizar_vip(dex_por_nombre, cadenas)
 

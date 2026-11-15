@@ -59,44 +59,36 @@ jobs:
       - name: Buscar codigo VIP
         run: python tools/analizar_apk.py facemoji.apkm --vip | tee analisis/03-vip.txt
 
-      - name: Estado VIP en AccountInfo
+      - name: Bytecode de AdSuggestionUtils
         run: |
           python tools/analizar_apk.py facemoji.apkm \
-            --metodos '^Lcom/baidu/simeji/account/AccountInfo;' \
-            | head -n 400 | tee analisis/40-accountinfo.txt || true
+            --smali '^Lcom/baidu/simeji/plutus/adsuggestion/AdSuggestionUtils' \
+            | head -n 1400 | tee analisis/50-smali-adsuggestion.txt || true
 
-      - name: Quien llama a Pangle
+      - name: Bytecode de CoolFontBean
+        run: |
+          python tools/analizar_apk.py facemoji.apkm \
+            --smali '^Lcom/baidu/simeji/coolfont/CoolFontBean;' \
+            | head -n 1200 | tee analisis/51-smali-coolfont.txt || true
+
+      - name: Quien usa la clave is_vip_subscriber
         timeout-minutes: 25
         run: |
           python tools/analizar_apk.py facemoji.apkm \
-            --llamadas 'openadsdk' \
-            | head -n 600 | tee analisis/41-llamadas-pangle.txt || true
+            --llamadas 'is_vip_subscriber|isVipSubscriber' --llamadas-clases '^Lcom/baidu/simeji/' \
+            | head -n 400 | tee analisis/52-uso-clave-vip.txt || true
 
-      - name: Quien llama a AdMob
-        timeout-minutes: 25
+      - name: Metodos VIP en qualquer clase
         run: |
           python tools/analizar_apk.py facemoji.apkm \
-            --llamadas 'gms/ads/' \
-            | head -n 400 | tee analisis/42-llamadas-admob.txt || true
+            --metodos-nombre '(?i)^(is_?vip|get_?vip|is_?premium|is_?subscriber|is_?pro|vip_?status)[A-Za-z_]*$' \
+            | head -n 500 | tee analisis/53-metodos-vip.txt || true
 
-      - name: Quien lee el estado de suscriptor VIP
-        timeout-minutes: 25
+      - name: Metodos de SplashActivity
         run: |
           python tools/analizar_apk.py facemoji.apkm \
-            --llamadas 'isVipSubscriber|is_vip_subscriber' \
-            | head -n 400 | tee analisis/43-llamadas-vip.txt || true
-
-      - name: Clases de suscripcion y video recompensado
-        run: |
-          python tools/analizar_apk.py facemoji.apkm \
-            --clases-regex '(?i)^Lcom/baidu/simeji/[^$]*(subscri|purchase|billing|paywall|videoreward)[^$]*;' \
-            | head -n 400 | tee analisis/44-clases-subscripcion.txt || true
-
-      - name: Metodos de las pantallas de video recompensado y suscripcion
-        run: |
-          python tools/analizar_apk.py facemoji.apkm \
-            --metodos '^Lcom/baidu/simeji/(skins/video|inputview/convenient/textbomb/TextBombVipManager|subscription)[^$]*;' \
-            | head -n 900 | tee analisis/45-metodos-subscripcion.txt || true
+            --metodos '^Lcom/baidu/simeji/settings/guide/[^$]*;' \
+            | head -n 400 | tee analisis/54-splash.txt || true
 
       - name: Publicar los informes en la rama
         run: |
