@@ -42,7 +42,7 @@ tasks {
         dependsOn("buildAndroid")
 
         classpath = sourceSets["main"].runtimeClasspath
-        mainClass.set("verificar.VerificarParcheoKt")
+        mainClass.set("verificar.VerificarParcheo")
     }
 
     // Used by gradle-semantic-release-plugin.
