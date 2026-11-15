@@ -17,9 +17,9 @@ Daemon will be stopped at the end of the build
 > Task :patches:checkKotlinGradlePluginConfigurationErrors SKIPPED
 > Task :extensions:extension:preReleaseBuild UP-TO-DATE
 > Task :extensions:extension:generateReleaseResources
-> Task :extensions:extension:checkReleaseDuplicateClasses
 > Task :extensions:extension:packageReleaseResources
 > Task :extensions:extension:processReleaseNavigationResources
+> Task :extensions:extension:checkReleaseDuplicateClasses
 > Task :extensions:extension:javaPreCompileRelease
 > Task :extensions:extension:checkReleaseAarMetadata
 > Task :extensions:extension:mapReleaseSourceSetPaths
@@ -50,57 +50,63 @@ Daemon will be stopped at the end of the build
 
 > Task :patches:verificarParcheo
 APK de entrada: /home/runner/work/Parche-facemoji/Parche-facemoji/apkm/base.apk (55739407 bytes)
-Bundle: /home/runner/work/Parche-facemoji/Parche-facemoji/patches/build/libs/patches-1.1.0.mpp
-Nov 15, 2026 4:53:27 PM app.morphe.patcher.Patcher$invoke$2 invokeSuspend
+Bundle: /home/runner/work/Parche-facemoji/Parche-facemoji/patches/build/libs/patches-1.1.1.mpp
+Nov 15, 2026 5:14:23 PM app.morphe.patcher.Patcher$invoke$2 invokeSuspend
 INFO: Executing patches
-Nov 15, 2026 4:53:27 PM app.morphe.patcher.patch.ResourcePatchContext decodeResources$morphe_patcher
+Nov 15, 2026 5:14:23 PM app.morphe.patcher.patch.ResourcePatchContext decodeResources$morphe_patcher
 INFO: Decoding the manifest
-Nov 15, 2026 4:53:28 PM app.morphe.patcher.resource.coder.ArsclibResourceCoder prepareDecodingOnRequest
+Nov 15, 2026 5:14:24 PM app.morphe.patcher.resource.coder.ArsclibResourceCoder prepareDecodingOnRequest
 INFO: Decoding resources on request, 7176 files can be decoded
-Nov 15, 2026 4:53:28 PM app.parchefacemoji.patches.facemoji.settings.SettingsScreenPatchKt settingsScreenPatch$lambda$0$0
-INFO: Entrada de ajustes anyadida en 1 pantalla(s); actividad declarada: app.parchefacemoji.extension.facemoji.settings.SettingsActivity
-Nov 15, 2026 4:53:28 PM app.parchefacemoji.patches.facemoji.tracking.DisableTrackingPatchKt disableTrackingPatch$lambda$0$0
+Nov 15, 2026 5:14:24 PM app.parchefacemoji.patches.facemoji.settings.SettingsScreenPatchKt settingsScreenPatch$lambda$0$0
+INFO: Entrada de ajustes anyadida en la pantalla principal (SettingsMainFragment)
+Nov 15, 2026 5:14:24 PM app.parchefacemoji.patches.facemoji.settings.SettingsScreenPatchKt settingsScreenPatch$lambda$0$0
+INFO: Entrada de ajustes anyadida en la pantalla avanzados (SettingsAdvancedFragment)
+Nov 15, 2026 5:14:24 PM app.parchefacemoji.patches.facemoji.settings.SettingsScreenPatchKt settingsScreenPatch$lambda$0$0
+INFO: Actividad declarada: app.parchefacemoji.extension.facemoji.settings.SettingsActivity
+Nov 15, 2026 5:14:24 PM app.parchefacemoji.patches.facemoji.tracking.DisableTrackingPatchKt disableTrackingPatch$lambda$0$0
 INFO: Rastreadores desactivados (7): Firebase Analytics: eventos, Firebase Analytics: propiedades, Firebase Analytics: usuario, Firebase Analytics: parametros, Crashlytics: registros, Crashlytics: usuario, Crashlytics: excepciones
-Nov 15, 2026 4:53:28 PM app.parchefacemoji.patches.facemoji.vip.UnlockVipPatchKt unlockVipPatch$lambda$0$0
+Nov 15, 2026 5:14:24 PM app.parchefacemoji.patches.facemoji.vip.UnlockVipPatchKt unlockVipPatch$lambda$0$0
 INFO: VIP: 7 banderas marcadas como gratuitas y 5 desbloqueos dados por hechos
-Nov 15, 2026 4:53:28 PM app.parchefacemoji.patches.facemoji.vip.UnlockVipPatchKt unlockVipPatch$lambda$0$0
+Nov 15, 2026 5:14:24 PM app.parchefacemoji.patches.facemoji.vip.UnlockVipPatchKt unlockVipPatch$lambda$0$0
 INFO:   gratuitas: Fuentes de color: es VIP, Fuentes de color: candado, Fuentes de color: candado o VIP, Fuentes de color: tipo bloqueado, Stickers: serie VIP, Stickers: serieVIP local, TextBomb: es VIP
-Nov 15, 2026 4:53:28 PM app.parchefacemoji.patches.facemoji.vip.UnlockVipPatchKt unlockVipPatch$lambda$0$0
+Nov 15, 2026 5:14:24 PM app.parchefacemoji.patches.facemoji.vip.UnlockVipPatchKt unlockVipPatch$lambda$0$0
 INFO:   desbloqueadas: Fuentes de color: desbloqueada por video o suscripcion, Fuentes de color: desbloqueo guardado, Rizz: frases VIP, Rizz: detalles VIP, Rizz: rompehielos VIP
-Nov 15, 2026 4:53:28 PM app.parchefacemoji.patches.facemoji.ads.RemoveAdsPatchKt removeAdsPatch$lambda$0$0
+Nov 15, 2026 5:14:24 PM app.parchefacemoji.patches.facemoji.ads.RemoveAdsPatchKt removeAdsPatch$lambda$0$0
 INFO: Anuncios apagados (5/5): Peticion de sugerencias, Sugerencias de comercio, Interruptor de sugerencias, Interruptor de comercio, Configuracion de estilo
-Parches ejecutados: 5
-Nov 15, 2026 4:53:28 PM app.morphe.patcher.patch.BytecodePatchContext get
+Nov 15, 2026 5:14:24 PM app.parchefacemoji.patches.facemoji.misc.VersionModPatchKt versionModPatch$lambda$0$0
+INFO: Version de la app: 3.7.0 -> 3.7.0-Mod
+Parches ejecutados: 6
+Nov 15, 2026 5:14:24 PM app.morphe.patcher.patch.BytecodePatchContext get
 INFO: Compiling patched dex files (mode: STRIP_FAST)
-Nov 15, 2026 4:53:28 PM app.morphe.patcher.patch.BytecodePatchContext copyUnchangedExtensionClasses
+Nov 15, 2026 5:14:24 PM app.morphe.patcher.patch.BytecodePatchContext copyUnchangedExtensionClasses
 INFO: Copied 983 unchanged extension classes to 1 DEX files
-Nov 15, 2026 4:53:28 PM app.morphe.patcher.patch.BytecodePatchContext logMutableClassCount
-INFO: Changed 39 of 38397 classes to mutable
-Nov 15, 2026 4:53:28 PM app.morphe.patcher.patch.BytecodePatchContext compileStripFast
-INFO: Writing 39 new classes to new DEX files
-Nov 15, 2026 4:53:28 PM app.morphe.patcher.dex.DexReadWrite writeMultiDexFile$morphe_patcher
-INFO: Processing 39 classes (single threaded mode)
-Nov 15, 2026 4:53:28 PM app.morphe.patcher.dex.DexReadWrite writeMultiDexFile$morphe_patcher
+Nov 15, 2026 5:14:24 PM app.morphe.patcher.patch.BytecodePatchContext logMutableClassCount
+INFO: Changed 40 of 38397 classes to mutable
+Nov 15, 2026 5:14:24 PM app.morphe.patcher.patch.BytecodePatchContext compileStripFast
+INFO: Writing 40 new classes to new DEX files
+Nov 15, 2026 5:14:24 PM app.morphe.patcher.dex.DexReadWrite writeMultiDexFile$morphe_patcher
+INFO: Processing 40 classes (single threaded mode)
+Nov 15, 2026 5:14:25 PM app.morphe.patcher.dex.DexReadWrite writeMultiDexFile$morphe_patcher
 INFO: Wrote 1 dex files to morphe-temporary-files/patched/newDex
-Nov 15, 2026 4:53:29 PM app.morphe.patcher.patch.BytecodePatchContext compileStripFast
-INFO: Stripped 39 modified classes from 4 original DEX files
-Nov 15, 2026 4:53:29 PM app.morphe.patcher.patch.ResourcePatchContext writeApk$morphe_patcher
+Nov 15, 2026 5:14:25 PM app.morphe.patcher.patch.BytecodePatchContext compileStripFast
+INFO: Stripped 40 modified classes from 4 original DEX files
+Nov 15, 2026 5:14:25 PM app.morphe.patcher.patch.ResourcePatchContext writeApk$morphe_patcher
 INFO: Compiling modified resources
-Nov 15, 2026 4:53:29 PM app.morphe.patcher.resource.coder.ArsclibResourceCoder prepareBookkeepingFiles
+Nov 15, 2026 5:14:25 PM app.morphe.patcher.resource.coder.ArsclibResourceCoder prepareBookkeepingFiles
 INFO: Decoded 0 of 7176 files on request
-Nov 15, 2026 4:53:29 PM app.morphe.patcher.resource.processor.StringsXmlProcessor process
+Nov 15, 2026 5:14:25 PM app.morphe.patcher.resource.processor.StringsXmlProcessor process
 INFO: Unescaping strings
-Nov 15, 2026 4:53:29 PM app.morphe.patcher.resource.processor.AaptMacroProcessor process
+Nov 15, 2026 5:14:25 PM app.morphe.patcher.resource.processor.AaptMacroProcessor process
 INFO: Processing aapt macros
-Nov 15, 2026 4:53:29 PM app.morphe.patcher.resource.processor.ResourceIdProcessor process
+Nov 15, 2026 5:14:25 PM app.morphe.patcher.resource.processor.ResourceIdProcessor process
 INFO: Generating new resource IDs
-Nov 15, 2026 4:53:29 PM app.morphe.patcher.resource.coder.ArsclibResourceCoder encodeResources
+Nov 15, 2026 5:14:25 PM app.morphe.patcher.resource.coder.ArsclibResourceCoder encodeResources
 INFO: Writing resource APK
-Nov 15, 2026 4:53:29 PM app.morphe.patcher.resource.coder.ArsclibResourceCoder encodeResourcesIncrementally
+Nov 15, 2026 5:14:25 PM app.morphe.patcher.resource.coder.ArsclibResourceCoder encodeResourcesIncrementally
 INFO: Reusing 6846 unchanged archive entries, rebuilding 2 entries, dropping 0 entries, leaving out 7 replaced entries
-Nov 15, 2026 4:53:29 PM app.morphe.patcher.resource.coder.ArsclibResourceCoder encodeResourcesIncrementally
-INFO: Resource APK scan: 100ms write: 400ms
-OK: APK parcheado en /home/runner/work/Parche-facemoji/Parche-facemoji/patches/build/verificacion/facemoji-parcheado.apk (55968952 bytes)
+Nov 15, 2026 5:14:26 PM app.morphe.patcher.resource.coder.ArsclibResourceCoder encodeResourcesIncrementally
+INFO: Resource APK scan: 200ms write: 500ms
+OK: APK parcheado en /home/runner/work/Parche-facemoji/Parche-facemoji/patches/build/verificacion/facemoji-parcheado.apk (55970668 bytes)
 
 [Incubating] Problems report is available at: file:///home/runner/work/Parche-facemoji/Parche-facemoji/build/reports/problems/problems-report.html
 
@@ -110,7 +116,7 @@ You can use '--warning-mode all' to show the individual deprecation warnings and
 
 For more on this, please refer to https://docs.gradle.org/9.8.2/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
 
-BUILD SUCCESSFUL in 1m 2s
+BUILD SUCCESSFUL in 1m 12s
 29 actionable tasks: 29 executed
 Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.8.2/userguide/configuration_cache_enabling.html
 codigo de salida: 0
