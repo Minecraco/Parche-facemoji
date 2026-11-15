@@ -3,7 +3,8 @@ package app.parchefacemoji.patches.facemoji.tracking
 import app.morphe.patcher.Fingerprint
 import app.morphe.patcher.patch.patch
 import app.parchefacemoji.patches.facemoji.shared.Constants.COMPATIBILITY_FACEMOJI
-import app.parchefacemoji.patches.facemoji.shared.blockVoidMethods
+import app.parchefacemoji.patches.facemoji.shared.Ajustes
+import app.parchefacemoji.patches.facemoji.shared.bloquearVoidSiActivo
 import java.util.logging.Logger
 
 private val logger = Logger.getLogger("ParcheFacemoji")
@@ -49,7 +50,11 @@ val disableTrackingPatch = patch(
     execute {
         val neutralized = TRACKER_SURFACES.filter { (surface, fingerprints) ->
             fingerprints.any { fingerprint ->
-                fingerprint.blockVoidMethods(surface = surface, extensionMethod = "logTrackerBlocked")
+                fingerprint.bloquearVoidSiActivo(
+                    surface = surface,
+                    ajuste = Ajustes.RASTREO,
+                    extensionMethod = "logTrackerBlocked",
+                )
             }
         }.keys
 

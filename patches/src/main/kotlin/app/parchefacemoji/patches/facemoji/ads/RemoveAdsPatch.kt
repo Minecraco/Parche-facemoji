@@ -4,7 +4,8 @@ import app.morphe.patcher.Fingerprint
 import app.morphe.patcher.patch.PatchException
 import app.morphe.patcher.patch.patch
 import app.parchefacemoji.patches.facemoji.shared.Constants.COMPATIBILITY_FACEMOJI
-import app.parchefacemoji.patches.facemoji.shared.forceBoolean
+import app.parchefacemoji.patches.facemoji.shared.Ajustes
+import app.parchefacemoji.patches.facemoji.shared.forzarBooleanSiActivo
 import java.util.logging.Logger
 
 private val logger = Logger.getLogger("ParcheFacemoji")
@@ -40,6 +41,7 @@ private val AD_SWITCHES: Map<String, Fingerprint> = linkedMapOf(
 val removeAdsPatch = patch(
     name = "Eliminar anuncios",
     description = "Apaga las sugerencias patrocinadas que la app inserta en el teclado. " +
+            "Se puede activar o desactivar en los ajustes de Minecraco sin volver a parchear. " +
             "En la version 3.7.0 la publicidad a pantalla completa la sirve Pangle con las clases " +
             "renombradas, por lo que ese formato no se puede bloquear de forma estable.",
     default = true,
@@ -53,7 +55,11 @@ val removeAdsPatch = patch(
 
     execute {
         val disabled = AD_SWITCHES.filter { (surface, fingerprint) ->
-            fingerprint.forceBoolean(value = false, surface = "anuncio: $surface")
+            fingerprint.forzarBooleanSiActivo(
+                value = false,
+                surface = "anuncio: $surface",
+                ajuste = Ajustes.ANUNCIOS,
+            )
         }.keys
 
         if (disabled.isEmpty()) {

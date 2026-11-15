@@ -68,7 +68,31 @@ adb logcat -s ParcheFacemoji
 La implementación vive en `shared/Hooks.kt` (`Fingerprint.blockVoidMethods`), que resuelve
 la huella con `matchAllOrNull()`: si el SDK no está en esa versión de la app, se ignora.
 
-## 3 bis. Forzar un valor de retorno (VIP, interruptores)
+## 3 bis. Ganchos condicionales (ajustes dentro de la app)
+
+Los tres parches no actúan siempre: cada gancho empieza preguntando si su interruptor está
+activo, y si no lo está deja ejecutar el código original de la app.
+
+```smali
+invoke-static {}, Lapp/parchefacemoji/extension/facemoji/PatchHooks;->esVipActivo()Z
+move-result v3
+if-eqz v3, :parche_apagado
+const-string v3, "vip: Fuentes de color: es VIP"
+invoke-static {v3}, L.../PatchHooks;->logBlocked(Ljava/lang/String;)V
+const/16 v3, 0x0
+return v3
+:parche_apagado
+```
+
+`v3` es el registro local más alto del método: está libre porque la inyección va en el índice 0,
+donde el método original todavía no ha escrito ningún local. El cálculo está en
+`shared/Hooks.kt` (`registroLibre`).
+
+Las utilidades disponibles son `bloquearVoidSiActivo`, `forzarBooleanSiActivo`,
+`forzarIntSiActivo` y `forzarBooleanObjetoSiActivo`; todas reciben el nombre del ajuste
+(constantes de `Ajustes`).
+
+## 3 ter. Forzar un valor de retorno (VIP, interruptores)
 
 Muchas comprobaciones de la app no son métodos `void` sino booleanos (`isVip()`, `getEnable()`).
 Para esas están las utilidades de `shared/Hooks.kt`:

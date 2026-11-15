@@ -61,6 +61,18 @@ stub de mediación y no hay Facebook, Unity, AppLovin ni Adjust.
 | `60-api-gestores.txt` | Fachada `g00/a` y su interfaz `h00/a` |
 | `61-smali-h00.txt`, `62-smali-gate.txt` | (vacíos: `h00/a` es abstracta y el `grep` falló) |
 
+## Sexta pasada: la pantalla de ajustes (para el parche de ajustes)
+
+| Fichero | Contenido |
+| --- | --- |
+| `90-descarga.txt` | Comprobación de que la APK se pudo descargar |
+| `91-clases-ajustes.txt` | Clases de ajustes, ayuda y feedback |
+| `92-metodos-ajustes.txt` | Métodos de `com/baidu/simeji/settings/*` |
+| `93-smali-ajustes.txt` | **Bytecode de `SettingsAdvancedFragment`** (es un `PreferenceFragment`) |
+| `94-llamadas-ajustes.txt` | Quién usa esa pantalla |
+| `95-verificacion.txt` | Registro de haber aplicado el bundle a la APK real |
+| `96-verificacion-apk.txt` | **Comprobación de las inyecciones en el APK parcheado** |
+
 ## Cómo reproducirlo
 
 ```bash

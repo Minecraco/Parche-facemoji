@@ -18,6 +18,8 @@ val patchListGeneratorClasspath = configurations.create("patchListGeneratorClass
 
 dependencies {
     compileOnly(libs.gson)
+    // El patcher trae coroutines en tiempo de ejecucion, pero no las expone al compilar.
+    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
     patchListGeneratorClasspath(libs.gson)
 }
 
@@ -29,6 +31,18 @@ tasks {
 
         classpath = sourceSets["main"].runtimeClasspath + patchListGeneratorClasspath
         mainClass.set("util.PatchListGeneratorKt")
+    }
+
+    // Aplica el bundle a una APK real para comprobar que el parcheo no rompe nada:
+    //   APK_A_VERIFICAR=/ruta/facemoji.apkm ./gradlew verificarParcheo
+    register<JavaExec>("verificarParcheo") {
+        group = "verification"
+        description = "Aplica los parches a la APK indicada en APK_A_VERIFICAR"
+
+        dependsOn("buildAndroid")
+
+        classpath = sourceSets["main"].runtimeClasspath
+        mainClass.set("verificar.VerificarParcheo")
     }
 
     // Used by gradle-semantic-release-plugin.

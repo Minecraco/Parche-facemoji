@@ -4,8 +4,10 @@ import app.morphe.patcher.Fingerprint
 import app.morphe.patcher.patch.PatchException
 import app.morphe.patcher.patch.patch
 import app.parchefacemoji.patches.facemoji.shared.Constants.COMPATIBILITY_FACEMOJI
-import app.parchefacemoji.patches.facemoji.shared.forceBoolean
-import app.parchefacemoji.patches.facemoji.shared.forceBooleanObject
+import app.parchefacemoji.patches.facemoji.shared.Ajustes
+import app.parchefacemoji.patches.facemoji.shared.forzarBooleanObjetoSiActivo
+import app.parchefacemoji.patches.facemoji.shared.forzarBooleanSiActivo
+import app.parchefacemoji.patches.facemoji.shared.forzarIntSiActivo
 import java.util.logging.Logger
 
 private val logger = Logger.getLogger("ParcheFacemoji")
@@ -19,6 +21,10 @@ private val VIP_FLAGS: Map<String, Fingerprint> = linkedMapOf(
     "Stickers: serie VIP" to SeriesStickerIsVipFingerprint,
     "Stickers: serieVIP local" to StickerItemIsSeriesVipFingerprint,
     "TextBomb: es VIP" to TextBombIsVipFingerprint,
+)
+
+/** Contenido que se marca como no VIP y que la app guarda como entero (0 = para todos). */
+private val VIP_INT_FLAGS: Map<String, Fingerprint> = linkedMapOf(
     "Rizz: frases VIP" to RizzConfigIsVipFingerprint,
     "Rizz: detalles VIP" to RizzConfigDetailIsVipFingerprint,
     "Rizz: rompehielos VIP" to RizzIceBreakerIsVipFingerprint,
@@ -55,7 +61,7 @@ val unlockVipPatch = patch(
     name = "Desbloquear VIP",
     description = "Marca como gratuitos las fuentes de color, las series de stickers, los TextBomb " +
             "y las frases del teclado Rizz que la app reserva a la suscripcion, y da por hechos " +
-            "los desbloqueos por video.",
+            "los desbloqueos por video. Se puede activar o desactivar en los ajustes de Minecraco.",
     default = true,
 ) {
     compatibleWith(COMPATIBILITY_FACEMOJI)
@@ -66,18 +72,38 @@ val unlockVipPatch = patch(
 
     execute {
         val unlocked = VIP_FLAGS.filter { (surface, fingerprint) ->
-            fingerprint.forceBoolean(value = false, surface = "vip: $surface")
+            fingerprint.forzarBooleanSiActivo(
+                value = false,
+                surface = "vip: $surface",
+                ajuste = Ajustes.VIP,
+            )
+        }.keys
+
+        val unlockedInts = VIP_INT_FLAGS.filter { (surface, fingerprint) ->
+            fingerprint.forzarIntSiActivo(
+                value = 0,
+                surface = "vip: $surface",
+                ajuste = Ajustes.VIP,
+            )
         }.keys
 
         val unlockedBooleans = VIP_UNLOCK_BOOLEANS.filter { (surface, fingerprint) ->
-            fingerprint.forceBoolean(value = true, surface = "vip: $surface")
+            fingerprint.forzarBooleanSiActivo(
+                value = true,
+                surface = "vip: $surface",
+                ajuste = Ajustes.VIP,
+            )
         }.keys
 
         val unlockedObjects = VIP_UNLOCK_OBJECTS.filter { (surface, fingerprint) ->
-            fingerprint.forceBooleanObject(value = true, surface = "vip: $surface")
+            fingerprint.forzarBooleanObjetoSiActivo(
+                value = true,
+                surface = "vip: $surface",
+                ajuste = Ajustes.VIP,
+            )
         }.keys
 
-        val marked = unlockedBooleans + unlockedObjects
+        val marked = unlockedBooleans + unlockedObjects + unlockedInts
 
         if (unlocked.isEmpty() && marked.isEmpty()) {
             throw PatchException(

@@ -2,6 +2,11 @@
 
 ## Hecho
 
+- **Ajustes de Minecraco**: pantalla propia (interruptores de anuncios, VIP y rastreo) con una
+  fila dentro de los ajustes de Facemoji, que es un `android.preference.PreferenceFragment`.
+  Los parches son condicionales: el smali pregunta al ajuste antes de actuar.
+- **Verificación del parcheo en CI**: `verificarParcheo` aplica el bundle a la APK real y un
+  script comprueba manifiesto y bytecode del APK resultante.
 - **Eliminar anuncios** (parcial): apaga el motor de **sugerencias patrocinadas** del teclado
   (`AdSuggestionUtils`), que es el anuncio que aparece mientras se escribe.
 - **Desbloquear VIP**: fuentes de color (`CoolFontBean`), series de stickers (`SeriesStickerItem`,
@@ -36,8 +41,10 @@ Los anuncios de bienvenida y los emergentes los sirve Pangle. Opciones para atac
 
 ## Ideas siguientes
 
-- **Ajustes en la app** (pantalla de preferencias del parche) para elegir qué banderas VIP se
-  tocan: ahora se tocan todas de golpe.
+- **Ajustes por bandera**: hoy el interruptor de VIP toca todas las banderas a la vez (fuentes,
+  stickers, TextBomb, Rizz). Se podrían separar en cuatro interruptores.
+- **Más pantallas de ajustes**: solo se ha enganchado `SettingsAdvancedFragment`; si hay otra
+  pestaña de ajustes donde encaje mejor la fila, añadirla.
 - **Compatibilidad de versiones**: cuando cambie la versión, volver a ejecutar
   `tools/analizar_apk.py --comprobar` para ver qué huellas siguen vivas.
 - **Ocultar avisos internos** (valoración, actualización obligatoria): sus métodos suelen ser
