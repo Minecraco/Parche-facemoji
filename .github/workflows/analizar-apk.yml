@@ -27,8 +27,16 @@ jobs:
           pip install gdown androguard
       - name: Descargar la APK del Drive
         run: gdown "https://drive.google.com/uc?id=${APKM_FILE_ID}" -O facemoji.apkm 2>&1 | tail -1
-      - name: Pantallas de ajustes basadas en preferencias
-        run: python tools/buscar_xml_ajustes.py facemoji.apkm > analisis/c1-xml-ajustes.txt 2>&1 || true
+      - name: Manifiesto
+        run: python tools/dump_manifest.py facemoji.apkm > analisis/c2-manifiesto.txt 2>&1 || true
+      - name: Clase base de la pantalla de ajustes
+        run: python tools/analizar_apk.py facemoji.apkm --metodos '^Lcom/baidu/simeji/components/b;' > analisis/c3-base-metodos.txt 2>&1 || true
+      - name: Bytecode de la clase base
+        run: python tools/analizar_apk.py facemoji.apkm --smali '^Lcom/baidu/simeji/components/b;' > analisis/c4-base-smali.txt 2>&1 || true
+      - name: Metodos con VIP en el nombre
+        run: python tools/analizar_apk.py facemoji.apkm --metodos-nombre '^(is|get|set)?Vip|^(is|get|set)?VIP' > analisis/c5-metodos-vip.txt 2>&1 || true
+      - name: Cadenas de suscripcion
+        run: python tools/analizar_apk.py facemoji.apkm --buscar 'isVip|vip_status|vipStatus|is_vip|svip' > analisis/c6-cadenas-vip.txt 2>&1 || true
       - name: Publicar
         if: always()
         run: |
