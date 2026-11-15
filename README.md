@@ -41,7 +41,8 @@ es decir `.apkm`). El resto de versiones se aceptan como *experimental*.
 
 | Parche | Por defecto | Qué hace |
 | --- | --- | --- |
-| **Ajustes de Minecraco** | ✅ Sí | Añade la pantalla **"Ajustes de Minecraco"** (icono propio y entrada en los ajustes avanzados) con interruptores para activar y desactivar los demás parches sin volver a parchear. |
+| **Ajustes Minecraco** | ✅ Sí | Añade la pantalla **"Ajustes Minecraco"** como primera entrada de los ajustes de Facemoji (y con icono propio), con interruptores para activar y desactivar los demás parches sin volver a parchear. |
+| **Marcar la version como Mod** | ✅ Sí | Cambia el nombre de la versión de la app a `3.7.0-Mod` para distinguir la copia parcheada. |
 | **Eliminar anuncios** | ✅ Sí | Apaga las **sugerencias patrocinadas** que la app inserta en la barra de sugerencias del teclado. |
 | **Desbloquear VIP** | ✅ Sí | Marca como gratuitas las fuentes de color, las series de stickers, los TextBomb y las frases del teclado Rizz que la app reserva a la suscripción, y da por hechos los desbloqueos por vídeo. |
 | **Desactivar rastreo** | ❌ No | Neutraliza el envío de eventos de Firebase Analytics, Crashlytics, Facebook y AppsFlyer. |
@@ -57,15 +58,15 @@ te quedes con una app "parcheada" que sigue igual.
 Con el parche **Ajustes de Minecraco** se añade una pantalla propia con tres interruptores. Se
 puede abrir de dos formas:
 
-1. **Icono propio**: en el cajón de aplicaciones aparece **"Ajustes de Minecraco"**, junto al de
-   Facemoji. Es la vía estable: no depende de cómo construya la app su lista de ajustes.
-2. **Desde los ajustes de Facemoji**: una fila "Ajustes de Minecraco" al final de *Ajustes
-   avanzados* (`SettingsAdvancedFragment`, que sí es un `PreferenceFragment`).
+1. **En los ajustes de Facemoji**: la fila **"Ajustes Minecraco"** aparece **la primera de
+   todas**, encima de "Idiomas". También se añade en *Ajustes avanzados*.
+2. **Icono propio**: en el cajón de aplicaciones aparece **"Ajustes Minecraco"**, junto al de
+   Facemoji.
 
-> La pantalla principal de ajustes que se ve en la app (Idiomas, Entrada, Estilo De Emoji,
-> Seguimos, TikTok, Comentarios, Preguntas Frecuentes, Acerca De) **no** usa preferencias: se
-> construye con vistas propias dentro de `SettingsActivity`, así que añadir una fila ahí exige
-> ingeniería inversa de esa lista. Está en el roadmap.
+Detalle técnico: la pantalla de ajustes que se ve en la app la construye `SettingsMainFragment`,
+que en la 3.7.0 vive en la clase ofuscada `Lef/n`. También es un
+`android.preference.PreferenceFragment` (como `SettingsAdvancedFragment`), así que se le añade
+una `Preference` más y se mueve al primer puesto.
 
 La pantalla tiene tres interruptores:
 

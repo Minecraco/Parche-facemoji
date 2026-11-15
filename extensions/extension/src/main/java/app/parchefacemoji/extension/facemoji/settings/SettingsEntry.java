@@ -4,8 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.util.Log;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * Añade la fila "Ajustes de Minecraco" dentro de los ajustes de Facemoji.
@@ -32,8 +37,11 @@ public final class SettingsEntry {
     /**
      * Punto de inyeccion: anade la fila a la pantalla de ajustes recibida.
      *
-     * @param fragmento el `SettingsAdvancedFragment` de Facemoji (se recibe como `Object`
-     *                  para no obligar al parche a conocer su tipo exacto).
+     * Se llama desde los dos fragments de ajustes de Facemoji que usan preferencias: el
+     * principal (`SettingsMainFragment`, el que se ve al abrir Ajustes) y el avanzado.
+     *
+     * @param fragmento el fragment de Facemoji (se recibe como `Object` para no obligar al
+     *                  parche a conocer su tipo exacto).
      */
     public static void agregarEntrada(Object fragmento) {
         if (!(fragmento instanceof PreferenceFragment)) return;
@@ -72,9 +80,43 @@ public final class SettingsEntry {
                 }
             });
 
-            pantalla.addPreference(fila);
+            insertarLaPrimera(pantalla, fila);
         } catch (Throwable error) {
             Log.w(TAG, "No se pudo anadir la entrada de ajustes del parche", error);
+        }
+    }
+
+    /**
+     * Coloca la fila como la primera de la lista.
+     *
+     * `PreferenceGroup` solo ofrece `addPreference`, que anyade al final. Para que aparezca arriba
+     * del todo se anyade primero (asi el grupo la engancha y se registra bien) y despues se mueve
+     * al principio de su lista interna por reflexion. Si algo de eso falla, la fila se queda al
+     * final en vez de perderse.
+     */
+    private static void insertarLaPrimera(PreferenceGroup grupo, Preference fila) {
+        grupo.addPreference(fila);
+
+        try {
+            Field campoLista = PreferenceGroup.class.getDeclaredField("mPreferenceList");
+            campoLista.setAccessible(true);
+
+            Object valor = campoLista.get(grupo);
+            if (!(valor instanceof List)) return;
+
+            @SuppressWarnings("unchecked")
+            List<Preference> lista = (List<Preference>) valor;
+
+            if (lista.remove(fila)) {
+                lista.add(0, fila);
+
+                // Avisar al grupo de que la lista ha cambiado para que se vuelva a pintar.
+                Method avisar = Preference.class.getDeclaredMethod("notifyChanged");
+                avisar.setAccessible(true);
+                avisar.invoke(grupo);
+            }
+        } catch (Throwable error) {
+            Log.w(TAG, "No se pudo poner la entrada la primera; se queda al final", error);
         }
     }
 }
