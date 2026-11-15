@@ -59,36 +59,24 @@ jobs:
       - name: Buscar codigo VIP
         run: python tools/analizar_apk.py facemoji.apkm --vip | tee analisis/03-vip.txt
 
-      - name: Bytecode de AdSuggestionUtils
+      - name: API de los gestores g00 y h00
         run: |
           python tools/analizar_apk.py facemoji.apkm \
-            --smali '^Lcom/baidu/simeji/plutus/adsuggestion/AdSuggestionUtils' \
-            | head -n 1400 | tee analisis/50-smali-adsuggestion.txt || true
+            --metodos '^L(h00|g00)/[^$]*;' \
+            | head -n 700 | tee analisis/60-api-gestores.txt || true
 
-      - name: Bytecode de CoolFontBean
+      - name: Bytecode del gestor VIP h00
         run: |
           python tools/analizar_apk.py facemoji.apkm \
-            --smali '^Lcom/baidu/simeji/coolfont/CoolFontBean;' \
-            | head -n 1200 | tee analisis/51-smali-coolfont.txt || true
+            --smali '^Lh00/a;' \
+            | head -n 1600 | tee analisis/61-smali-h00.txt || true
 
-      - name: Quien usa la clave is_vip_subscriber
-        timeout-minutes: 25
+      - name: Bytecode del gate de sugerencias
         run: |
           python tools/analizar_apk.py facemoji.apkm \
-            --llamadas 'is_vip_subscriber|isVipSubscriber' --llamadas-clases '^Lcom/baidu/simeji/' \
-            | head -n 400 | tee analisis/52-uso-clave-vip.txt || true
-
-      - name: Metodos VIP en qualquer clase
-        run: |
-          python tools/analizar_apk.py facemoji.apkm \
-            --metodos-nombre '(?i)^(is_?vip|get_?vip|is_?premium|is_?subscriber|is_?pro|vip_?status)[A-Za-z_]*$' \
-            | head -n 500 | tee analisis/53-metodos-vip.txt || true
-
-      - name: Metodos de SplashActivity
-        run: |
-          python tools/analizar_apk.py facemoji.apkm \
-            --metodos '^Lcom/baidu/simeji/settings/guide/[^$]*;' \
-            | head -n 400 | tee analisis/54-splash.txt || true
+            --smali '^Lcom/baidu/simeji/plutus/adsuggestion/AdSuggestionUtils;' \
+            | grep -A 30 -E '\\.method (b|c|m|n|o)\\(\\)Z' \
+            | head -n 500 | tee analisis/62-smali-gate.txt || true
 
       - name: Publicar los informes en la rama
         run: |

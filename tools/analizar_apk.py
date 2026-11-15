@@ -453,7 +453,10 @@ def smali(dex_por_nombre: dict[str, bytes], patron: str, limite: int = 1500) -> 
                 print(f"  .method {metodo.get_name()}{metodo.get_descriptor()}")
                 for instruccion in instrucciones:
                     try:
-                        print(f"      {instruccion.get_output().strip()}")
+                        print(
+                            f"      {instruccion.get_name():24}"
+                            f"{instruccion.get_output().strip()}"
+                        )
                     except Exception:
                         continue
                     lineas += 1
