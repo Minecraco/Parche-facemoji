@@ -25,7 +25,7 @@ internal object Ajustes {
  *
  * @return el indice, o `null` si el metodo no tiene ni un solo registro local.
  */
-private fun MethodImplementation?.registroLibre(method: Method): Int? {
+internal fun MethodImplementation?.registroLibre(method: Method): Int? {
     val implementacion = this ?: return null
     val registrosDeParametros =
         method.parameterTypes.size + if (AccessFlags.STATIC.isSet(method.accessFlags)) 0 else 1
