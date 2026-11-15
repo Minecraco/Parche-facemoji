@@ -1,0 +1,85 @@
+name: Analizar APK de Facemoji
+
+# Puente temporal: GitHub Actions si tiene salida a Internet, incluido Google Drive,
+# y el sandbox de desarrollo no. Descarga la APK publica del Drive, ejecuta
+# tools/analizar_apk.py y hace commit de los informes en la rama actual para poder
+# leerlos desde el repositorio. Se elimina cuando ya no haga falta.
+
+on:
+  push:
+    paths:
+      - 'analisis/TRIGGER'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  APKM_FILE_ID: 1jddpsPYRfpOKYaqKvEhuMeYjRHQacOZR
+
+jobs:
+  analizar:
+    name: Analizar la APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install gdown androguard
+
+      - name: Descargar la APK del Drive
+        run: |
+          set +e
+          gdown "https://drive.google.com/uc?id=${APKM_FILE_ID}" -O facemoji.apkm 2>&1 | tail -1
+          if [ -f facemoji.apkm ]; then
+            echo "descarga: correcta ($(stat -c%s facemoji.apkm) bytes)" > analisis/90-descarga.txt
+          else
+            echo "descarga: FALLIDA (el fichero del Drive ya no es publico?)" > analisis/90-descarga.txt
+          fi
+
+      - name: Clases de ajustes
+        if: hashFiles('facemoji.apkm') != ''
+        run: |
+          python tools/analizar_apk.py facemoji.apkm \
+            --clases-regex '(?i)^Lcom/baidu/simeji/[^$]*(setting|about|feedback)[^$]*;' \
+            | head -n 500 | tee analisis/91-clases-ajustes.txt || true
+
+      - name: Metodos de la pantalla de ajustes
+        if: hashFiles('facemoji.apkm') != ''
+        run: |
+          python tools/analizar_apk.py facemoji.apkm \
+            --metodos '^Lcom/baidu/simeji/settings/[^$]*;' \
+            | head -n 700 | tee analisis/92-metodos-ajustes.txt || true
+
+      - name: Bytecode de la pantalla de ajustes
+        if: hashFiles('facemoji.apkm') != ''
+        run: |
+          python tools/analizar_apk.py facemoji.apkm \
+            --smali '^Lcom/baidu/simeji/settings/SettingsAdvancedFragment' \
+            | head -n 1500 | tee analisis/93-smali-ajustes.txt || true
+
+      - name: Quien abre la pantalla de ajustes
+        if: hashFiles('facemoji.apkm') != ''
+        timeout-minutes: 25
+        run: |
+          python tools/analizar_apk.py facemoji.apkm \
+            --llamadas 'SettingsAdvancedFragment' --llamadas-clases '^Lcom/baidu/simeji/' \
+            | head -n 300 | tee analisis/94-llamadas-ajustes.txt || true
+
+      - name: Publicar los informes en la rama
+        if: always()
+        run: |
+          rm -f facemoji.apkm
+          git config user.name "analisis-apk"
+          git config user.email "noreply@example.com"
+          git add analisis
+          git commit -m "chore: informe de analisis de la pantalla de ajustes" || echo "sin cambios"
+          git push
