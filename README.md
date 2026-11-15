@@ -137,7 +137,7 @@ verificador incluido (ver [docs/VERIFICAR_HUELLAS.md](docs/VERIFICAR_HUELLAS.md)
 ## 🩹 Lista de parches publicada
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.2.0](https://github.com/Minecraco/Parche-facemoji/releases/tag/v1.2.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;6 patches total
+> **[v1.3.0](https://github.com/Minecraco/Parche-facemoji/releases/tag/v1.3.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;6 patches total
 <details open>
 <summary>📦 Facemoji AI Emoji Keyboard&nbsp;&nbsp;•&nbsp;&nbsp;6 patches</summary>
 <br>

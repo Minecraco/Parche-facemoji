@@ -1,3 +1,13 @@
+## [1.3.0](https://github.com/Minecraco/Parche-facemoji/compare/v1.2.0...v1.3.0) (2026-11-15)
+
+### ✨ New Features
+
+* la fila Ajustes Minecraco entra en la lista real de la app ([8505ff2](https://github.com/Minecraco/Parche-facemoji/commit/8505ff2481d027c86b01e489037f24e7c2a2ef48))
+
+### 🐛 Bug Fixes
+
+* importar ARSC segun la version de androguard ([e686ee6](https://github.com/Minecraco/Parche-facemoji/commit/e686ee648b8364bab0e2f71743878d528aa465c8))
+
 ## [1.2.0](https://github.com/Minecraco/Parche-facemoji/compare/v1.1.1...v1.2.0) (2026-11-15)
 
 ### ✨ New Features
