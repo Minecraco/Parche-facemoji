@@ -39,12 +39,16 @@ jobs:
         run: |
           pip install gdown
           gdown "https://drive.google.com/uc?id=${APKM_FILE_ID}" -O facemoji.apkm
+          # El .apkm es un contenedor: el patcher trabaja sobre el base.apk de dentro.
+          mkdir -p apkm
+          unzip -o -q facemoji.apkm -d apkm
+          ls -la apkm | head -20
 
       - name: Aplicar los parches
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          APK_A_VERIFICAR: ${{ github.workspace }}/facemoji.apkm
+          APK_A_VERIFICAR: ${{ github.workspace }}/apkm/base.apk
         run: |
           set +e
           ./gradlew buildAndroid verificarParcheo --no-daemon \
@@ -55,7 +59,7 @@ jobs:
       - name: Publicar el resultado
         if: always()
         run: |
-          rm -f facemoji.apkm
+          rm -rf facemoji.apkm apkm
           git config user.name "verificar-apk"
           git config user.email "noreply@example.com"
           git add analisis/95-verificacion.txt
