@@ -41,6 +41,7 @@ es decir `.apkm`). El resto de versiones se aceptan como *experimental*.
 
 | Parche | Por defecto | Qué hace |
 | --- | --- | --- |
+| **Ajustes de Minecraco** | ✅ Sí | Añade una entrada **"Ajustes de Minecraco"** dentro de los ajustes de Facemoji, con interruptores para activar y desactivar los demás parches sin volver a parchear. |
 | **Eliminar anuncios** | ✅ Sí | Apaga las **sugerencias patrocinadas** que la app inserta en la barra de sugerencias del teclado. |
 | **Desbloquear VIP** | ✅ Sí | Marca como gratuitas las fuentes de color, las series de stickers, los TextBomb y las frases del teclado Rizz que la app reserva a la suscripción, y da por hechos los desbloqueos por vídeo. |
 | **Desactivar rastreo** | ❌ No | Neutraliza el envío de eventos de Firebase Analytics, Crashlytics, Facebook y AppsFlyer. |
@@ -50,6 +51,32 @@ Los parches se aplican de forma **opcional y tolerante**: si un rastreador o un 
 tu versión de Facemoji, se ignora en vez de romper el parcheo. Los parches de anuncios y de VIP
 sí fallan de forma explícita si no encuentran **ninguno** de sus puntos de enganche, para que no
 te quedes con una app "parcheada" que sigue igual.
+
+### 🎛️ Ajustes dentro de la app
+
+Con el parche **Ajustes de Minecraco** aparece una fila nueva en los ajustes de Facemoji
+(*Ajustes avanzados*):
+
+```text
+Ajustes de Minecraco
+  Anuncios, VIP y rastreo
+```
+
+Al pulsarla se abre una pantalla propia con tres interruptores:
+
+| Interruptor | Qué hace al apagarlo |
+| --- | --- |
+| Bloquear anuncios | Las sugerencias patrocinadas vuelven a aparecer |
+| Desbloquear VIP | Vuelven los candados y los avisos de suscripción |
+| Desactivar rastreo | La app vuelve a enviar eventos de analítica |
+
+Los cambios se aplican al instante y se guardan en el dispositivo: no hay que volver a
+parchear ni reinstalar. Por dentro, cada gancho inyectado pregunta primero
+`PatchHooks.esVipActivo()` (o `esAnunciosActivo()` / `esRastreoActivo()`) y, si el ajuste está
+apagado, deja ejecutar el código original de la app.
+
+El permiso de ID de publicidad no aparece como interruptor porque se quita en el manifiesto al
+parchear, no en tiempo de ejecución.
 
 ### 🔍 Qué se ha encontrado en la app real (3.7.0)
 
@@ -77,9 +104,15 @@ Verificación automática contra la APK real (`--comprobar`):
 
 ### ⚠️ Estado de verificación y limitaciones
 
-- Las huellas se han comprobado contra la **APK 3.7.0 real** (las 15 + 12 + 8 coinciden), pero
-  **no se ha probado en un dispositivo**. Por eso todas las versiones siguen apareciendo como
-  *experimental* en Morphe Manager.
+- Las huellas se comprueban contra la **APK 3.7.0 real** con `--comprobar`.
+- Además, el workflow *Verificar que el parche se aplica* ejecuta el patcher completo sobre esa
+  misma APK y comprueba el resultado: se aplican los 5 parches, se genera un APK de 55,9 MB, la
+  actividad aparece en el manifiesto y los cuatro ganchos están en su clase
+  (ver [`analisis/96-verificacion-apk.txt`](analisis/96-verificacion-apk.txt)). Eso descarta los
+  fallos de smali y de manifiesto, que son los que rompen el parcheo.
+- **Sigue sin probarse en un dispositivo**, así que no se puede confirmar el comportamiento
+  visual (que la fila salga donde toca, que los interruptores cambien lo que deben). Por eso las
+  versiones siguen apareciendo como *experimental* en Morphe Manager.
 - **La publicidad a pantalla completa (bienvenida y emergentes) no se elimina**: la sirve Pangle
   con las clases renombradas y no hay un punto de enganche estable en 3.7.0. El parche de
   anuncios solo apaga las sugerencias patrocinadas del teclado.
