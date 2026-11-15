@@ -1,0 +1,40 @@
+name: Analizar APK de Facemoji
+
+on:
+  push:
+    paths:
+      - 'analisis/TRIGGER'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  APKM_FILE_ID: 1jddpsPYRfpOKYaqKvEhuMeYjRHQacOZR
+
+jobs:
+  analizar:
+    name: Analizar la APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install gdown androguard
+      - name: Descargar la APK del Drive
+        run: gdown "https://drive.google.com/uc?id=${APKM_FILE_ID}" -O facemoji.apkm 2>&1 | tail -1
+      - name: Pantallas de ajustes basadas en preferencias
+        run: python tools/buscar_xml_ajustes.py facemoji.apkm > analisis/c1-xml-ajustes.txt 2>&1 || true
+      - name: Publicar
+        if: always()
+        run: |
+          rm -f facemoji.apkm
+          git config user.name "analisis-apk"
+          git config user.email "noreply@example.com"
+          git add analisis
+          git commit -m "chore: pantallas de ajustes basadas en preferencias" || echo "sin cambios"
+          git push
