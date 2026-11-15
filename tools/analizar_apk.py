@@ -316,11 +316,16 @@ def metodos_de(dex_por_nombre: dict[str, bytes], patron: str) -> None:
                 continue
             print(f"### {clase_desc}")
             for metodo in clase.get_methods():
-                acceso = metodo.get_access_flags_string()
-                print(
-                    f"    {acceso} {metodo.get_name()}"
-                    f"{metodo.get_descriptor().split(')')[0]}){metodo.get_return_type()}"
-                )
+                try:
+                    descriptor = metodo.get_descriptor()
+                except Exception:
+                    descriptor = "(?)"
+                try:
+                    acceso = metodo.get_access_flags_string() or ""
+                except Exception:
+                    acceso = "?"
+                retorno = descriptor.rsplit(")", 1)[-1]
+                print(f"    {acceso:22} {metodo.get_name()}{descriptor}  -> {retorno}")
             print()
 
 
