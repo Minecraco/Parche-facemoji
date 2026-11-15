@@ -26,24 +26,20 @@ El análisis completo está en [`analisis/`](../analisis). Lo importante:
 - El sistema VIP no está centralizado: cada catálogo lleva su propia bandera `isVip` y esas
   banderas conservan el nombre, que es lo que explota el parche.
 
-## Pendiente: entrada en la lista de ajustes principal
+## Hecho: entrada en la lista de ajustes principal
 
-La pantalla que se ve al abrir *Ajustes* en Facemoji (Idiomas, Entrada, Estilo De Emoji,
-Seguimos, TikTok, Comentarios, Preguntas Frecuentes, Acerca De) **no** es un
-`PreferenceFragment`: sólo tres fragments de la app usan preferencias
-(`SettingsAdvancedFragment`, `SettingsCorrectionFragment`, `SettingsGustureFragment`) y ninguno
-es esa lista. La lista la construye `SettingsActivity` con vistas propias.
+La pantalla que se ve al abrir *Ajustes* (Idiomas, Entrada, Estilo De Emoji, Seguimos, TikTok,
+Comentarios, Preguntas Frecuentes, Acerca De) la construye `SettingsMainFragment`, que en 3.7.0
+es la clase ofuscada `Lef/n`. Se localizó siguiendo `SettingsActivity`, que la instancia con la
+etiqueta `"SettingsMainFragment"`.
 
-Lo que se sabe de ella:
+Resultó ser también un `android.preference.PreferenceFragment` (como `SettingsAdvancedFragment`),
+así que basta con añadir una `Preference` y moverla al primer puesto de la lista interna
+(`mPreferenceList`, por reflexión) para que salga arriba del todo.
 
-- `SettingsActivity` extiende `com/baidu/simeji/components/b`, que tiene un despachador
-  `u0(Bundle, Activity)` que abre las pantallas de destino (por ejemplo `AgreementActivity`).
-- Los fragments de ajustes se gestionan con `FragmentManager` (`WeakReference<FragmentManager>`).
-- Las filas parecen declararse como datos (ids + recursos de texto), no como preferencias.
-
-Para meter una fila habría que reconstruir el modelo de esa lista en jadx y engancharse a
-`getItemCount`/`getItem` de su adaptador, o sustituir el `RecyclerView`. Es factible pero frágil,
-y hoy la pantalla de ajustes del parche ya es accesible por su propio icono.
+Queda anotado para la próxima versión: si R8 cambia el nombre de `Lef/n`, la huella deja de
+coincidir y hay que volver a localizarla con
+`--llamadas 'addPreferencesFromResource'` (sin restringir a `com/baidu/simeji`).
 
 ## Pendiente: publicidad a pantalla completa
 

@@ -21,6 +21,19 @@ private const val SETTINGS_ACTIVITY = "app.parchefacemoji.extension.facemoji.set
  * `android.preference.PreferenceFragment`. Se engancha `onResume()` porque en ese momento la
  * lista de preferencias ya esta creada.
  */
+/**
+ * Pantalla de ajustes principal de Facemoji: la que se ve al abrir *Ajustes* (Idiomas, Entrada,
+ * Estilo De Emoji, ...). Vive en una clase ofuscada, `Lef/n`, pero tambien es un
+ * `android.preference.PreferenceFragment`. Se identifico en la 3.7.0 siguiendo a
+ * `SettingsActivity`, que la instancia con la etiqueta "SettingsMainFragment".
+ */
+internal object SettingsMainOnResumeFingerprint : Fingerprint(
+    definingClass = "Lef/n;",
+    name = "onResume",
+    returnType = "V",
+)
+
+/** Pantalla de ajustes avanzados de Facemoji, en `com/baidu/simeji/settings`. */
 internal object SettingsAdvancedOnResumeFingerprint : Fingerprint(
     definingClass = "Lcom/baidu/simeji/settings/SettingsAdvancedFragment;",
     name = "onResume",
@@ -43,8 +56,8 @@ internal object SettingsAdvancedOnResumeFingerprint : Fingerprint(
  */
 @Suppress("unused")
 val settingsScreenPatch = patch(
-    name = "Ajustes de Minecraco",
-    description = "Anade una pantalla \"Ajustes de Minecraco\" para activar y desactivar los " +
+    name = "Ajustes Minecraco",
+    description = "Anade una pantalla \"Ajustes Minecraco\" para activar y desactivar los " +
             "parches de anuncios, VIP y rastreo sin volver a parchear. Se abre desde los ajustes " +
             "avanzados de Facemoji y tambien con su propio icono en el cajon de aplicaciones.",
     default = true,
@@ -69,7 +82,7 @@ val settingsScreenPatch = patch(
                     // propio en el cajon de aplicaciones. Es la via que no depende de como
                     // construya Facemoji su lista de ajustes, que cambia entre versiones.
                     setAttribute("android:exported", "true")
-                    setAttribute("android:label", "Ajustes de Minecraco")
+                    setAttribute("android:label", "Ajustes Minecraco")
                     setAttribute(
                         "android:theme",
                         "@android:style/Theme.DeviceDefault.Light.NoActionBar",
@@ -86,29 +99,34 @@ val settingsScreenPatch = patch(
             }
         }
 
-        // 2. Anadir la fila a la pantalla de ajustes avanzados.
-        val coincidencias = SettingsAdvancedOnResumeFingerprint.matchAllOrNull().orEmpty()
+        // 2. Anadir la fila a las pantallas de ajustes de la app.
+        val pantallas = linkedMapOf(
+            "principal (SettingsMainFragment)" to SettingsMainOnResumeFingerprint,
+            "avanzados (SettingsAdvancedFragment)" to SettingsAdvancedOnResumeFingerprint,
+        ).mapValues { (_, huella) -> huella.matchAllOrNull().orEmpty() }
 
-        if (coincidencias.isEmpty()) {
+        val total = pantallas.values.sumOf { it.size }
+
+        if (total == 0) {
             throw PatchException(
-                "No se ha encontrado la pantalla de ajustes avanzados de Facemoji en esta " +
-                        "version. Desactiva este parche o abre una incidencia en " +
+                "No se ha encontrado ninguna pantalla de ajustes de Facemoji en esta version. " +
+                        "Desactiva este parche o abre una incidencia en " +
                         "https://github.com/Minecraco/Parche-facemoji/issues indicando la version.",
             )
         }
 
-        coincidencias.forEach { match ->
-            match.method.addInstructions(
-                0,
-                """
-                    invoke-static {p0}, $ENTRY_CLASS->agregarEntrada(Ljava/lang/Object;)V
-                """,
-            )
+        pantallas.forEach { (nombre, coincidencias) ->
+            coincidencias.forEach { match ->
+                match.method.addInstructions(
+                    0,
+                    """
+                        invoke-static {p0}, $ENTRY_CLASS->agregarEntrada(Ljava/lang/Object;)V
+                    """,
+                )
+            }
+            logger.info("Entrada de ajustes anyadida en la pantalla $nombre")
         }
 
-        logger.info(
-            "Entrada de ajustes anyadida en ${coincidencias.size} pantalla(s); " +
-                    "actividad declarada: $SETTINGS_ACTIVITY",
-        )
+        logger.info("Actividad declarada: $SETTINGS_ACTIVITY")
     }
 }
