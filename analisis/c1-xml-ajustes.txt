@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/runner/work/Parche-facemoji/Parche-facemoji/tools/buscar_xml_ajustes.py", line 100, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/runner/work/Parche-facemoji/Parche-facemoji/tools/buscar_xml_ajustes.py", line 71, in main
+    valores = tabla_recursos(apk)
+              ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/Parche-facemoji/Parche-facemoji/tools/buscar_xml_ajustes.py", line 31, in tabla_recursos
+    from androguard.core.resources.arsc import ARSCParser
+ModuleNotFoundError: No module named 'androguard.core.resources.arsc'
