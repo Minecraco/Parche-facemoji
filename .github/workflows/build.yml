@@ -13,7 +13,6 @@ on:
 
 permissions:
   contents: read
-  issues: write
 
 jobs:
   build:
@@ -30,33 +29,11 @@ jobs:
           java-version: '21'
 
       - name: Build patches
-        id: build
-        continue-on-error: true
         env:
           # El plugin app.morphe.patches se descarga desde GitHub Packages.
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -o pipefail
-          ./gradlew buildAndroid --no-daemon 2>&1 | tee build.log
-
-      # TEMPORAL: publica el error de compilacion como issue para poder diagnosticarlo
-      # desde fuera del runner. Se elimina en cuanto la compilacion este verde.
-      - name: Publicar log de error
-        if: steps.build.outcome == 'failure'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-        run: |
-          tail -c 60000 build.log > log-tail.txt
-          gh issue create \
-            --repo "$GITHUB_REPOSITORY" \
-            --title "ci: fallo de compilacion" \
-            --body-file log-tail.txt || true
-
-      - name: Fallar si la compilacion fallo
-        if: steps.build.outcome == 'failure'
-        run: exit 1
+        run: ./gradlew buildAndroid --no-daemon
 
       - name: Upload .mpp
         uses: actions/upload-artifact@v4

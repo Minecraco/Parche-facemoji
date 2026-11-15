@@ -1,5 +1,7 @@
 # 🧩 Parche Facemoji
 
+[![Build patches bundle](https://github.com/Minecraco/Parche-facemoji/actions/workflows/build.yml/badge.svg)](https://github.com/Minecraco/Parche-facemoji/actions/workflows/build.yml)
+
 Parches [Morphe](https://morphe.software) en español para **Facemoji AI Emoji Keyboard**
 (`com.simejikeyboard`), el teclado con emojis, fuentes y temas de Nexileap.
 
