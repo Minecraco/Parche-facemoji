@@ -50,8 +50,7 @@ jobs:
           ./gradlew buildAndroid test --tests 'verificar.AplicarParchesTest' --no-daemon \
             > verificacion.log 2>&1
           echo "codigo de salida: $?" >> verificacion.log
-          grep -E "BUILD|Parches ejecutados|APK parcheado|FAILED|Caused by|Exception|error" \
-            verificacion.log | tail -n 60 > analisis/95-verificacion.txt || true
+          tail -n 400 verificacion.log > analisis/95-verificacion.txt
 
       - name: Publicar el resultado
         if: always()
