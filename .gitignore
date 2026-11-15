@@ -136,3 +136,7 @@ local.properties
 # Python
 __pycache__/
 *.pyc
+
+# APK de trabajo: nunca se sube al repositorio
+*.apkm
+*.xapk

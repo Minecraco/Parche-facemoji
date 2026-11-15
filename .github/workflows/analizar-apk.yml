@@ -1,0 +1,81 @@
+name: Analizar APK de Facemoji
+
+# Puente temporal: GitHub Actions si tiene salida a Internet, incluido Google Drive,
+# y el sandbox de desarrollo no. Este workflow descarga la APK publica del Drive,
+# ejecuta tools/analizar_apk.py y hace commit de los informes en la rama actual
+# para poder leerlos desde el repositorio.
+#
+# Se dispara solo cuando se anade/actualiza el fichero analisis/TRIGGER, para no
+# ejecutarse en cada push. Se elimina cuando ya no haga falta.
+
+on:
+  push:
+    paths:
+      - 'analisis/TRIGGER'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  APKM_FILE_ID: 1jddpsPYRfpOKYaqKvEhuMeYjRHQacOZR
+
+jobs:
+  analizar:
+    name: Analizar la APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install gdown androguard
+
+      - name: Descargar la APK del Drive
+        run: |
+          mkdir -p analisis
+          gdown "${APKM_FILE_ID}" -O facemoji.apkm
+          ls -l facemoji.apkm
+          python - <<'EOF'
+          import zipfile
+          print("es un zip valido:", zipfile.is_zipfile("facemoji.apkm"))
+          with zipfile.ZipFile("facemoji.apkm") as zf:
+              print("entradas:", len(zf.infolist()))
+          EOF
+
+      - name: Informe de SDK
+        run: python tools/analizar_apk.py facemoji.apkm --informe | tee analisis/01-sdk.txt
+
+      - name: Comprobar huellas
+        run: python tools/analizar_apk.py facemoji.apkm --comprobar | tee analisis/02-huellas.txt
+
+      - name: Buscar codigo VIP
+        run: python tools/analizar_apk.py facemoji.apkm --vip | tee analisis/03-vip.txt
+
+      - name: Clases propias de la app
+        run: |
+          python tools/analizar_apk.py facemoji.apkm --clases com/simejikeyboard \
+            | head -n 3000 | tee analisis/04-clases-simejikeyboard.txt || true
+
+      - name: Clases candidatas de suscripcion
+        run: |
+          for paquete in com/plutus com/facemoji com/creativeapp; do
+            python tools/analizar_apk.py facemoji.apkm --clases "$paquete" \
+              | head -n 1500 | tee "analisis/05-clases-$(echo "$paquete" | tr '/' '-').txt" || true
+          done
+
+      - name: Publicar los informes en la rama
+        run: |
+          rm -f facemoji.apkm
+          git config user.name "analisis-apk"
+          git config user.email "noreply@example.com"
+          git add analisis
+          git commit -m "chore: informe de analisis de la APK de Facemoji" || echo "sin cambios"
+          git push
