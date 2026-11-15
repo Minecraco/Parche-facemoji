@@ -60,7 +60,7 @@ jobs:
         if: always()
         run: |
           pip install androguard
-          python tools/verificar_parcheado.py build/verificacion/facemoji-parcheado.apk \
+          python tools/verificar_parcheado.py patches/build/verificacion/facemoji-parcheado.apk \
             | tee analisis/96-verificacion-apk.txt || true
 
       - name: Publicar el resultado

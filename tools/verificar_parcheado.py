@@ -3,7 +3,7 @@
 Se usa despues de `./gradlew verificarParcheo`: mira el manifiesto y el bytecode del APK
 resultante para confirmar que las inyecciones estan donde deben.
 
-Uso: python3 tools/verificar_parcheado.py build/verificacion/facemoji-parcheado.apk
+Uso: python3 tools/verificar_parcheado.py patches/build/verificacion/facemoji-parcheado.apk
 """
 
 from __future__ import annotations
