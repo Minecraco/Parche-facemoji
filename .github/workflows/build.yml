@@ -13,6 +13,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 jobs:
   build:
@@ -34,6 +35,36 @@ jobs:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./gradlew buildAndroid --no-daemon
+
+      # Carga los parches desde el .mpp y genera patches-list.json. Esto valida en CI que
+      # las declaraciones de parche son correctas (nombres, compatibilidad y extensiones),
+      # algo que la simple compilacion no comprueba.
+      - name: Validar carga de los parches
+        id: validar
+        continue-on-error: true
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -o pipefail
+          ./gradlew generatePatchesList --no-daemon 2>&1 | tee validacion.log
+
+      # TEMPORAL: publica el error como issue para poder diagnosticarlo desde fuera.
+      - name: Publicar log de error
+        if: steps.validar.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          tail -c 60000 validacion.log > log-tail.txt
+          gh issue create \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "ci: fallo al cargar los parches" \
+            --body-file log-tail.txt || true
+
+      - name: Fallar si los parches no cargan
+        if: steps.validar.outcome == 'failure'
+        run: exit 1
 
       - name: Upload .mpp
         uses: actions/upload-artifact@v4
