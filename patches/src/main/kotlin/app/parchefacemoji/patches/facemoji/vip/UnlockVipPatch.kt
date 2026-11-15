@@ -24,9 +24,13 @@ private val VIP_FLAGS: Map<String, Fingerprint> = linkedMapOf(
     "Rizz: rompehielos VIP" to RizzIceBreakerIsVipFingerprint,
 )
 
-/** Contenido que se marca como ya desbloqueado. */
-private val VIP_UNLOCKS: Map<String, Fingerprint> = linkedMapOf(
+/** Contenido que se marca como ya desbloqueado (devuelve un boolean primitivo). */
+private val VIP_UNLOCK_BOOLEANS: Map<String, Fingerprint> = linkedMapOf(
     "Fuentes de color: desbloqueada por video o suscripcion" to CoolFontIsVipUnlockedFingerprint,
+)
+
+/** Contenido que se marca como ya desbloqueado (devuelve `java.lang.Boolean`). */
+private val VIP_UNLOCK_OBJECTS: Map<String, Fingerprint> = linkedMapOf(
     "Fuentes de color: desbloqueo guardado" to CoolFontVipUnlockedObjectFingerprint,
 )
 
@@ -65,13 +69,15 @@ val unlockVipPatch = patch(
             fingerprint.forceBoolean(value = false, surface = "vip: $surface")
         }.keys
 
-        val marked = VIP_UNLOCKS.filter { (surface, fingerprint) ->
-            if (fingerprint.returnType == "Ljava/lang/Boolean;") {
-                fingerprint.forceBooleanObject(value = true, surface = "vip: $surface")
-            } else {
-                fingerprint.forceBoolean(value = true, surface = "vip: $surface")
-            }
+        val unlockedBooleans = VIP_UNLOCK_BOOLEANS.filter { (surface, fingerprint) ->
+            fingerprint.forceBoolean(value = true, surface = "vip: $surface")
         }.keys
+
+        val unlockedObjects = VIP_UNLOCK_OBJECTS.filter { (surface, fingerprint) ->
+            fingerprint.forceBooleanObject(value = true, surface = "vip: $surface")
+        }.keys
+
+        val marked = unlockedBooleans + unlockedObjects
 
         if (unlocked.isEmpty() && marked.isEmpty()) {
             throw PatchException(
