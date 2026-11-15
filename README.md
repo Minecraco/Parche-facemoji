@@ -18,7 +18,24 @@ Después:
 2. En Morphe Manager abre *Patcher*, elige Facemoji y selecciona los parches.
 3. Aplica y instala la APK parcheada.
 
+## 📦 Dónde está el `.mpp`
+
+El archivo de parches se puede conseguir de dos formas:
+
+1. **En cada release** (pestaña *Releases*): `patches-<versión>.mpp`, generado por
+   `release.yml` con semantic-release. Las releases se crean al fusionar en `main`
+   commits de tipo `feat:` o `fix:`.
+2. **En cada push** (pestaña *Actions* → workflow **Build patches bundle**): artefacto
+   `parche-facemoji-mpp`, sin necesidad de publicar release. También se puede lanzar a mano
+   con *Run workflow*.
+
+En ambos casos el `.mpp` se aplica en **Morphe Desktop** (*Patch bundle* → seleccionar el
+fichero) o se añade como fuente local en Morphe Manager.
+
 ## 🩹 Parches
+
+Versión objetivo del desarrollo: **Facemoji 3.7.0** (APKMirror la publica como *BUNDLE*,
+es decir `.apkm`). El resto de versiones se aceptan como *experimental*.
 
 | Parche | Por defecto | Qué hace |
 | --- | --- | --- |
@@ -44,8 +61,15 @@ ejecuta el verificador incluido (ver [docs/VERIFICAR_HUELLAS.md](docs/VERIFICAR_
 
 ### 🚧 Pendiente
 
-El desbloqueo de **VIP / Pro** y de los temas y fuentes de pago está en el roadmap:
-necesita analizar el bytecode ofuscado de la app. Detalles en [docs/ROADMAP.md](docs/ROADMAP.md).
+El desbloqueo de **VIP / Pro** y de los temas y fuentes de pago es el siguiente paso y
+necesita la APK real para analizar el bytecode propio de la app (que sí está ofuscado).
+Herramienta lista para cuando la tengas:
+
+```bash
+python3 tools/analizar_apk.py Facemoji.apkm --vip
+```
+
+Detalles y riesgos en [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## 🩹 Lista de parches publicada
 

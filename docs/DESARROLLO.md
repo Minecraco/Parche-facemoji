@@ -16,6 +16,10 @@ Guía para modificar, compilar y publicar los parches de este repositorio.
 
 4. `./gradlew buildAndroid` genera el bundle en `patches/build/libs/patches-*.mpp`.
 
+También puedes compilar sin entorno local: cada push lanza el workflow
+**Build patches bundle** (`.github/workflows/build.yml`), que deja el `.mpp` como artefacto
+descargable en la pestaña *Actions*. Las releases estables las publica `release.yml`.
+
 Alternativa para desarrollo: clona también `morphe-patcher` y `morphe-patches-library`
 junto a este repositorio. `settings.gradle.kts` los detecta como *composite builds* y así
 no hace falta publicar el plugin para probar cambios del patcher.

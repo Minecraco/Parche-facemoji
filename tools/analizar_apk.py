@@ -18,6 +18,9 @@ Ejemplos de uso:
 
     # Lista clases de un paquete (requiere androguard)
     python3 tools/analizar_apk.py Facemoji.apkm --clases com/simejikeyboard
+
+    # Localiza el codigo de suscripcion VIP (para el parche pendiente)
+    python3 tools/analizar_apk.py Facemoji.apkm --vip
 """
 
 from __future__ import annotations
@@ -226,6 +229,53 @@ def listar_clases(dex_por_nombre: dict[str, bytes], prefijo: str) -> None:
                 print(f"{clase_desc}  ({nombre})")
 
 
+# Nombres y claves que suelen aparecer en el codigo de suscripciones / VIP.
+PATRON_VIP = re.compile(
+    r"(?i)(vip|premium|subscri|purchase|billing|\bsku\b|entitle|paywall|is_?pro\b|is_?paid)"
+)
+PATRON_METODOS_VIP = re.compile(r"(?i)(vip|premium|is_?pro\b|is_?paid|subscri|entitle)")
+
+
+def analizar_vip(dex_por_nombre: dict[str, bytes], cadenas: set[str]) -> None:
+    """Busca los puntos de entrada del sistema VIP para poder escribir el parche."""
+    print("=== Cadenas candidatas (claves de prefs, campos JSON, SKUs) ===")
+    coincidencias = sorted(c for c in cadenas if PATRON_VIP.search(c))
+    for cadena in coincidencias[:150]:
+        print(f"  {cadena}")
+    if len(coincidencias) > 150:
+        print(f"  ... y {len(coincidencias) - 150} mas")
+
+    DEX = cargar_androguard()
+    if DEX is None:
+        print(
+            "\nPara listar tambien clases y metodos candidatos instala androguard:\n"
+            "  pip install androguard\n"
+            "y vuelve a ejecutar con --vip."
+        )
+        return
+
+    print("\n=== Metodos candidatos (clase -> metodo) ===")
+    encontrados = 0
+    for blob in dex_por_nombre.values():
+        try:
+            dex = DEX(blob)
+        except Exception:
+            continue
+        for clase in dex.get_classes():
+            clase_desc = clase.get_name()
+            for metodo in clase.get_methods():
+                nombre_metodo = metodo.get_name()
+                if not PATRON_METODOS_VIP.search(nombre_metodo):
+                    continue
+                print(f"  {clase_desc}->{nombre_metodo}")
+                encontrados += 1
+                if encontrados >= 200:
+                    print("  ... (limite de 200 alcanzado)")
+                    return
+    if encontrados == 0:
+        print("  Ninguno: el codigo esta ofuscado y habra que buscar por cadenas o por flujo.")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Comprueba las huellas de los parches de Parche Facemoji sobre una APK.",
@@ -235,6 +285,11 @@ def main() -> None:
     parser.add_argument("--comprobar", action="store_true", help="Comprueba las huellas de los parches")
     parser.add_argument("--buscar", metavar="REGEX", help="Busca cadenas del DEX (VIP, premium, ...)")
     parser.add_argument("--clases", metavar="PAQUETE", help="Lista clases que contengan el paquete")
+    parser.add_argument(
+        "--vip",
+        action="store_true",
+        help="Busca el codigo de suscripcion VIP (cadenas y metodos candidatos)",
+    )
     args = parser.parse_args()
 
     if not args.apk.is_file():
@@ -247,7 +302,7 @@ def main() -> None:
 
     print(f"{len(dex_por_nombre)} ficheros DEX, {len(cadenas)} cadenas distintas\n")
 
-    if not any((args.informe, args.comprobar, args.buscar, args.clases)):
+    if not any((args.informe, args.comprobar, args.buscar, args.clases, args.vip)):
         args.informe = True
 
     if args.informe:
@@ -258,6 +313,8 @@ def main() -> None:
         buscar(cadenas, args.buscar)
     if args.clases:
         listar_clases(dex_por_nombre, args.clases)
+    if args.vip:
+        analizar_vip(dex_por_nombre, cadenas)
 
 
 if __name__ == "__main__":

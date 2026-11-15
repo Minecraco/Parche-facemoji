@@ -30,8 +30,13 @@ Riesgos que hay que confirmar antes de prometer nada:
 ### Qué hace falta para hacerlo bien
 
 - Una **APK/APKM original** de la versión a soportar (no un mod) para obtener las huellas
-  reales. Con ella se puede usar `tools/analizar_apk.py --buscar "vip|premium|subscribe"`
-  para localizar las claves y luego confirmarlas con jadx.
+  reales. Con ella:
+
+  ```bash
+  python3 tools/analizar_apk.py Facemoji.apkm --vip
+  ```
+
+  localiza las cadenas y los métodos candidatos; después se confirman con jadx.
 - Probar en dispositivo: abrir temas premium, teclado y pantalla de cuenta.
 - Decidir el alcance: ¿solo ocultar los avisos de "hazte VIP" o desbloquear los temas?
 

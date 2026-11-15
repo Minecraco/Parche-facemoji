@@ -1,0 +1,44 @@
+name: Build patches bundle
+
+# Compila el .mpp en cada push y lo deja como artefacto descargable en la pestana
+# Actions del repositorio. Asi se puede probar el bundle sin esperar a una release.
+# Las releases estables las sigue generando release.yml (semantic-release) en main.
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build .mpp
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Build patches
+        env:
+          # El plugin app.morphe.patches se descarga desde GitHub Packages.
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./gradlew buildAndroid --no-daemon
+
+      - name: Upload .mpp
+        uses: actions/upload-artifact@v4
+        with:
+          name: parche-facemoji-mpp
+          path: patches/build/libs/patches-*.mpp
+          if-no-files-found: error
+          retention-days: 30

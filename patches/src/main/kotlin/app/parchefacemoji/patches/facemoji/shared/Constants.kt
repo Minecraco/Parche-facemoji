@@ -19,16 +19,22 @@ object Constants {
         // Color de fondo del icono de la app en Morphe Manager.
         appIconColor = 0xE0245E,
         targets = listOf(
-            // Las huellas (fingerprints) de estos parches se basan en las APIs publicas de
-            // los SDK de terceros que la app incluye, por lo que no dependen de la version
-            // concreta de Facemoji. Aun asi, ninguna version esta verificada al 100% todavia:
-            // se marcan como experimentales hasta confirmarlas con una APK real.
-            // Ver docs/VERIFICAR_HUELLAS.md
+            // Version objetivo del desarrollo (APKMirror la publica como BUNDLE, ".apkm").
+            AppTarget(
+                version = "3.7.0",
+                // Todavia no verificada en dispositivo: las huellas se basan en las APIs
+                // publicas de los SDK, no en una APK comprobada. Al confirmarla, quitar
+                // isExperimental. Ver docs/VERIFICAR_HUELLAS.md
+                isExperimental = true,
+                description = "Version objetivo de desarrollo. Sin verificar en dispositivo.",
+            ),
+            // Las huellas no dependen de la version concreta de Facemoji, asi que se deja
+            // abierta cualquier otra version de forma experimental.
             AppTarget(
                 version = null,
                 isExperimental = true,
-                description = "Cualquier version de Facemoji. Sin verificar todavia: " +
-                        "abre una incidencia si el parche falla."
+                description = "Cualquier otra version de Facemoji. Experimental: " +
+                        "abre una incidencia si el parche falla.",
             ),
         ),
     )

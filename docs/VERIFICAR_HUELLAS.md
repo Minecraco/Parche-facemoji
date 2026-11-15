@@ -81,7 +81,22 @@ D ParcheFacemoji: Anuncio bloqueado: AdMob: banner
 Si el log aparece, la interceptación funciona y solo queda comprobar visualmente que el
 anuncio ya no se muestra. Si no aparece ninguna línea, la huella no coincide en tu versión.
 
-## 5. Reportar
+## 5. Localizar el código VIP (para el parche pendiente)
+
+```bash
+pip install androguard     # recomendado, lista también métodos
+python3 tools/analizar_apk.py Facemoji.apkm --vip
+```
+
+Imprime dos listas:
+
+- **Cadenas** que parecen claves de preferencias, campos JSON o SKUs
+  (`is_vip`, `vip_status`, `premium_theme`…).
+- **Métodos** cuyo nombre contiene `vip`/`premium`/`isPro`/`subscri` (si hay androguard).
+
+Ese listado es lo que hace falta para escribir el parche de desbloqueo VIP.
+
+## 6. Reportar
 
 Abre una incidencia en
 <https://github.com/Minecraco/Parche-facemoji/issues> con:
