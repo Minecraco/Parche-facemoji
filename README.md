@@ -41,7 +41,7 @@ es decir `.apkm`). El resto de versiones se aceptan como *experimental*.
 
 | Parche | Por defecto | Qué hace |
 | --- | --- | --- |
-| **Ajustes de Minecraco** | ✅ Sí | Añade una entrada **"Ajustes de Minecraco"** dentro de los ajustes de Facemoji, con interruptores para activar y desactivar los demás parches sin volver a parchear. |
+| **Ajustes de Minecraco** | ✅ Sí | Añade la pantalla **"Ajustes de Minecraco"** (icono propio y entrada en los ajustes avanzados) con interruptores para activar y desactivar los demás parches sin volver a parchear. |
 | **Eliminar anuncios** | ✅ Sí | Apaga las **sugerencias patrocinadas** que la app inserta en la barra de sugerencias del teclado. |
 | **Desbloquear VIP** | ✅ Sí | Marca como gratuitas las fuentes de color, las series de stickers, los TextBomb y las frases del teclado Rizz que la app reserva a la suscripción, y da por hechos los desbloqueos por vídeo. |
 | **Desactivar rastreo** | ❌ No | Neutraliza el envío de eventos de Firebase Analytics, Crashlytics, Facebook y AppsFlyer. |
@@ -54,15 +54,20 @@ te quedes con una app "parcheada" que sigue igual.
 
 ### 🎛️ Ajustes dentro de la app
 
-Con el parche **Ajustes de Minecraco** aparece una fila nueva en los ajustes de Facemoji
-(*Ajustes avanzados*):
+Con el parche **Ajustes de Minecraco** se añade una pantalla propia con tres interruptores. Se
+puede abrir de dos formas:
 
-```text
-Ajustes de Minecraco
-  Anuncios, VIP y rastreo
-```
+1. **Icono propio**: en el cajón de aplicaciones aparece **"Ajustes de Minecraco"**, junto al de
+   Facemoji. Es la vía estable: no depende de cómo construya la app su lista de ajustes.
+2. **Desde los ajustes de Facemoji**: una fila "Ajustes de Minecraco" al final de *Ajustes
+   avanzados* (`SettingsAdvancedFragment`, que sí es un `PreferenceFragment`).
 
-Al pulsarla se abre una pantalla propia con tres interruptores:
+> La pantalla principal de ajustes que se ve en la app (Idiomas, Entrada, Estilo De Emoji,
+> Seguimos, TikTok, Comentarios, Preguntas Frecuentes, Acerca De) **no** usa preferencias: se
+> construye con vistas propias dentro de `SettingsActivity`, así que añadir una fila ahí exige
+> ingeniería inversa de esa lista. Está en el roadmap.
+
+La pantalla tiene tres interruptores:
 
 | Interruptor | Qué hace al apagarlo |
 | --- | --- |

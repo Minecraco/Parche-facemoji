@@ -54,9 +54,11 @@ def comprobar_manifiesto(apk: Path) -> bool:
         print(f"manifiesto: no se pudo leer ({error})")
         return False
 
-    correcto = "parchefacemoji.extension.facemoji.settings.SettingsActivity" in texto
-    print(f"manifiesto: {'OK, actividad declarada' if correcto else 'FALTA la actividad'}")
-    return correcto
+    declarada = "parchefacemoji.extension.facemoji.settings.SettingsActivity" in texto
+    lanzable = "android.intent.category.LAUNCHER" in texto
+    print(f"manifiesto: {'OK, actividad declarada' if declarada else 'FALTA la actividad'}")
+    print(f"icono propio: {'OK, categoria LAUNCHER presente' if lanzable else 'FALTA LAUNCHER'}")
+    return declarada and lanzable
 
 
 def comprobar_smali(apk: Path) -> bool:
