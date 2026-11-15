@@ -44,29 +44,21 @@ jobs:
             echo "descarga: FALLIDA" > analisis/90-descarga.txt
           fi
 
-      - name: Quien usa las preferencias del framework
+      - name: Quien abre las pantallas de la lista de ajustes
         if: hashFiles('facemoji.apkm') != ''
         timeout-minutes: 30
         run: |
           python tools/analizar_apk.py facemoji.apkm \
-            --llamadas 'Landroid/preference/' \
-            | head -n 600 | tee analisis/a6-usuarios-preferencias.txt || true
-
-      - name: Pantallas principales de la app
-        if: hashFiles('facemoji.apkm') != ''
-        run: |
-          python tools/analizar_apk.py facemoji.apkm \
-            --clases-regex '(?i)^Lcom/baidu/simeji/[^$]*(home|mainactivity|mainfragment|tab)[^$]*;' \
-            | head -n 400 | tee analisis/a7-clases-principales.txt || true
-
-      - name: Quien usa los fragments de ajustes
-        if: hashFiles('facemoji.apkm') != ''
-        timeout-minutes: 30
-        run: |
-          python tools/analizar_apk.py facemoji.apkm \
-            --llamadas 'SettingsGustureFragment|SettingsCorrectionFragment' \
+            --llamadas 'FaqActivity|FeedbackActivity|AgreementActivity|EmojiStyleSettingActivity' \
             --llamadas-clases '^Lcom/baidu/simeji/' \
-            | head -n 300 | tee analisis/a8-uso-fragments.txt || true
+            | head -n 400 | tee analisis/a9-quien-abre-lista.txt || true
+
+      - name: Clases con Setting en el nombre, en todo el DEX
+        if: hashFiles('facemoji.apkm') != ''
+        run: |
+          python tools/analizar_apk.py facemoji.apkm \
+            --clases-regex '(?i)^L[^;]*[Ss]etting[^;]*;' \
+            | head -n 500 | tee analisis/a10-clases-setting-global.txt || true
 
       - name: Publicar los informes en la rama
         if: always()
