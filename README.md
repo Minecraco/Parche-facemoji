@@ -95,53 +95,26 @@ verificador incluido (ver [docs/VERIFICAR_HUELLAS.md](docs/VERIFICAR_HUELLAS.md)
 ## 🩹 Lista de parches publicada
 
 <!-- PATCHES_START EXPANDED -->
+> **[v1.0.0](https://github.com/Minecraco/Parche-facemoji/releases/tag/v1.0.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;4 patches total
+<details open>
+<summary>📦 Facemoji AI Emoji Keyboard&nbsp;&nbsp;•&nbsp;&nbsp;4 patches</summary>
+<br>
 
-<!-- No modifiques esta sección a mano. La lista se genera cuando release.yml publica una versión.
-     Si prefieres que la lista aparezca plegada, quita la palabra 'EXPANDED' del comentario de arriba.
-     Si prefieres mantenerla a mano, elimina los comentarios PATCHES_START y PATCHES_END. -->
+**Package name:** `com.simejikeyboard`
 
-#### La lista de parches aparecerá aquí automáticamente tras la primera publicación.
+**🎯 Supported versions:**
 
-&nbsp;
+| 🧪&nbsp;3.7.0 |
+| :---: |
+| Version objetivo. Huellas verificadas sobre la APK real; falta la prueba en dispositivo. | Cualquier otra version de Facemoji. Experimental: los objetivos pueden haber cambiado. Abre una incidencia si el parche falla. |
 
-## 🛠️ Compilar en local
+| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
+|----------|----------------|-----------|
+| [Desactivar rastreo](#desactivar-rastreo) | Deja de enviar los eventos de Firebase Analytics, Crashlytics, Facebook y AppsFlyer. Desactiva tambien el envio de registros de fallos. |  |
+| [Desbloquear VIP](#desbloquear-vip) | Marca como gratuitos las fuentes de color, las series de stickers, los TextBomb y las frases del teclado Rizz que la app reserva a la suscripcion, y da por hechos los desbloqueos por video. |  |
+| [Eliminar anuncios](#eliminar-anuncios) | Apaga las sugerencias patrocinadas que la app inserta en el teclado. En la version 3.7.0 la publicidad a pantalla completa la sirve Pangle con las clases renombradas, por lo que ese formato no se puede bloquear de forma estable. |  |
+| [Quitar permiso de ID de publicidad](#quitar-permiso-de-id-de-publicidad) | Elimina el permiso AD_ID del manifiesto para que la app no pueda leer el identificador de publicidad del dispositivo. |  |
 
-Requisitos: JDK 21 y un token de GitHub con permiso `read:packages`
-(el proyecto descarga el plugin de Morphe desde GitHub Packages).
+</details>
 
-```bash
-export GITHUB_ACTOR=tu-usuario
-export GITHUB_TOKEN=ghp_xxx      # token con read:packages
-
-./gradlew buildAndroid
-```
-
-El bundle queda en `patches/build/libs/patches-*.mpp` y se aplica con
-[Morphe Desktop](https://github.com/MorpheApp/morphe-desktop) o Morphe Manager
-(añadiéndolo como fuente local).
-
-Más detalles en [docs/DESARROLLO.md](docs/DESARROLLO.md).
-
-## 📁 Estructura
-
-```text
-patches/src/main/kotlin/app/parchefacemoji/patches/facemoji/
-├── ads/         parche de anuncios + huellas de las sugerencias patrocinadas
-├── vip/         parche de desbloqueo VIP + huellas de las banderas de pago
-├── tracking/    parche de analítica + huellas de los rastreadores
-├── privacy/     cambios de manifiesto (permiso AD_ID)
-└── shared/      compatibilidad de la app y utilidades de hooking
-
-extensions/extension/   código Java que se inyecta en la app (PatchHooks)
-tools/analizar_apk.py   verificador de huellas y analizador de la APK real
-analisis/               informes del análisis de la 3.7.0 (huellas, clases, bytecode)
-docs/                   documentación de desarrollo y verificación
-```
-
-## 📜 Licencia
-
-GPLv3. Ver [LICENSE](LICENSE) y [NOTICE](NOTICE).
-Este proyecto no está afiliado a Nexileap ni al proyecto Morphe.
-
-<!-- El comentario de cierre está aquí a propósito para que la primera publicación limpie el README. -->
 <!-- PATCHES_END -->
