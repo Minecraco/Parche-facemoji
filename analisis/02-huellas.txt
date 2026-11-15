@@ -1,0 +1,29 @@
+4 ficheros DEX, 164880 cadenas distintas
+
+Modo de comprobacion: exacto (androguard)
+
+=== Eliminar anuncios ===
+  [ ] Lcom/google/android/gms/ads/BaseAdView;->loadAd
+  [ ] Lcom/google/android/gms/ads/AdLoader;->loadAd
+  [ ] Lcom/google/android/gms/ads/interstitial/InterstitialAd;->show
+  [ ] Lcom/google/android/gms/ads/appopen/AppOpenAd;->show
+  [ ] Lcom/google/android/gms/ads/rewarded/RewardedAd;->show
+  [ ] Lcom/google/android/gms/ads/rewardedinterstitial/RewardedInterstitialAd;->show
+  [ ] Lcom/facebook/ads/AdView;->loadAd
+  [ ] Lcom/facebook/ads/InterstitialAd;->show
+  [ ] Lcom/unity3d/ads/UnityAds;->show
+  [ ] Lcom/applovin/adview/AppLovinAdView;->loadNextAd
+  => Ninguna huella coincide: este parche fallaria o no haria nada.
+
+=== Desactivar rastreo ===
+  [x] Lcom/google/firebase/analytics/FirebaseAnalytics;->logEvent
+  [x] Lcom/google/firebase/analytics/FirebaseAnalytics;->setUserProperty
+  [x] Lcom/google/firebase/analytics/FirebaseAnalytics;->setUserId
+  [x] Lcom/google/firebase/analytics/FirebaseAnalytics;->setDefaultEventParameters
+  [x] Lcom/google/firebase/crashlytics/FirebaseCrashlytics;->log
+  [x] Lcom/google/firebase/crashlytics/FirebaseCrashlytics;->setUserId
+  [x] Lcom/google/firebase/crashlytics/FirebaseCrashlytics;->recordException
+  [ ] Lcom/facebook/appevents/AppEventsLogger;->logEvent
+  [x] Lcom/appsflyer/AppsFlyerLib;->logEvent
+  => 8/9 huellas disponibles.
+
