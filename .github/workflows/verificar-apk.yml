@@ -47,7 +47,7 @@ jobs:
           APK_A_VERIFICAR: ${{ github.workspace }}/facemoji.apkm
         run: |
           set +e
-          ./gradlew buildAndroid :patches:test --tests 'verificar.AplicarParchesTest' --no-daemon \
+          ./gradlew buildAndroid verificarParcheo --no-daemon \
             > verificacion.log 2>&1
           echo "codigo de salida: $?" >> verificacion.log
           tail -n 400 verificacion.log > analisis/95-verificacion.txt

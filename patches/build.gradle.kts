@@ -19,10 +19,6 @@ val patchListGeneratorClasspath = configurations.create("patchListGeneratorClass
 dependencies {
     compileOnly(libs.gson)
     patchListGeneratorClasspath(libs.gson)
-
-    // Solo para la prueba que aplica el bundle a una APK real (ver
-    // patches/src/test/kotlin/verificar/AplicarParchesTest.kt). No entra en el .mpp.
-    testImplementation(kotlin("test"))
 }
 
 tasks {
@@ -33,6 +29,18 @@ tasks {
 
         classpath = sourceSets["main"].runtimeClasspath + patchListGeneratorClasspath
         mainClass.set("util.PatchListGeneratorKt")
+    }
+
+    // Aplica el bundle a una APK real para comprobar que el parcheo no rompe nada:
+    //   APK_A_VERIFICAR=/ruta/facemoji.apkm ./gradlew verificarParcheo
+    register<JavaExec>("verificarParcheo") {
+        group = "verification"
+        description = "Aplica los parches a la APK indicada en APK_A_VERIFICAR"
+
+        dependsOn("buildAndroid")
+
+        classpath = sourceSets["main"].runtimeClasspath
+        mainClass.set("verificar.VerificarParcheoKt")
     }
 
     // Used by gradle-semantic-release-plugin.
