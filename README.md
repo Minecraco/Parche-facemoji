@@ -59,14 +59,17 @@ Con el parche **Ajustes de Minecraco** se añade una pantalla propia con tres in
 puede abrir de dos formas:
 
 1. **En los ajustes de Facemoji**: la fila **"Ajustes Minecraco"** aparece **la primera de
-   todas**, encima de "Idiomas". También se añade en *Ajustes avanzados*.
+   todas**, encima de "Idiomas".
 2. **Icono propio**: en el cajón de aplicaciones aparece **"Ajustes Minecraco"**, junto al de
    Facemoji.
+3. **En Ajustes avanzados**: la misma fila, como tercera vía por si las otras dos fallan.
 
-Detalle técnico: la pantalla de ajustes que se ve en la app la construye `SettingsMainFragment`,
-que en la 3.7.0 vive en la clase ofuscada `Lef/n`. También es un
-`android.preference.PreferenceFragment` (como `SettingsAdvancedFragment`), así que se le añade
-una `Preference` más y se mueve al primer puesto.
+Detalle técnico: la pantalla de ajustes que se ve en la app **no usa preferencias**. La construye
+`SettingFragment`, que en la 3.7.0 es la clase ofuscada `com.baidu.simeji.skins.v0`: monta un
+`RecyclerView` cuyas filas son objetos del modelo `La9/b` (`String título, Drawable icono, int
+tipo, String clave`) guardados en un `ArrayList`. El parche mete una fila más en el primer puesto
+de esa lista y engancha el manejador de toques (`V2`) para reconocerla por identidad y abrir la
+pantalla del parche.
 
 La pantalla tiene tres interruptores:
 

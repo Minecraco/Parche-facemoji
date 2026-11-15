@@ -28,18 +28,27 @@ El análisis completo está en [`analisis/`](../analisis). Lo importante:
 
 ## Hecho: entrada en la lista de ajustes principal
 
-La pantalla que se ve al abrir *Ajustes* (Idiomas, Entrada, Estilo De Emoji, Seguimos, TikTok,
-Comentarios, Preguntas Frecuentes, Acerca De) la construye `SettingsMainFragment`, que en 3.7.0
-es la clase ofuscada `Lef/n`. Se localizó siguiendo `SettingsActivity`, que la instancia con la
-etiqueta `"SettingsMainFragment"`.
+La pantalla de ajustes que se ve en la app **no es una pantalla de preferencias**. Se descartaron,
+una por una, las seis pantallas basadas en `PreferenceScreen` de la APK (`prefs_advanced`,
+`prefs_correction`, `prefs_gesture`, `prefs_screen_gesture`, `prefs_about_debug`,
+`prefs_about_release`): son los ajustes del **teclado**, no esta pantalla.
 
-Resultó ser también un `android.preference.PreferenceFragment` (como `SettingsAdvancedFragment`),
-así que basta con añadir una `Preference` y moverla al primer puesto de la lista interna
-(`mPreferenceList`, por reflexión) para que salga arriba del todo.
+La pantalla real la construye `SettingFragment`, que en la 3.7.0 es `com.baidu.simeji.skins.v0`
+(se localizó porque es el único código que menciona `FaqActivity`). Monta un `RecyclerView` con
+filas del modelo `La9/b`, guardadas en el campo `menuItems`, y despacha los toques con un
+`packed-switch` sobre el tipo de la fila.
 
-Queda anotado para la próxima versión: si R8 cambia el nombre de `Lef/n`, la huella deja de
-coincidir y hay que volver a localizarla con
-`--llamadas 'addPreferencesFromResource'` (sin restringir a `com/baidu/simeji`).
+Cómo se resuelve:
+
+1. Se inyecta una llamada al final del método que llena la lista (`u2`, el `onViewCreated`).
+2. Esa llamada busca la lista por su contenido (el primer campo `List` cuyos elementos responden a
+   `getKey()`), crea una fila más con el mismo modelo y la pone en el índice 0.
+3. Se engancha el manejador de toques (`V2`) para que, si la fila pulsada es la nuestra
+   (comparada por identidad), abra la pantalla del parche.
+
+Aprendizaje para la próxima vez: las búsquedas de huellas hay que hacerlas **sin restringir el
+paquete** a `com/baidu/simeji`. Las dos pistas que resolvieron esto (`Lef/n` y
+`skins/v0`) estaban en clases ofuscadas fuera de los paquetes "lógicos".
 
 ## Pendiente: publicidad a pantalla completa
 
