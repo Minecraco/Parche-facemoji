@@ -1,0 +1,42 @@
+name: Analizar APK de Facemoji
+
+on:
+  push:
+    paths:
+      - 'analisis/TRIGGER'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  APKM_FILE_ID: 1jddpsPYRfpOKYaqKvEhuMeYjRHQacOZR
+
+jobs:
+  analizar:
+    name: Analizar la APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install gdown androguard
+      - name: Descargar la APK del Drive
+        run: gdown "https://drive.google.com/uc?id=${APKM_FILE_ID}" -O facemoji.apkm 2>&1 | tail -1
+      - name: Quien llama a V2 G2 E2
+        run: python tools/analizar_apk.py facemoji.apkm --llamadas '->(V2|G2|E2)\(' --llamadas-clases '^Lcom/baidu/simeji/skins/' > analisis/d6-quien-llama-clics.txt 2>&1 || true
+      - name: Adaptador de la lista
+        run: python tools/analizar_apk.py facemoji.apkm --smali '^Lcom/baidu/simeji/skins/u0;$' > analisis/d7-adaptador.txt 2>&1 || true
+      - name: Publicar
+        if: always()
+        run: |
+          rm -f facemoji.apkm
+          git config user.name "analisis-apk"
+          git config user.email "noreply@example.com"
+          git add analisis
+          git commit -m "chore: quien maneja el toque de las filas" || echo "sin cambios"
+          git push
