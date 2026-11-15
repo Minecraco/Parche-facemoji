@@ -56,12 +56,19 @@ jobs:
           echo "codigo de salida: $?" >> verificacion.log
           tail -n 400 verificacion.log > analisis/95-verificacion.txt
 
+      - name: Comprobar el APK parcheado
+        if: always()
+        run: |
+          pip install androguard
+          python tools/verificar_parcheado.py build/verificacion/facemoji-parcheado.apk \
+            | tee analisis/96-verificacion-apk.txt || true
+
       - name: Publicar el resultado
         if: always()
         run: |
           rm -rf facemoji.apkm apkm
           git config user.name "verificar-apk"
           git config user.email "noreply@example.com"
-          git add analisis/95-verificacion.txt
+          git add analisis/95-verificacion.txt analisis/96-verificacion-apk.txt
           git commit -m "chore: resultado de la verificacion del parcheo" || echo "sin cambios"
           git push
