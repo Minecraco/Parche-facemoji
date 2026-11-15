@@ -31,9 +31,14 @@ COMPROBACIONES = [
         "Rastreo: el gancho pregunta por el ajuste antes de neutralizar el envio",
     ),
     (
+        r"^Lef/n;",
+        "agregarEntrada",
+        "Ajustes: la pantalla principal (SettingsMainFragment) anyade la fila del parche",
+    ),
+    (
         r"^Lcom/baidu/simeji/settings/SettingsAdvancedFragment;",
         "agregarEntrada",
-        "Ajustes: la pantalla de Facemoji anyade la fila del parche",
+        "Ajustes: la pantalla avanzada anyade la fila del parche",
     ),
 ]
 
@@ -56,9 +61,13 @@ def comprobar_manifiesto(apk: Path) -> bool:
 
     declarada = "parchefacemoji.extension.facemoji.settings.SettingsActivity" in texto
     lanzable = "android.intent.category.LAUNCHER" in texto
+    con_sufijo = "-Mod" in texto
+
     print(f"manifiesto: {'OK, actividad declarada' if declarada else 'FALTA la actividad'}")
     print(f"icono propio: {'OK, categoria LAUNCHER presente' if lanzable else 'FALTA LAUNCHER'}")
-    return declarada and lanzable
+    print(f"version marcada: {'OK, aparece el sufijo -Mod' if con_sufijo else 'FALTA el sufijo -Mod'}")
+
+    return declarada and lanzable and con_sufijo
 
 
 def comprobar_smali(apk: Path) -> bool:
