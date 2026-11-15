@@ -60,7 +60,8 @@ jobs:
             git config user.email "noreply@example.com"
             git add build-failure.log
             git commit -m "ci: registro del fallo de compilacion" || true
-            git push origin HEAD || true
+            # En un evento push el checkout deja HEAD suelto: hay que decir a que rama va.
+            git push origin "HEAD:refs/heads/${GITHUB_REF_NAME}" || true
           fi
 
       - name: Upload .mpp
