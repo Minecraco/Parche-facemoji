@@ -329,6 +329,61 @@ def metodos_de(dex_por_nombre: dict[str, bytes], patron: str) -> None:
             print()
 
 
+def llamadas(
+    dex_por_nombre: dict[str, bytes],
+    patron: str,
+    patron_clases: str = r"^L(com/baidu/simeji|com/gbu|sdk)/",
+    limite: int = 300,
+) -> None:
+    """Busca los metodos que llaman a algo que coincida con una expresion regular.
+
+    Se usa para encontrar desde el codigo de la app los puntos de entrada de un SDK
+    cuya API esta ofuscada (por ejemplo Pangle).
+    """
+    DEX = cargar_androguard()
+    if DEX is None:
+        sys.exit("Esta opcion necesita androguard: pip install androguard")
+
+    regex = re.compile(patron)
+    regex_clases = re.compile(patron_clases)
+    vistos: set[tuple[str, str]] = set()
+
+    for blob in dex_por_nombre.values():
+        try:
+            dex = DEX(blob)
+        except Exception:
+            continue
+        for clase in dex.get_classes():
+            clase_desc = clase.get_name()
+            if not regex_clases.search(clase_desc):
+                continue
+            for metodo in clase.get_methods():
+                try:
+                    if metodo.get_code() is None:
+                        continue
+                    instrucciones = metodo.get_instructions()
+                except Exception:
+                    continue
+                for instruccion in instrucciones:
+                    try:
+                        salida = instruccion.get_output()
+                    except Exception:
+                        continue
+                    if not regex.search(salida):
+                        continue
+                    clave = (clase_desc, metodo.get_name())
+                    if clave in vistos:
+                        continue
+                    vistos.add(clave)
+                    print(f"{clase_desc}->{metodo.get_name()}{metodo.get_descriptor()}")
+                    print(f"      {salida.strip()}")
+                    if len(vistos) >= limite:
+                        print(f"\n{len(vistos)} metodos (limite alcanzado)")
+                        return
+
+    print(f"\n{len(vistos)} metodos coinciden con {patron}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Comprueba las huellas de los parches de Parche Facemoji sobre una APK.",
@@ -349,6 +404,17 @@ def main() -> None:
         help="Imprime los metodos de las clases cuyo descriptor coincide (requiere androguard)",
     )
     parser.add_argument(
+        "--llamadas",
+        metavar="REGEX",
+        help="Busca metodos que llamen a algo que coincida (requiere androguard)",
+    )
+    parser.add_argument(
+        "--llamadas-clases",
+        metavar="REGEX",
+        default=r"^L(com/baidu/simeji|com/gbu|sdk)/",
+        help="Restringe la busqueda de llamadas a estas clases",
+    )
+    parser.add_argument(
         "--vip",
         action="store_true",
         help="Busca el codigo de suscripcion VIP (cadenas y metodos candidatos)",
@@ -367,7 +433,7 @@ def main() -> None:
 
     if not any(
         (args.informe, args.comprobar, args.buscar, args.clases, args.clases_regex,
-         args.metodos, args.vip)
+         args.metodos, args.llamadas, args.vip)
     ):
         args.informe = True
 
@@ -383,6 +449,8 @@ def main() -> None:
         clases_regex(dex_por_nombre, args.clases_regex)
     if args.metodos:
         metodos_de(dex_por_nombre, args.metodos)
+    if args.llamadas:
+        llamadas(dex_por_nombre, args.llamadas, args.llamadas_clases)
     if args.vip:
         analizar_vip(dex_por_nombre, cadenas)
 
