@@ -26,9 +26,34 @@ def abrir_apk(path: Path) -> zipfile.ZipFile:
     return zf
 
 
+def cargar(nombres: tuple[str, ...], atributo: str):
+    """Importa `atributo` del primer modulo de androguard que lo tenga."""
+    import importlib
+
+    for nombre in nombres:
+        try:
+            modulo = importlib.import_module(nombre)
+        except Exception:
+            continue
+        if hasattr(modulo, atributo):
+            return getattr(modulo, atributo)
+    return None
+
+
 def tabla_recursos(apk: zipfile.ZipFile) -> dict[int, str]:
     """id de recurso -> valor por defecto (solo cadenas)."""
-    from androguard.core.resources.arsc import ARSCParser
+    ARSCParser = cargar(
+        (
+            "androguard.core.resources.arsc",
+            "androguard.core.resources",
+            "androguard.core.axml",
+            "androguard.core.bytecodes.axml",
+        ),
+        "ARSCParser",
+    )
+    if ARSCParser is None:
+        print("(sin ARSCParser: se muestran las claves sin resolver los titulos)\n")
+        return {}
 
     valores: dict[int, str] = {}
     for nombre in apk.namelist():
@@ -36,10 +61,18 @@ def tabla_recursos(apk: zipfile.ZipFile) -> dict[int, str]:
             continue
         arsc = ARSCParser(apk.read(nombre))
         for paquete in arsc.get_packages_names():
-            for idioma, config in arsc.get_configurations(paquete).items():
+            try:
+                configuraciones = arsc.get_configurations(paquete)
+            except Exception:
+                configuraciones = {}
+            for idioma in configuraciones:
                 if idioma not in ("DEFAULT", "es"):
                     continue
-                for entrada in arsc.get_res_config(paquete, idioma).values():
+                try:
+                    entradas = arsc.get_res_config(paquete, idioma).values()
+                except Exception:
+                    continue
+                for entrada in entradas:
                     for res_id, valor in entrada.items():
                         if isinstance(valor, str) and res_id not in valores:
                             valores[res_id] = valor
@@ -65,7 +98,16 @@ def main() -> int:
     parser.add_argument("--min-filas", type=int, default=3)
     args = parser.parse_args()
 
-    from androguard.core.axml import AXMLPrinter
+    AXMLPrinter = cargar(
+        (
+            "androguard.core.axml",
+            "androguard.core.bytecodes.axml",
+        ),
+        "AXMLPrinter",
+    )
+    if AXMLPrinter is None:
+        print("No se ha podido cargar androguard (AXMLPrinter).")
+        return 1
 
     apk = abrir_apk(args.apk)
     valores = tabla_recursos(apk)
