@@ -18,6 +18,8 @@ val patchListGeneratorClasspath = configurations.create("patchListGeneratorClass
 
 dependencies {
     compileOnly(libs.gson)
+    // El patcher trae coroutines en tiempo de ejecucion, pero no las expone al compilar.
+    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
     patchListGeneratorClasspath(libs.gson)
 }
 
