@@ -1,10 +1,10 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (release.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "patches": [
     {
       "name": "Ajustes de Minecraco",
-      "description": "Anade una entrada \"Ajustes de Minecraco\" dentro de los ajustes de Facemoji para activar y desactivar los parches de anuncios, VIP y rastreo sin volver a parchear.",
+      "description": "Anade una pantalla \"Ajustes de Minecraco\" para activar y desactivar los parches de anuncios, VIP y rastreo sin volver a parchear. Se abre desde los ajustes avanzados de Facemoji y tambien con su propio icono en el cajon de aplicaciones.",
       "default": true,
       "category": "Ajustes",
       "compatiblePackages": [
@@ -20,9 +20,9 @@
             {
               "version": "3.7.0",
               "versionCodes": null,
-              "isExperimental": true,
+              "isExperimental": false,
               "minSdk": null,
-              "description": "Version objetivo. Huellas verificadas sobre la APK real; falta la prueba en dispositivo."
+              "description": "Version objetivo. Huellas y parcheo verificados en CI; el aspecto final no se ha revisado en dispositivo."
             },
             {
               "version": null,
@@ -54,9 +54,9 @@
             {
               "version": "3.7.0",
               "versionCodes": null,
-              "isExperimental": true,
+              "isExperimental": false,
               "minSdk": null,
-              "description": "Version objetivo. Huellas verificadas sobre la APK real; falta la prueba en dispositivo."
+              "description": "Version objetivo. Huellas y parcheo verificados en CI; el aspecto final no se ha revisado en dispositivo."
             },
             {
               "version": null,
@@ -88,9 +88,9 @@
             {
               "version": "3.7.0",
               "versionCodes": null,
-              "isExperimental": true,
+              "isExperimental": false,
               "minSdk": null,
-              "description": "Version objetivo. Huellas verificadas sobre la APK real; falta la prueba en dispositivo."
+              "description": "Version objetivo. Huellas y parcheo verificados en CI; el aspecto final no se ha revisado en dispositivo."
             },
             {
               "version": null,
@@ -122,9 +122,9 @@
             {
               "version": "3.7.0",
               "versionCodes": null,
-              "isExperimental": true,
+              "isExperimental": false,
               "minSdk": null,
-              "description": "Version objetivo. Huellas verificadas sobre la APK real; falta la prueba en dispositivo."
+              "description": "Version objetivo. Huellas y parcheo verificados en CI; el aspecto final no se ha revisado en dispositivo."
             },
             {
               "version": null,
@@ -156,9 +156,9 @@
             {
               "version": "3.7.0",
               "versionCodes": null,
-              "isExperimental": true,
+              "isExperimental": false,
               "minSdk": null,
-              "description": "Version objetivo. Huellas verificadas sobre la APK real; falta la prueba en dispositivo."
+              "description": "Version objetivo. Huellas y parcheo verificados en CI; el aspecto final no se ha revisado en dispositivo."
             },
             {
               "version": null,

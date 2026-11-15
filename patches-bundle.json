@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-11-15T16:28:48",
-  "description": "## [1.1.0](https://github.com/Minecraco/Parche-facemoji/compare/v1.0.0...v1.1.0) (2026-11-15)\n\n### ✨ New Features\n\n* pantalla de ajustes de Minecraco con interruptores de anuncios, VIP y rastreo ([2b2ac4d](https://github.com/Minecraco/Parche-facemoji/commit/2b2ac4dc5eb7f56a154a9ee6eefcdff554cd5a90))",
-  "download_url": "https://github.com/Minecraco/Parche-facemoji/releases/download/v1.1.0/patches-1.1.0.mpp",
+  "created_at": "2026-11-15T16:57:14",
+  "description": "## [1.1.1](https://github.com/Minecraco/Parche-facemoji/compare/v1.1.0...v1.1.1) (2026-11-15)\n\n### 🐛 Bug Fixes\n\n* acceso a los ajustes del parche por icono propio y 3.7.0 marcada como compatible ([74b1b34](https://github.com/Minecraco/Parche-facemoji/commit/74b1b34927f8b77d8d1e557d1f3483d519cf40eb))\n* marcar la 3.7.0 como compatible (ya esta verificada) y buscar la pantalla de ajustes real ([39fbfb2](https://github.com/Minecraco/Parche-facemoji/commit/39fbfb26fcff85634d0469c60f83eb32eb9c8f49))",
+  "download_url": "https://github.com/Minecraco/Parche-facemoji/releases/download/v1.1.1/patches-1.1.1.mpp",
   "signature_download_url": "",
-  "version": "1.1.0"
+  "version": "1.1.1"
 }

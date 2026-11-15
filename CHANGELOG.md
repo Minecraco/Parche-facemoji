@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/Minecraco/Parche-facemoji/compare/v1.1.0...v1.1.1) (2026-11-15)
+
+### 🐛 Bug Fixes
+
+* acceso a los ajustes del parche por icono propio y 3.7.0 marcada como compatible ([74b1b34](https://github.com/Minecraco/Parche-facemoji/commit/74b1b34927f8b77d8d1e557d1f3483d519cf40eb))
+* marcar la 3.7.0 como compatible (ya esta verificada) y buscar la pantalla de ajustes real ([39fbfb2](https://github.com/Minecraco/Parche-facemoji/commit/39fbfb26fcff85634d0469c60f83eb32eb9c8f49))
+
 ## [1.1.0](https://github.com/Minecraco/Parche-facemoji/compare/v1.0.0...v1.1.0) (2026-11-15)
 
 ### ✨ New Features

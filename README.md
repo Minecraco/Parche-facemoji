@@ -133,7 +133,7 @@ verificador incluido (ver [docs/VERIFICAR_HUELLAS.md](docs/VERIFICAR_HUELLAS.md)
 ## 🩹 Lista de parches publicada
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.1.0](https://github.com/Minecraco/Parche-facemoji/releases/tag/v1.1.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;5 patches total
+> **[v1.1.1](https://github.com/Minecraco/Parche-facemoji/releases/tag/v1.1.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;5 patches total
 <details open>
 <summary>📦 Facemoji AI Emoji Keyboard&nbsp;&nbsp;•&nbsp;&nbsp;5 patches</summary>
 <br>
@@ -142,13 +142,13 @@ verificador incluido (ver [docs/VERIFICAR_HUELLAS.md](docs/VERIFICAR_HUELLAS.md)
 
 **🎯 Supported versions:**
 
-| 🧪&nbsp;3.7.0 |
+| 3.7.0 |
 | :---: |
-| Version objetivo. Huellas verificadas sobre la APK real; falta la prueba en dispositivo. | Cualquier otra version de Facemoji. Experimental: los objetivos pueden haber cambiado. Abre una incidencia si el parche falla. |
+| Version objetivo. Huellas y parcheo verificados en CI; el aspecto final no se ha revisado en dispositivo. | Cualquier otra version de Facemoji. Experimental: los objetivos pueden haber cambiado. Abre una incidencia si el parche falla. |
 
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|
-| [Ajustes de Minecraco](#ajustes-de-minecraco) | Anade una entrada "Ajustes de Minecraco" dentro de los ajustes de Facemoji para activar y desactivar los parches de anuncios, VIP y rastreo sin volver a parchear. |  |
+| [Ajustes de Minecraco](#ajustes-de-minecraco) | Anade una pantalla "Ajustes de Minecraco" para activar y desactivar los parches de anuncios, VIP y rastreo sin volver a parchear. Se abre desde los ajustes avanzados de Facemoji y tambien con su propio icono en el cajon de aplicaciones. |  |
 | [Desactivar rastreo](#desactivar-rastreo) | Deja de enviar los eventos de Firebase Analytics, Crashlytics, Facebook y AppsFlyer. Desactiva tambien el envio de registros de fallos. |  |
 | [Desbloquear VIP](#desbloquear-vip) | Marca como gratuitos las fuentes de color, las series de stickers, los TextBomb y las frases del teclado Rizz que la app reserva a la suscripcion, y da por hechos los desbloqueos por video. Se puede activar o desactivar en los ajustes de Minecraco. |  |
 | [Eliminar anuncios](#eliminar-anuncios) | Apaga las sugerencias patrocinadas que la app inserta en el teclado. Se puede activar o desactivar en los ajustes de Minecraco sin volver a parchear. En la version 3.7.0 la publicidad a pantalla completa la sirve Pangle con las clases renombradas, por lo que ese formato no se puede bloquear de forma estable. |  |
