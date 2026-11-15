@@ -2,7 +2,7 @@ package app.parchefacemoji.patches.facemoji.privacy
 
 import app.morphe.patcher.patch.patch
 import app.morphe.patcher.patch.resourceXml
-import app.parchefacemoji.patches.facemoji.shared.COMPATIBILITY_FACEMOJI
+import app.parchefacemoji.patches.facemoji.shared.Constants.COMPATIBILITY_FACEMOJI
 
 /** Permiso que da acceso al identificador de publicidad del dispositivo (Android 13+). */
 private const val AD_ID_PERMISSION = "com.google.android.gms.permission.AD_ID"

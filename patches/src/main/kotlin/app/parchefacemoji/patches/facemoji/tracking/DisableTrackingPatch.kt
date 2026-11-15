@@ -2,7 +2,7 @@ package app.parchefacemoji.patches.facemoji.tracking
 
 import app.morphe.patcher.Fingerprint
 import app.morphe.patcher.patch.patch
-import app.parchefacemoji.patches.facemoji.shared.COMPATIBILITY_FACEMOJI
+import app.parchefacemoji.patches.facemoji.shared.Constants.COMPATIBILITY_FACEMOJI
 import app.parchefacemoji.patches.facemoji.shared.blockVoidMethods
 import java.util.logging.Logger
 
