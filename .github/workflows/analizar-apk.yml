@@ -35,35 +35,26 @@ jobs:
           set +e
           gdown "https://drive.google.com/uc?id=${APKM_FILE_ID}" -O facemoji.apkm 2>&1 | tail -1
 
-      - name: Clases internas de SettingsActivity
+      - name: Clases del paquete ef (ajustes)
         if: hashFiles('facemoji.apkm') != ''
         run: |
           python tools/analizar_apk.py facemoji.apkm \
-            --clases-regex '^Lcom/baidu/simeji/settings/SettingsActivity[^;]*;' \
-            | head -n 300 | tee analisis/b1-settingsactivity-clases.txt || true
+            --clases-regex '^Lef/[^;]*;' \
+            | head -n 300 | tee analisis/b5-clases-ef.txt || true
 
-      - name: Metodos de SettingsActivity
+      - name: Metodos de SettingsMainFragment
         if: hashFiles('facemoji.apkm') != ''
         run: |
           python tools/analizar_apk.py facemoji.apkm \
-            --metodos '^Lcom/baidu/simeji/settings/SettingsActivity[^;]*;' \
-            | head -n 500 | tee analisis/b2-settingsactivity-metodos.txt || true
+            --metodos '^Lef/(l|n);' \
+            | head -n 400 | tee analisis/b6-metodos-mainfragment.txt || true
 
-      - name: Quien construye la lista (RecyclerView)
-        if: hashFiles('facemoji.apkm') != ''
-        timeout-minutes: 30
-        run: |
-          python tools/analizar_apk.py facemoji.apkm \
-            --llamadas 'setLayoutManager|setAdapter' \
-            --llamadas-clases '^Lcom/baidu/simeji/settings/' \
-            | head -n 300 | tee analisis/b3-lista-recycler.txt || true
-
-      - name: Bytecode de SettingsActivity
+      - name: Bytecode de SettingsMainFragment
         if: hashFiles('facemoji.apkm') != ''
         run: |
           python tools/analizar_apk.py facemoji.apkm \
-            --smali '^Lcom/baidu/simeji/settings/SettingsActivity' \
-            | head -n 2500 | tee analisis/b4-smali-settingsactivity.txt || true
+            --smali '^Lef/n;' \
+            | head -n 2000 | tee analisis/b7-smali-mainfragment.txt || true
 
       - name: Publicar los informes en la rama
         if: always()

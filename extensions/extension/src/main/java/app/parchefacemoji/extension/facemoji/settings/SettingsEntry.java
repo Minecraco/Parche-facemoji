@@ -53,7 +53,7 @@ public final class SettingsEntry {
 
             Preference fila = new Preference(contexto);
             fila.setKey(CLAVE);
-            fila.setTitle("Ajustes de Minecraco");
+            fila.setTitle("Ajustes Minecraco");
             fila.setSummary("Anuncios, VIP y rastreo");
             fila.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override

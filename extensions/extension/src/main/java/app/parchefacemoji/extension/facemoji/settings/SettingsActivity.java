@@ -33,7 +33,7 @@ public class SettingsActivity extends Activity {
         desplazamiento.addView(raiz);
 
         TextView titulo = new TextView(this);
-        titulo.setText("Ajustes de Minecraco");
+        titulo.setText("Ajustes Minecraco");
         titulo.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
         titulo.setGravity(Gravity.START);
         titulo.setPadding(0, 0, 0, dp(4));

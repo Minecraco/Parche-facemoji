@@ -43,8 +43,8 @@ internal object SettingsAdvancedOnResumeFingerprint : Fingerprint(
  */
 @Suppress("unused")
 val settingsScreenPatch = patch(
-    name = "Ajustes de Minecraco",
-    description = "Anade una pantalla \"Ajustes de Minecraco\" para activar y desactivar los " +
+    name = "Ajustes Minecraco",
+    description = "Anade una pantalla \"Ajustes Minecraco\" para activar y desactivar los " +
             "parches de anuncios, VIP y rastreo sin volver a parchear. Se abre desde los ajustes " +
             "avanzados de Facemoji y tambien con su propio icono en el cajon de aplicaciones.",
     default = true,
@@ -69,7 +69,7 @@ val settingsScreenPatch = patch(
                     // propio en el cajon de aplicaciones. Es la via que no depende de como
                     // construya Facemoji su lista de ajustes, que cambia entre versiones.
                     setAttribute("android:exported", "true")
-                    setAttribute("android:label", "Ajustes de Minecraco")
+                    setAttribute("android:label", "Ajustes Minecraco")
                     setAttribute(
                         "android:theme",
                         "@android:style/Theme.DeviceDefault.Light.NoActionBar",
