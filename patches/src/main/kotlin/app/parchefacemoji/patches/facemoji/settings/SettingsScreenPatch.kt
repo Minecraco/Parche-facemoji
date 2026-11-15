@@ -28,7 +28,7 @@ internal object SettingsAdvancedOnResumeFingerprint : Fingerprint(
 )
 
 /**
- * Anade una entrada "Ajustes de Minecraco" en los ajustes de la app.
+ * Anade la pantalla "Ajustes de Minecraco" y una entrada en los ajustes de la app.
  *
  * Los ajustes de Facemoji son un `android.preference.PreferenceFragment` clasico (se comprobo
  * en la 3.7.0: `SettingsAdvancedFragment` llama a `addPreferencesFromResource`). Por eso basta
@@ -44,8 +44,9 @@ internal object SettingsAdvancedOnResumeFingerprint : Fingerprint(
 @Suppress("unused")
 val settingsScreenPatch = patch(
     name = "Ajustes de Minecraco",
-    description = "Anade una entrada \"Ajustes de Minecraco\" dentro de los ajustes de Facemoji " +
-            "para activar y desactivar los parches de anuncios, VIP y rastreo sin volver a parchear.",
+    description = "Anade una pantalla \"Ajustes de Minecraco\" para activar y desactivar los " +
+            "parches de anuncios, VIP y rastreo sin volver a parchear. Se abre desde los ajustes " +
+            "avanzados de Facemoji y tambien con su propio icono en el cajon de aplicaciones.",
     default = true,
 ) {
     compatibleWith(COMPATIBILITY_FACEMOJI)
@@ -64,12 +65,23 @@ val settingsScreenPatch = patch(
 
                 aplicacion.appendChild("activity") {
                     setAttribute("android:name", SETTINGS_ACTIVITY)
-                    setAttribute("android:exported", "false")
+                    // exportada + MAIN/LAUNCHER: asi la pantalla se abre tambien como icono
+                    // propio en el cajon de aplicaciones. Es la via que no depende de como
+                    // construya Facemoji su lista de ajustes, que cambia entre versiones.
+                    setAttribute("android:exported", "true")
                     setAttribute("android:label", "Ajustes de Minecraco")
                     setAttribute(
                         "android:theme",
                         "@android:style/Theme.DeviceDefault.Light.NoActionBar",
                     )
+                    appendChild("intent-filter") {
+                        appendChild("action") {
+                            setAttribute("android:name", "android.intent.action.MAIN")
+                        }
+                        appendChild("category") {
+                            setAttribute("android:name", "android.intent.category.LAUNCHER")
+                        }
+                    }
                 }
             }
         }
