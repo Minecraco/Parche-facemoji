@@ -276,6 +276,54 @@ def analizar_vip(dex_por_nombre: dict[str, bytes], cadenas: set[str]) -> None:
         print("  Ninguno: el codigo esta ofuscado y habra que buscar por cadenas o por flujo.")
 
 
+def clases_regex(dex_por_nombre: dict[str, bytes], patron: str) -> None:
+    """Lista las clases cuyo descriptor coincide con una expresion regular."""
+    DEX = cargar_androguard()
+    if DEX is None:
+        sys.exit("Esta opcion necesita androguard: pip install androguard")
+
+    regex = re.compile(patron)
+    vistas: set[str] = set()
+    for nombre, blob in dex_por_nombre.items():
+        try:
+            dex = DEX(blob)
+        except Exception:
+            continue
+        for clase in dex.get_classes():
+            clase_desc = clase.get_name()
+            if clase_desc in vistas or not regex.search(clase_desc):
+                continue
+            vistas.add(clase_desc)
+            print(f"{clase_desc}  ({nombre})")
+    print(f"\n{len(vistas)} clases coinciden con {patron}")
+
+
+def metodos_de(dex_por_nombre: dict[str, bytes], patron: str) -> None:
+    """Imprime los metodos de las clases cuyo descriptor coincide con una expresion regular."""
+    DEX = cargar_androguard()
+    if DEX is None:
+        sys.exit("Esta opcion necesita androguard: pip install androguard")
+
+    regex = re.compile(patron)
+    for blob in dex_por_nombre.values():
+        try:
+            dex = DEX(blob)
+        except Exception:
+            continue
+        for clase in dex.get_classes():
+            clase_desc = clase.get_name()
+            if not regex.search(clase_desc):
+                continue
+            print(f"### {clase_desc}")
+            for metodo in clase.get_methods():
+                acceso = metodo.get_access_flags_string()
+                print(
+                    f"    {acceso} {metodo.get_name()}"
+                    f"{metodo.get_descriptor().split(')')[0]}){metodo.get_return_type()}"
+                )
+            print()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Comprueba las huellas de los parches de Parche Facemoji sobre una APK.",
@@ -285,6 +333,16 @@ def main() -> None:
     parser.add_argument("--comprobar", action="store_true", help="Comprueba las huellas de los parches")
     parser.add_argument("--buscar", metavar="REGEX", help="Busca cadenas del DEX (VIP, premium, ...)")
     parser.add_argument("--clases", metavar="PAQUETE", help="Lista clases que contengan el paquete")
+    parser.add_argument(
+        "--clases-regex",
+        metavar="REGEX",
+        help="Lista clases cuyo descriptor coincide con la expresion regular",
+    )
+    parser.add_argument(
+        "--metodos",
+        metavar="REGEX",
+        help="Imprime los metodos de las clases cuyo descriptor coincide (requiere androguard)",
+    )
     parser.add_argument(
         "--vip",
         action="store_true",
@@ -302,7 +360,10 @@ def main() -> None:
 
     print(f"{len(dex_por_nombre)} ficheros DEX, {len(cadenas)} cadenas distintas\n")
 
-    if not any((args.informe, args.comprobar, args.buscar, args.clases, args.vip)):
+    if not any(
+        (args.informe, args.comprobar, args.buscar, args.clases, args.clases_regex,
+         args.metodos, args.vip)
+    ):
         args.informe = True
 
     if args.informe:
@@ -313,6 +374,10 @@ def main() -> None:
         buscar(cadenas, args.buscar)
     if args.clases:
         listar_clases(dex_por_nombre, args.clases)
+    if args.clases_regex:
+        clases_regex(dex_por_nombre, args.clases_regex)
+    if args.metodos:
+        metodos_de(dex_por_nombre, args.metodos)
     if args.vip:
         analizar_vip(dex_por_nombre, cadenas)
 

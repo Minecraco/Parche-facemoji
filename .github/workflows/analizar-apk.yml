@@ -59,17 +59,47 @@ jobs:
       - name: Buscar codigo VIP
         run: python tools/analizar_apk.py facemoji.apkm --vip | tee analisis/03-vip.txt
 
-      - name: Clases propias de la app
+      - name: Clases de AdMob presentes
         run: |
-          python tools/analizar_apk.py facemoji.apkm --clases com/simejikeyboard \
-            | head -n 3000 | tee analisis/04-clases-simejikeyboard.txt || true
+          python tools/analizar_apk.py facemoji.apkm \
+            --clases-regex '^Lcom/google/android/gms/ads/' \
+            | head -n 2000 | tee analisis/10-admob-clases.txt || true
 
-      - name: Clases candidatas de suscripcion
+      - name: API publica de Pangle
         run: |
-          for paquete in com/plutus com/facemoji com/creativeapp; do
-            python tools/analizar_apk.py facemoji.apkm --clases "$paquete" \
-              | head -n 1500 | tee "analisis/05-clases-$(echo "$paquete" | tr '/' '-').txt" || true
-          done
+          python tools/analizar_apk.py facemoji.apkm \
+            --clases-regex '^Lcom/bytedance/sdk/openadsdk/TT[^$]*;' \
+            | head -n 2000 | tee analisis/11-pangle-clases.txt || true
+
+      - name: Clases de anuncios propias de la app
+        run: |
+          python tools/analizar_apk.py facemoji.apkm \
+            --clases-regex '^L(com/baidu/simeji|com/gbu|sdk)/[^$]*(Ads|Ad|Advert|Pangle|Csj|Splash)' \
+            | head -n 2000 | tee analisis/12-ads-app.txt || true
+
+      - name: Metodos de los anuncios propios
+        run: |
+          python tools/analizar_apk.py facemoji.apkm \
+            --metodos '^L(com/baidu/simeji|com/gbu|sdk)/[^$]*(Ads|Advert|Pangle|Splash)[^$]*;' \
+            | head -n 3000 | tee analisis/13-ads-metodos.txt || true
+
+      - name: Clases con VIP en el nombre
+        run: |
+          python tools/analizar_apk.py facemoji.apkm \
+            --clases-regex '^L(com/baidu/simeji|com/gbu|sdk)/[^$]*(Vip|VIP|Premium|Subscri)[^$]*;' \
+            | head -n 2000 | tee analisis/20-vip-clases.txt || true
+
+      - name: Metodos de los beans VIP
+        run: |
+          python tools/analizar_apk.py facemoji.apkm \
+            --metodos '^L(com/baidu/simeji/coolfont/CoolFontBean|com/baidu/simeji/sticker/series/SeriesStickerItem|com/baidu/simeji/skins/content/itemdata/StickerItem|sdk/SDKType|com/baidu/simeji/inputview/convenient/textbomb/TextBombBean);' \
+            | head -n 1500 | tee analisis/21-vip-metodos.txt || true
+
+      - name: Metodos del SDK de tipo de dispositivo
+        run: |
+          python tools/analizar_apk.py facemoji.apkm \
+            --metodos '^Lsdk/[^$]*;' \
+            | head -n 1500 | tee analisis/22-sdk-metodos.txt || true
 
       - name: Publicar los informes en la rama
         run: |
