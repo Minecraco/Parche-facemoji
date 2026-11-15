@@ -22,19 +22,21 @@ object Constants {
             // Version objetivo del desarrollo (APKMirror la publica como BUNDLE, ".apkm").
             AppTarget(
                 version = "3.7.0",
-                // Todavia no verificada en dispositivo: las huellas se basan en las APIs
-                // publicas de los SDK, no en una APK comprobada. Al confirmarla, quitar
-                // isExperimental. Ver docs/VERIFICAR_HUELLAS.md
+                // Huellas comprobadas contra la APK 3.7.0 real (2 arquitecturas, APKMirror):
+                // todos los objetivos de los parches existen en esa compilacion. Falta la
+                // prueba en un dispositivo, por eso sigue siendo experimental.
+                // Ver docs/VERIFICAR_HUELLAS.md y analisis/*.txt
                 isExperimental = true,
-                description = "Version objetivo de desarrollo. Sin verificar en dispositivo.",
+                description = "Version objetivo. Huellas verificadas sobre la APK real; " +
+                        "falta la prueba en dispositivo.",
             ),
-            // Las huellas no dependen de la version concreta de Facemoji, asi que se deja
-            // abierta cualquier otra version de forma experimental.
+            // En 3.7.0 los metodos objetivo tienen nombre propio (beans y gestores), pero
+            // R8 puede cambiarlos en una version futura: se deja abierta como experimental.
             AppTarget(
                 version = null,
                 isExperimental = true,
-                description = "Cualquier otra version de Facemoji. Experimental: " +
-                        "abre una incidencia si el parche falla.",
+                description = "Cualquier otra version de Facemoji. Experimental: los objetivos " +
+                        "pueden haber cambiado. Abre una incidencia si el parche falla.",
             ),
         ),
     )

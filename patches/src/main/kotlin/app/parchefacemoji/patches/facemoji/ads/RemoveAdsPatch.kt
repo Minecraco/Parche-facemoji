@@ -4,42 +4,44 @@ import app.morphe.patcher.Fingerprint
 import app.morphe.patcher.patch.PatchException
 import app.morphe.patcher.patch.patch
 import app.parchefacemoji.patches.facemoji.shared.Constants.COMPATIBILITY_FACEMOJI
-import app.parchefacemoji.patches.facemoji.shared.blockVoidMethods
+import app.parchefacemoji.patches.facemoji.shared.forceBoolean
 import java.util.logging.Logger
 
 private val logger = Logger.getLogger("ParcheFacemoji")
 
 /**
- * Superficie publicitaria -> huella que la neutraliza.
- *
- * El orden es solo informativo (se usa para el mensaje de log).
+ * Superficie publicitaria -> huella que la apaga (se fuerza a `false`).
  */
-private val AD_SURFACES: Map<String, Fingerprint> = linkedMapOf(
-    "AdMob: banner" to AdMobBannerFingerprint,
-    "AdMob: nativo" to AdMobNativeFingerprint,
-    "AdMob: intersticial" to AdMobInterstitialFingerprint,
-    "AdMob: app open" to AdMobAppOpenFingerprint,
-    "AdMob: recompensado" to AdMobRewardedFingerprint,
-    "AdMob: recompensado intersticial" to AdMobRewardedInterstitialFingerprint,
-    "Facebook: banner" to FacebookBannerFingerprint,
-    "Facebook: intersticial" to FacebookInterstitialFingerprint,
-    "Unity Ads" to UnityAdsFingerprint,
-    "AppLovin: banner" to AppLovinBannerFingerprint,
+private val AD_SWITCHES: Map<String, Fingerprint> = linkedMapOf(
+    "Peticion de sugerencias" to AdSuggestionMasterGateFingerprint,
+    "Sugerencias de comercio" to AdSuggestionCommerceGateFingerprint,
+    "Interruptor de sugerencias" to AdSuggestionSwitchEnableFingerprint,
+    "Interruptor de comercio" to AdSuggestionEcommerceEnableFingerprint,
+    "Configuracion de estilo" to AdSuggestionGpConfigEnableFingerprint,
 )
 
 /**
- * Bloquea los anuncios interceptando la API publica de cada red publicitaria.
+ * Apaga las sugerencias patrocinadas que Facemoji muestra dentro del teclado.
  *
- * Cada anuncio se neutraliza en el momento en el que la app pide cargarlo o mostrarlo:
- * el metodo del SDK termina inmediatamente con `return-void`, por lo que el SDK nunca
- * llega a descargar ni a pintar el anuncio. La app no recibe el callback de error ni de
- * exito, asi que no muestra ningun dialogo: simplemente se queda sin anuncio.
+ * El teclado ofrece, entre las palabras sugeridas, enlaces patrocinados a apps y tiendas.
+ * Todas esas sugerencias pasan por `AdSuggestionUtils`: sus dos metodos de decision
+ * (`b()` y `c()`) devuelven `true` cuando hay que pedirlas, y se alimentan de tres
+ * configuraciones remotas que se consultan con `getEnable()`.
+ *
+ * El parche fuerza esos cinco puntos a `false`. Al no pedirse nunca, la app no descarga la
+ * lista de sugerencias ni pinta la fila de anuncios; el resto del teclado (prediccion,
+ * correccion, emojis) no se ve afectado porque usa otro motor distinto.
+ *
+ * Limitacion conocida: la publicidad de pantalla completa (bienvenida y emergentes) la sirve
+ * Pangle/CSJ con las clases renombradas por R8, asi que en 3.7.0 no queda un punto de enganche
+ * estable para ella. Este parche no la elimina.
  */
 @Suppress("unused")
 val removeAdsPatch = patch(
     name = "Eliminar anuncios",
-    description = "Bloquea la carga y la visualizacion de los anuncios de AdMob y de las demas " +
-            "redes publicitarias que Facemoji pueda incluir.",
+    description = "Apaga las sugerencias patrocinadas que la app inserta en el teclado. " +
+            "En la version 3.7.0 la publicidad a pantalla completa la sirve Pangle con las clases " +
+            "renombradas, por lo que ese formato no se puede bloquear de forma estable.",
     default = true,
 ) {
     compatibleWith(COMPATIBILITY_FACEMOJI)
@@ -50,19 +52,20 @@ val removeAdsPatch = patch(
     extendWith("extensions/facemoji.mpe")
 
     execute {
-        val blocked = AD_SURFACES.filter { (surface, fingerprint) ->
-            fingerprint.blockVoidMethods(surface = surface)
+        val disabled = AD_SWITCHES.filter { (surface, fingerprint) ->
+            fingerprint.forceBoolean(value = false, surface = "anuncio: $surface")
         }.keys
 
-        if (blocked.isEmpty()) {
+        if (disabled.isEmpty()) {
             throw PatchException(
-                "No se ha encontrado ninguna red publicitaria conocida en esta version de Facemoji. " +
-                        "Es probable que la app haya cambiado de SDK o que esta version aun no este soportada. " +
-                        "Desactiva este parche o abre una incidencia en " +
-                        "https://github.com/Minecraco/Parche-facemoji/issues indicando la version de la app.",
+                "No se ha encontrado el motor de sugerencias patrocinadas en esta version de " +
+                        "Facemoji. Es probable que la app haya cambiado de SDK o que esta version " +
+                        "aun no este soportada. Desactiva este parche o abre una incidencia en " +
+                        "https://github.com/Minecraco/Parche-facemoji/issues indicando la version " +
+                        "de la app.",
             )
         }
 
-        logger.info("Anuncios bloqueados (${blocked.size}): ${blocked.joinToString()}")
+        logger.info("Anuncios apagados (${disabled.size}/${AD_SWITCHES.size}): ${disabled.joinToString()}")
     }
 }

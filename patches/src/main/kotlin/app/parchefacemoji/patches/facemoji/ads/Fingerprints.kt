@@ -3,88 +3,65 @@ package app.parchefacemoji.patches.facemoji.ads
 import app.morphe.patcher.Fingerprint
 
 /**
- * Puntos de entrada de las redes publicitarias que Facemoji puede incluir.
+ * Huellas de la publicidad de Facemoji 3.7.0.
  *
- * Se apunta a la API publica de cada SDK (no al codigo ofuscado de Facemoji) porque los
- * SDK de terceros se publican con reglas de ofuscacion que conservan esos nombres entre
- * versiones. Eso hace que estas huellas sobrevivan a las actualizaciones de la app.
+ * En esta version la app ya no usa la API publica de AdMob: solo queda el stub de mediacion
+ * del SDK de Google (no existen `BaseAdView`, `InterstitialAd` ni `AdLoader`). La publicidad
+ * real la sirve Pangle/CSJ (ByteDance), pero R8 ha renombrado sus clases, asi que no hay
+ * ningun nombre estable al que engancharse dentro del SDK.
  *
- * Segun los metadatos publicos de la app sus rastreadores y librerias incluyen
- * Google AdMob (red principal), Facebook y AppsFlyer. Aun asi se declaran tambien las
- * redes de mediacion mas habituales: si no estan, la huella simplemente no coincide.
+ * Lo que si sobrevive al renombrado es el motor de **sugerencias patrocinadas** del teclado:
+ * `com.baidu.simeji.plutus.adsuggestion.AdSuggestionUtils`. Ese es el anuncio que aparece
+ * dentro del teclado mientras se escribe, y se puede apagar desde su propio interruptor.
+ *
+ * Las huellas se declaran en dos niveles:
+ * - los dos metodos que deciden si hay que pedir sugerencias (`b` y `c`),
+ * - los `getEnable()` de las tres configuraciones que los alimentan.
+ *
+ * Los `getEnable()` son beans Kotlin: su nombre no lo toca la ofuscacion, por lo que
+ * sobreviven incluso si los nombres de `b`/`c` cambian en una version futura.
  */
 
 /**
- * Anuncios de banner y rectangulo (AdMob).
+ * Interruptor general de las sugerencias patrocinadas.
  *
- * `AdView` hereda `loadAd` de `BaseAdView`, por lo que el punto de llamada real es el
- * de la clase base. Cubre todas las sobrecargas (`AdRequest` y `AdManagerAdRequest`).
+ * Devuelve `true` cuando el interruptor remoto esta activo y hay red.
  */
-internal object AdMobBannerFingerprint : Fingerprint(
-    definingClass = "Lcom/google/android/gms/ads/BaseAdView;",
-    name = "loadAd",
-    returnType = "V",
+internal object AdSuggestionMasterGateFingerprint : Fingerprint(
+    definingClass = "Lcom/baidu/simeji/plutus/adsuggestion/AdSuggestionUtils;",
+    name = "b",
+    returnType = "Z",
 )
 
-/** Anuncios nativos y personalizados (AdMob). */
-internal object AdMobNativeFingerprint : Fingerprint(
-    definingClass = "Lcom/google/android/gms/ads/AdLoader;",
-    name = "loadAd",
-    returnType = "V",
+/**
+ * Interruptor de las sugerencias de comercio (enlaces a tiendas).
+ *
+ * Devuelve `true` cuando la configuracion de anuncios o la de comercio estan activas,
+ * hay red y la preferencia local no lo impide.
+ */
+internal object AdSuggestionCommerceGateFingerprint : Fingerprint(
+    definingClass = "Lcom/baidu/simeji/plutus/adsuggestion/AdSuggestionUtils;",
+    name = "c",
+    returnType = "Z",
 )
 
-/** Anuncios intersticiales (AdMob). */
-internal object AdMobInterstitialFingerprint : Fingerprint(
-    definingClass = "Lcom/google/android/gms/ads/interstitial/InterstitialAd;",
-    name = "show",
-    returnType = "V",
+/** Configuracion de las sugerencias patrocinadas normales. */
+internal object AdSuggestionSwitchEnableFingerprint : Fingerprint(
+    definingClass = "Lcom/baidu/simeji/plutus/adsuggestion/AdSuggestionUtils\$AdSuggestionSwitch;",
+    name = "getEnable",
+    returnType = "Z",
 )
 
-/** Anuncios de apertura de app (AdMob), los que aparecen al salir del teclado. */
-internal object AdMobAppOpenFingerprint : Fingerprint(
-    definingClass = "Lcom/google/android/gms/ads/appopen/AppOpenAd;",
-    name = "show",
-    returnType = "V",
+/** Configuracion de las sugerencias de la app de comercio. */
+internal object AdSuggestionEcommerceEnableFingerprint : Fingerprint(
+    definingClass = "Lcom/baidu/simeji/plutus/adsuggestion/AdSuggestionUtils\$EcommerceSuggestionSwitch;",
+    name = "getEnable",
+    returnType = "Z",
 )
 
-/** Anuncios recompensados (AdMob). */
-internal object AdMobRewardedFingerprint : Fingerprint(
-    definingClass = "Lcom/google/android/gms/ads/rewarded/RewardedAd;",
-    name = "show",
-    returnType = "V",
-)
-
-/** Anuncios recompensados intersticiales (AdMob). */
-internal object AdMobRewardedInterstitialFingerprint : Fingerprint(
-    definingClass = "Lcom/google/android/gms/ads/rewardedinterstitial/RewardedInterstitialAd;",
-    name = "show",
-    returnType = "V",
-)
-
-/** Banner de Facebook Audience Network. */
-internal object FacebookBannerFingerprint : Fingerprint(
-    definingClass = "Lcom/facebook/ads/AdView;",
-    name = "loadAd",
-    returnType = "V",
-)
-
-/** Intersticial de Facebook Audience Network. */
-internal object FacebookInterstitialFingerprint : Fingerprint(
-    definingClass = "Lcom/facebook/ads/InterstitialAd;",
-    name = "show",
-    returnType = "V",
-)
-
-/** Unity Ads. */
-internal object UnityAdsFingerprint : Fingerprint(
-    definingClass = "Lcom/unity3d/ads/UnityAds;",
-    name = "show",
-    returnType = "V",
-)
-
-/** AppLovin (banner). */
-internal object AppLovinBannerFingerprint : Fingerprint(
-    definingClass = "Lcom/applovin/adview/AppLovinAdView;",
-    name = "loadNextAd",
-    returnType = "V",
+/** Configuracion de estilo de las sugerencias (afecta al diseno del anuncio). */
+internal object AdSuggestionGpConfigEnableFingerprint : Fingerprint(
+    definingClass = "Lcom/baidu/simeji/plutus/adsuggestion/AdSuggestionUtils\$GpAdSugConfig;",
+    name = "getEnable",
+    returnType = "Z",
 )

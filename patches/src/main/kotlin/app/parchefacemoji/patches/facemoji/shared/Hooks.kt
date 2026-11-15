@@ -62,3 +62,149 @@ internal fun Fingerprint.blockVoidMethods(
 
     return patched
 }
+
+/**
+ * Hace que todos los metodos que coincidan con esta huella devuelvan siempre `value`.
+ *
+ * Se usa para las comprobaciones booleanas de la app (`isVip()`, `getEnable()`, ...), que son
+ * la forma habitual de apagar una funcion o de saltarse una comprobacion de pago.
+ *
+ * El codigo insertado es:
+ *
+ * ```smali
+ * const-string v0, "<etiqueta>"
+ * invoke-static {v0}, L.../PatchHooks;->logBlocked(Ljava/lang/String;)V
+ * const/4 v0, 0x0    ; o 0x1
+ * return v0
+ * ```
+ *
+ * Se escribe al principio del metodo y termina en `return`, asi que el cuerpo original nunca
+ * llega a ejecutarse y `v0` no puede pisar ningun valor en uso.
+ *
+ * @param value Valor que devolvera el metodo.
+ * @param surface Etiqueta corta que se escribe en logcat (solo ASCII).
+ * @return `true` si se ha modificado al menos un metodo.
+ */
+internal fun Fingerprint.forceBoolean(
+    value: Boolean,
+    surface: String,
+    extensionMethod: String = "logBlocked",
+): Boolean {
+    var patched = false
+
+    matchAllOrNull().orEmpty().forEach { match ->
+        val original = match.originalMethod
+
+        // Solo sirve para metodos que devuelven boolean.
+        if (original.returnType != "Z") return@forEach
+
+        // Un metodo abstracto o nativo no tiene cuerpo donde insertar nada.
+        val implementation = original.implementation ?: return@forEach
+
+        // `const/4 v0` necesita que el metodo tenga al menos un registro libre.
+        if (implementation.registerCount < 1) return@forEach
+
+        val literal = if (value) "0x1" else "0x0"
+
+        match.method.addInstructions(
+            0,
+            """
+                const-string v0, "$surface"
+                invoke-static {v0}, $EXTENSION_CLASS->$extensionMethod(Ljava/lang/String;)V
+                const/4 v0, $literal
+                return v0
+            """,
+        )
+
+        patched = true
+    }
+
+    return patched
+}
+
+/**
+ * Hace que todos los metodos que coincidan con esta huella devuelvan el entero `value`.
+ *
+ * Variante de [forceBoolean] para las banderas que la app guarda como `Int` (por ejemplo
+ * `isVip()I` de las configuraciones del teclado Rizz).
+ *
+ * @param value Valor que devolvera el metodo (entre -8 y 7, que es lo que cabe en `const/4`).
+ * @param surface Etiqueta corta que se escribe en logcat (solo ASCII).
+ * @return `true` si se ha modificado al menos un metodo.
+ */
+internal fun Fingerprint.forceInt(
+    value: Int,
+    surface: String,
+    extensionMethod: String = "logBlocked",
+): Boolean {
+    require(value in -8..7) { "forceInt solo admite valores que quepan en const/4" }
+
+    var patched = false
+
+    matchAllOrNull().orEmpty().forEach { match ->
+        val original = match.originalMethod
+
+        if (original.returnType != "I") return@forEach
+
+        val implementation = original.implementation ?: return@forEach
+
+        if (implementation.registerCount < 1) return@forEach
+
+        match.method.addInstructions(
+            0,
+            """
+                const-string v0, "$surface"
+                invoke-static {v0}, $EXTENSION_CLASS->$extensionMethod(Ljava/lang/String;)V
+                const/4 v0, $value
+                return v0
+            """,
+        )
+
+        patched = true
+    }
+
+    return patched
+}
+
+/**
+ * Hace que todos los metodos que coincidan con esta huella devuelvan `java.lang.Boolean`.
+ *
+ * Se usa en los envoltorios que devuelven el objeto en vez del primitivo
+ * (por ejemplo `getVipIsUnLock()Ljava/lang/Boolean;`).
+ *
+ * @param value Valor que devolvera el metodo.
+ * @param surface Etiqueta corta que se escribe en logcat (solo ASCII).
+ * @return `true` si se ha modificado al menos un metodo.
+ */
+internal fun Fingerprint.forceBooleanObject(
+    value: Boolean,
+    surface: String,
+    extensionMethod: String = "logBlocked",
+): Boolean {
+    var patched = false
+    val campo = if (value) "TRUE" else "FALSE"
+
+    matchAllOrNull().orEmpty().forEach { match ->
+        val original = match.originalMethod
+
+        if (original.returnType != "Ljava/lang/Boolean;") return@forEach
+
+        val implementation = original.implementation ?: return@forEach
+
+        if (implementation.registerCount < 1) return@forEach
+
+        match.method.addInstructions(
+            0,
+            """
+                const-string v0, "$surface"
+                invoke-static {v0}, $EXTENSION_CLASS->$extensionMethod(Ljava/lang/String;)V
+                sget-object v0, Ljava/lang/Boolean;->$campo:Ljava/lang/Boolean;
+                return-object v0
+            """,
+        )
+
+        patched = true
+    }
+
+    return patched
+}
