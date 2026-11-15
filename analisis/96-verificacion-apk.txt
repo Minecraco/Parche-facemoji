@@ -1,1 +1,7 @@
-No existe el APK: build/verificacion/facemoji-parcheado.apk
+manifiesto: OK, actividad declarada
+OK   VIP: el gancho pregunta por el ajuste antes de forzar la bandera
+OK   Anuncios: el gancho pregunta por el ajuste antes de apagar la sugerencia
+OK   Rastreo: el gancho pregunta por el ajuste antes de neutralizar el envio
+OK   Ajustes: la pantalla de Facemoji anyade la fila del parche
+
+RESULTADO: todo correcto
