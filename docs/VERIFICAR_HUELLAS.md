@@ -96,6 +96,20 @@ cambian el paquete o la firma del método (por ejemplo, un `show()` que pasa a
    `blockVoidMethods` (void), `forceBoolean` (`Z`), `forceInt` (`I`) o `forceBooleanObject`
    (`Ljava/lang/Boolean;`).
 
+## 3 bis. Comprobar que el bundle se aplica (sin dispositivo)
+
+Antes de instalar nada se puede comprobar que el parcheo no rompe la app:
+
+```bash
+APK_A_VERIFICAR=/ruta/base.apk ./gradlew verificarParcheo
+python3 tools/verificar_parcheado.py patches/build/verificacion/facemoji-parcheado.apk
+```
+
+El primero aplica todos los parches y escribe un APK; el segundo revisa el resultado: que la
+actividad esté en el manifiesto y que los cuatro ganchos estén en su clase. En el repositorio lo
+hace el workflow **Verificar que el parche se aplica** (pestaña *Actions*), que deja el resultado
+en [`analisis/96-verificacion-apk.txt`](../analisis/96-verificacion-apk.txt).
+
 ## 4. Comprobar en el dispositivo
 
 Con la app parcheada instalada y el teclado abierto:
