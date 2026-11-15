@@ -128,9 +128,9 @@ verificador incluido (ver [docs/VERIFICAR_HUELLAS.md](docs/VERIFICAR_HUELLAS.md)
 ## 🩹 Lista de parches publicada
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.0.0](https://github.com/Minecraco/Parche-facemoji/releases/tag/v1.0.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;4 patches total
+> **[v1.1.0](https://github.com/Minecraco/Parche-facemoji/releases/tag/v1.1.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;5 patches total
 <details open>
-<summary>📦 Facemoji AI Emoji Keyboard&nbsp;&nbsp;•&nbsp;&nbsp;4 patches</summary>
+<summary>📦 Facemoji AI Emoji Keyboard&nbsp;&nbsp;•&nbsp;&nbsp;5 patches</summary>
 <br>
 
 **Package name:** `com.simejikeyboard`
@@ -143,9 +143,10 @@ verificador incluido (ver [docs/VERIFICAR_HUELLAS.md](docs/VERIFICAR_HUELLAS.md)
 
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|
+| [Ajustes de Minecraco](#ajustes-de-minecraco) | Anade una entrada "Ajustes de Minecraco" dentro de los ajustes de Facemoji para activar y desactivar los parches de anuncios, VIP y rastreo sin volver a parchear. |  |
 | [Desactivar rastreo](#desactivar-rastreo) | Deja de enviar los eventos de Firebase Analytics, Crashlytics, Facebook y AppsFlyer. Desactiva tambien el envio de registros de fallos. |  |
-| [Desbloquear VIP](#desbloquear-vip) | Marca como gratuitos las fuentes de color, las series de stickers, los TextBomb y las frases del teclado Rizz que la app reserva a la suscripcion, y da por hechos los desbloqueos por video. |  |
-| [Eliminar anuncios](#eliminar-anuncios) | Apaga las sugerencias patrocinadas que la app inserta en el teclado. En la version 3.7.0 la publicidad a pantalla completa la sirve Pangle con las clases renombradas, por lo que ese formato no se puede bloquear de forma estable. |  |
+| [Desbloquear VIP](#desbloquear-vip) | Marca como gratuitos las fuentes de color, las series de stickers, los TextBomb y las frases del teclado Rizz que la app reserva a la suscripcion, y da por hechos los desbloqueos por video. Se puede activar o desactivar en los ajustes de Minecraco. |  |
+| [Eliminar anuncios](#eliminar-anuncios) | Apaga las sugerencias patrocinadas que la app inserta en el teclado. Se puede activar o desactivar en los ajustes de Minecraco sin volver a parchear. En la version 3.7.0 la publicidad a pantalla completa la sirve Pangle con las clases renombradas, por lo que ese formato no se puede bloquear de forma estable. |  |
 | [Quitar permiso de ID de publicidad](#quitar-permiso-de-id-de-publicidad) | Elimina el permiso AD_ID del manifiesto para que la app no pueda leer el identificador de publicidad del dispositivo. |  |
 
 </details>

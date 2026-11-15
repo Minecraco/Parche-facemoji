@@ -1,3 +1,9 @@
+## [1.1.0](https://github.com/Minecraco/Parche-facemoji/compare/v1.0.0...v1.1.0) (2026-11-15)
+
+### ✨ New Features
+
+* pantalla de ajustes de Minecraco con interruptores de anuncios, VIP y rastreo ([2b2ac4d](https://github.com/Minecraco/Parche-facemoji/commit/2b2ac4dc5eb7f56a154a9ee6eefcdff554cd5a90))
+
 ## 1.0.0 (2026-11-15)
 
 ### ✨ New Features
