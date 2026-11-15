@@ -1,0 +1,8 @@
+usage: analizar_apk.py [-h] [--informe] [--comprobar] [--buscar REGEX]
+                       [--clases PAQUETE] [--clases-regex REGEX]
+                       [--metodos REGEX] [--llamadas REGEX]
+                       [--llamadas-clases REGEX] [--metodos-nombre REGEX]
+                       [--smali REGEX] [--subclases REGEX] [--usa-clase REGEX]
+                       [--vip]
+                       apk
+analizar_apk.py: error: argument --llamadas: expected one argument
