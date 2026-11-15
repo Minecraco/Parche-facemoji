@@ -19,6 +19,10 @@ val patchListGeneratorClasspath = configurations.create("patchListGeneratorClass
 dependencies {
     compileOnly(libs.gson)
     patchListGeneratorClasspath(libs.gson)
+
+    // Solo para la prueba que aplica el bundle a una APK real (ver
+    // patches/src/test/kotlin/verificar/AplicarParchesTest.kt). No entra en el .mpp.
+    testImplementation(kotlin("test"))
 }
 
 tasks {
