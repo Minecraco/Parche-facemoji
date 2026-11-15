@@ -29,6 +29,12 @@ jobs:
         run: gdown "https://drive.google.com/uc?id=${APKM_FILE_ID}" -O facemoji.apkm 2>&1 | tail -1
       - name: Manifiesto
         run: python tools/dump_manifest.py facemoji.apkm > analisis/c2-manifiesto.txt 2>&1 || true
+      - name: Clases del paquete skins (pantalla de ajustes)
+        run: python tools/analizar_apk.py facemoji.apkm --clases 'com/baidu/simeji/skins' > analisis/c9-clases-skins.txt 2>&1 || true
+      - name: Bytecode del manejador de filas de ajustes
+        run: python tools/analizar_apk.py facemoji.apkm --smali '^Lcom/baidu/simeji/skins/(v0|n0|o0|p0);$' > analisis/d1-smali-ajustes.txt 2>&1 || true
+      - name: Quien usa BaseItemUIData en skins
+        run: python tools/analizar_apk.py facemoji.apkm --usa-clase 'Lcom/gclub/global/jetpackmvvm/base/BaseItemUIData;' > analisis/d2-usa-baseitem.txt 2>&1 || true
       - name: Quien hereda de la clase base de ajustes
         run: python tools/analizar_apk.py facemoji.apkm --subclases '^Lcom/baidu/simeji/components/b;' > analisis/c7-subclases-base.txt 2>&1 || true
       - name: Quien menciona FaqActivity
