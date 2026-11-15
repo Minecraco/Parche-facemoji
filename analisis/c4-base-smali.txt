@@ -1,0 +1,546 @@
+[32m2026-11-15 17:37:20.529 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36m__init__[0m:[36m8331[0m - [34m[1mDEX None None None[0m
+[32m2026-11-15 17:37:20.529 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36m__init__[0m:[36m511[0m - [34m[1mHeaderItem[0m
+[32m2026-11-15 17:37:20.544 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'HEADER_ITEM'[0m
+[32m2026-11-15 17:37:20.544 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36m__init__[0m:[36m511[0m - [34m[1mHeaderItem[0m
+[32m2026-11-15 17:37:20.549 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'HEADER_ITEM'. Required time 0:00.0047[0m
+[32m2026-11-15 17:37:20.549 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'MAP_LIST'[0m
+[32m2026-11-15 17:37:20.549 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'MAP_LIST'. Required time 0:00.0000[0m
+[32m2026-11-15 17:37:20.549 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'STRING_DATA_ITEM'[0m
+[32m2026-11-15 17:37:20.615 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'STRING_DATA_ITEM'. Required time 0:00.0663[0m
+[32m2026-11-15 17:37:20.625 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'STRING_ID_ITEM'[0m
+[32m2026-11-15 17:37:20.682 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'STRING_ID_ITEM'. Required time 0:00.0569[0m
+[32m2026-11-15 17:37:20.692 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'TYPE_ID_ITEM'[0m
+[32m2026-11-15 17:37:20.702 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'TYPE_ID_ITEM'. Required time 0:00.0102[0m
+[32m2026-11-15 17:37:20.702 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'FIELD_ID_ITEM'[0m
+[32m2026-11-15 17:37:20.836 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'FIELD_ID_ITEM'. Required time 0:00.1335[0m
+[32m2026-11-15 17:37:20.836 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'TYPE_LIST'[0m
+[32m2026-11-15 17:37:20.853 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'TYPE_LIST'. Required time 0:00.0171[0m
+[32m2026-11-15 17:37:20.856 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'PROTO_ID_ITEM'[0m
+[32m2026-11-15 17:37:20.876 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'PROTO_ID_ITEM'. Required time 0:00.0197[0m
+[32m2026-11-15 17:37:20.876 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'METHOD_ID_ITEM'[0m
+[32m2026-11-15 17:37:21.120 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'METHOD_ID_ITEM'. Required time 0:00.2437[0m
+[32m2026-11-15 17:37:21.120 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'CLASS_DATA_ITEM'[0m
+[32m2026-11-15 17:37:21.378 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'CLASS_DATA_ITEM'. Required time 0:00.2579[0m
+[32m2026-11-15 17:37:21.383 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'DEBUG_INFO_ITEM'[0m
+[32m2026-11-15 17:37:21.384 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'DEBUG_INFO_ITEM'. Required time 0:00.0006[0m
+[32m2026-11-15 17:37:21.384 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'CODE_ITEM'[0m
+[32m2026-11-15 17:37:21.559 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'CODE_ITEM'. Required time 0:00.1753[0m
+[32m2026-11-15 17:37:21.560 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ANNOTATION_ITEM'[0m
+[32m2026-11-15 17:37:22.008 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ANNOTATION_ITEM'. Required time 0:00.4488[0m
+[32m2026-11-15 17:37:22.014 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ANNOTATION_SET_ITEM'[0m
+[32m2026-11-15 17:37:22.031 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ANNOTATION_SET_ITEM'. Required time 0:00.0170[0m
+[32m2026-11-15 17:37:22.035 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ANNOTATION_SET_REF_LIST'[0m
+[32m2026-11-15 17:37:22.036 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ANNOTATION_SET_REF_LIST'. Required time 0:00.0019[0m
+[32m2026-11-15 17:37:22.042 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ENCODED_ARRAY_ITEM'[0m
+[32m2026-11-15 17:37:22.059 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ENCODED_ARRAY_ITEM'. Required time 0:00.0172[0m
+[32m2026-11-15 17:37:22.059 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ANNOTATIONS_DIRECTORY_ITEM'[0m
+[32m2026-11-15 17:37:22.081 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ANNOTATIONS_DIRECTORY_ITEM'. Required time 0:00.0219[0m
+[32m2026-11-15 17:37:22.084 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'CLASS_DEF_ITEM'[0m
+[32m2026-11-15 17:37:22.824 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'CLASS_DEF_ITEM'. Required time 0:00.7392[0m
+4 ficheros DEX, 164880 cadenas distintas
+
+
+### Lcom/baidu/simeji/components/b;
+  .method <init>()V
+      invoke-direct           v1, Landroidx/fragment/app/j;-><init>()V
+      new-instance            v0, Lcom/baidu/simeji/components/b$a;
+      invoke-direct           v0, v1, Lcom/baidu/simeji/components/b$a;-><init>(Lcom/baidu/simeji/components/b;)V
+      iput-object             v0, v1, Lcom/baidu/simeji/components/b;->m0 Landroid/view/View$OnClickListener;
+      return-void             
+  .method B0()Z
+      invoke-static           Lcom/baidu/simeji/App;->g()Lcom/baidu/simeji/App;
+      move-result-object      v0
+      invoke-virtual          v0, Lcom/baidu/simeji/App;->i()Lki/b;
+      move-result-object      v0
+      invoke-virtual          v0, Lki/b;->b()Z
+      move-result             v0
+      const/4                 v1, 0
+      if-eqz                  v0, +015h
+      invoke-static           Lcom/baidu/simeji/App;->g()Lcom/baidu/simeji/App;
+      move-result-object      v0
+      const-string            v2, "key_use_had_agree_privacy"
+      invoke-static           v0, v2, v1, Lcom/preff/kb/preferences/PreffMultiProcessPreference;->getBooleanPreference(Landroid/content/Context; Ljava/lang/String; Z)Z
+      move-result             v0
+      if-nez                  v0, +009h
+      invoke-static           Lcom/android/inputmethod/latin/utils/UncachedInputMethodManagerUtils;->isFacemojiIme()Z
+      move-result             v0
+      if-nez                  v0, +003h
+      const/4                 v1, 1
+      return                  v1
+  .method E0(Landroid/app/Activity;)V
+      new-instance            v0, Landroid/content/Intent;
+      const-class             v1, Lcom/baidu/simeji/settings/guide/AgreeGuideActivity;
+      invoke-direct           v0, v2, v1, Landroid/content/Intent;-><init>(Landroid/content/Context; Ljava/lang/Class;)V
+      const/high16            v1, 67108864
+      invoke-virtual          v0, v1, Landroid/content/Intent;->addFlags(I)Landroid/content/Intent;
+      invoke-virtual          v2, v0, Landroid/app/Activity;->startActivity(Landroid/content/Intent;)V
+      invoke-virtual          v2, Landroid/app/Activity;->finish()V
+      goto                    +ch
+      move-exception          v2
+      const-string            v0, "com/baidu/simeji/components/BaseActivity"
+      const-string            v1, "openAgreeGuidePage"
+      invoke-static           v2, v0, v1, Lb7/b;->d(Ljava/lang/Throwable; Ljava/lang/String; Ljava/lang/String;)V
+      invoke-static           v2, Lcom/preff/kb/util/DebugLog;->e(Ljava/lang/Throwable;)V
+      return-void             
+  .method M0()V
+      iget-object             v0, v1, Lcom/baidu/simeji/components/b;->g0 Lcom/baidu/simeji/components/b$e;
+      if-eqz                  v0, +008h
+      invoke-virtual          v1, v0, Landroid/content/Context;->unregisterReceiver(Landroid/content/BroadcastReceiver;)V
+      const/4                 v0, 0
+      iput-object             v0, v1, Lcom/baidu/simeji/components/b;->g0 Lcom/baidu/simeji/components/b$e;
+      return-void             
+  .method N0()V
+      iget-object             v0, v1, Lcom/baidu/simeji/components/b;->i0 Lcom/baidu/simeji/components/b$f;
+      if-eqz                  v0, +008h
+      invoke-virtual          v1, v0, Landroid/content/Context;->unregisterReceiver(Landroid/content/BroadcastReceiver;)V
+      const/4                 v0, 0
+      iput-object             v0, v1, Lcom/baidu/simeji/components/b;->i0 Lcom/baidu/simeji/components/b$f;
+      return-void             
+  .method t0(Lcom/baidu/simeji/components/b;)Ljava/util/List;
+      iget-object             v0, v0, Lcom/baidu/simeji/components/b;->k0 Ljava/util/List;
+      return-object           v0
+  .method u0(Landroid/os/Bundle; Landroid/app/Activity;)V
+      if-eqz                  v1, +009h
+      const-string            v0, "h5_share"
+      invoke-virtual          v1, v0, Landroid/os/BaseBundle;->getBoolean(Ljava/lang/String;)Z
+      move-result             v1
+      goto                    +2h
+      const/4                 v1, 0
+      instance-of             v0, v2, Lcom/baidu/simeji/skins/SkinIndexActivity;
+      if-nez                  v0, +015h
+      instance-of             v0, v2, Lcom/baidu/simeji/settings/PrivacyActivity;
+      if-nez                  v0, +011h
+      instance-of             v0, v2, Lcom/baidu/simeji/settings/AgreementActivity;
+      if-nez                  v0, +00dh
+      invoke-static           Lcom/baidu/simeji/components/b;->B0()Z
+      move-result             v0
+      if-eqz                  v0, +007h
+      if-nez                  v1, +005h
+      invoke-static           v2, Lcom/baidu/simeji/components/b;->E0(Landroid/app/Activity;)V
+      return-void             
+  .method x0()V
+      const                   v0, 2131427414
+      invoke-virtual          v3, v0, Landroid/app/Activity;->findViewById(I)Landroid/view/View;
+      move-result-object      v0
+      check-cast              v0, Lcom/baidu/simeji/widget/ActionbarView;
+      const/4                 v1, 0
+      invoke-virtual          v0, v1, Landroid/view/View;->setVisibility(I)V
+      new-instance            v1, Lz8/a;
+      invoke-direct           v1, v0, Lz8/a;-><init>(Lcom/baidu/simeji/widget/ActionbarView;)V
+      iput-object             v1, v3, Lcom/baidu/simeji/components/b;->Z Lz8/a;
+      iget-object             v0, v3, Lcom/baidu/simeji/components/b;->m0 Landroid/view/View$OnClickListener;
+      invoke-virtual          v1, v0, Lz8/a;->e(Landroid/view/View$OnClickListener;)V
+      iget-object             v0, v3, Lcom/baidu/simeji/components/b;->Z Lz8/a;
+      invoke-virtual          v3, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+      move-result-object      v1
+      const                   v2, 2131230825
+      invoke-virtual          v1, v2, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
+      move-result-object      v1
+      invoke-virtual          v0, v1, Lz8/a;->c(Landroid/graphics/drawable/Drawable;)V
+      const                   v0, 2131427425
+      invoke-virtual          v3, v0, Landroid/app/Activity;->findViewById(I)Landroid/view/View;
+      move-result-object      v0
+      iput-object             v0, v3, Lcom/baidu/simeji/components/b;->d0 Landroid/view/View;
+      if-eqz                  v0, +00ah
+      new-instance            v1, Lcom/baidu/simeji/components/b$b;
+      invoke-direct           v1, v3, Lcom/baidu/simeji/components/b$b;-><init>(Lcom/baidu/simeji/components/b;)V
+      invoke-virtual          v0, v1, Landroid/view/View;->setOnClickListener(Landroid/view/View$OnClickListener;)V
+      return-void             
+  .method y0()V
+      const                   v0, 16908290
+      invoke-virtual          v3, v0, Landroid/app/Activity;->findViewById(I)Landroid/view/View;
+      move-result-object      v1
+      const/4                 v2, 0
+      invoke-virtual          v1, v2, Landroid/view/View;->setId(I)V
+      const                   v1, 2131429619
+      invoke-virtual          v3, v1, Landroid/app/Activity;->findViewById(I)Landroid/view/View;
+      move-result-object      v1
+      check-cast              v1, Landroid/widget/LinearLayout;
+      iput-object             v1, v3, Lcom/baidu/simeji/components/b;->b0 Landroid/widget/LinearLayout;
+      const                   v1, 2131429197
+      invoke-virtual          v3, v1, Landroid/app/Activity;->findViewById(I)Landroid/view/View;
+      move-result-object      v1
+      check-cast              v1, Landroid/widget/FrameLayout;
+      iput-object             v1, v3, Lcom/baidu/simeji/components/b;->a0 Landroid/widget/FrameLayout;
+      invoke-virtual          v1, v0, Landroid/view/View;->setId(I)V
+      return-void             
+  .method A0()Z
+      iget-boolean            v0, v1, Lcom/baidu/simeji/components/b;->c0 Z
+      return                  v0
+  .method C0()V
+      invoke-static           Ljava/lang/System;->currentTimeMillis()J
+      move-result-wide        v0
+      iget-wide               v2, v4, Lcom/baidu/simeji/components/b;->l0 J
+      sub-long/2addr          v0, v2
+      new-instance            v2, Ljava/lang/StringBuilder;
+      invoke-direct           v2, Ljava/lang/StringBuilder;-><init>()V
+      invoke-virtual          v4, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+      move-result-object      v3
+      invoke-virtual          v3, Ljava/lang/Class;->getSimpleName()Ljava/lang/String;
+      move-result-object      v3
+      invoke-virtual          v2, v3, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      const-string            v3, "|"
+      invoke-virtual          v2, v3, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      invoke-virtual          v2, v0, v1, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+      invoke-virtual          v2, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+      move-result-object      v0
+      const                   v1, 200796
+      invoke-static           v1, v0, Lcom/preff/kb/common/statistic/StatisticUtil;->onEvent(I Ljava/lang/String;)V
+      sget-boolean            v0, Lcom/preff/kb/util/DebugLog;->DEBUG Z
+      if-eqz                  v0, +020h
+      new-instance            v0, Ljava/lang/StringBuilder;
+      invoke-direct           v0, Ljava/lang/StringBuilder;-><init>()V
+      invoke-virtual          v4, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+      move-result-object      v1
+      invoke-virtual          v1, Ljava/lang/Class;->getName()Ljava/lang/String;
+      move-result-object      v1
+      invoke-virtual          v0, v1, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      const-string            v1, " onFullyDrawn"
+      invoke-virtual          v0, v1, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      invoke-virtual          v0, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+      move-result-object      v0
+      const-string            v1, "Displayed"
+      invoke-static           v1, v0, Lcom/preff/kb/util/DebugLog;->d(Ljava/lang/String; Ljava/lang/String;)I
+      return-void             
+  .method D0()V
+      invoke-virtual          v0, Lcom/baidu/simeji/components/b;->onBackPressed()V
+      return-void             
+  .method F0(Ljava/lang/Runnable;)V
+      if-nez                  v3, +003h
+      return-void             
+      invoke-virtual          v2, Landroid/app/Activity;->getWindow()Landroid/view/Window;
+      move-result-object      v0
+      invoke-virtual          v0, Landroid/view/Window;->getDecorView()Landroid/view/View;
+      move-result-object      v0
+      new-instance            v1, Lcom/baidu/simeji/components/b$d;
+      invoke-direct           v1, v2, v3, Lcom/baidu/simeji/components/b$d;-><init>(Lcom/baidu/simeji/components/b; Ljava/lang/Runnable;)V
+      invoke-virtual          v0, v1, Landroid/view/View;->post(Ljava/lang/Runnable;)Z
+      return-void             
+  .method G0()V
+      new-instance            v0, Lcom/baidu/simeji/components/b$e;
+      invoke-direct           v0, v3, Lcom/baidu/simeji/components/b$e;-><init>(Lcom/baidu/simeji/components/b;)V
+      iput-object             v0, v3, Lcom/baidu/simeji/components/b;->g0 Lcom/baidu/simeji/components/b$e;
+      new-instance            v0, Landroid/content/IntentFilter;
+      invoke-direct           v0, Landroid/content/IntentFilter;-><init>()V
+      const-string            v1, "android.intent.action.CLOSE_SYSTEM_DIALOGS"
+      invoke-virtual          v0, v1, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
+      sget                    v1, Landroid/os/Build$VERSION;->SDK_INT I
+      const/16                v2, 33
+      if-lt                   v1, v2, +009h
+      iget-object             v1, v3, Lcom/baidu/simeji/components/b;->g0 Lcom/baidu/simeji/components/b$e;
+      const/4                 v2, 4
+      invoke-static           v3, v1, v0, v2, Lcom/baidu/simeji/components/a;->a(Lcom/baidu/simeji/components/b; Landroid/content/BroadcastReceiver; Landroid/content/IntentFilter; I)Landroid/content/Intent;
+      goto                    +6h
+      iget-object             v1, v3, Lcom/baidu/simeji/components/b;->g0 Lcom/baidu/simeji/components/b$e;
+      invoke-virtual          v3, v1, v0, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver; Landroid/content/IntentFilter;)Landroid/content/Intent;
+      return-void             
+  .method H0()V
+      new-instance            v0, Lcom/baidu/simeji/components/b$f;
+      const/4                 v1, 0
+      invoke-direct           v0, v3, v1, Lcom/baidu/simeji/components/b$f;-><init>(Lcom/baidu/simeji/components/b; Lcom/baidu/simeji/components/c;)V
+      iput-object             v0, v3, Lcom/baidu/simeji/components/b;->i0 Lcom/baidu/simeji/components/b$f;
+      new-instance            v0, Landroid/content/IntentFilter;
+      invoke-direct           v0, Landroid/content/IntentFilter;-><init>()V
+      const-string            v1, "android.net.conn.CONNECTIVITY_CHANGE"
+      invoke-virtual          v0, v1, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
+      sget                    v1, Landroid/os/Build$VERSION;->SDK_INT I
+      const/16                v2, 33
+      if-lt                   v1, v2, +009h
+      iget-object             v1, v3, Lcom/baidu/simeji/components/b;->i0 Lcom/baidu/simeji/components/b$f;
+      const/4                 v2, 4
+      invoke-static           v3, v1, v0, v2, Lcom/baidu/simeji/components/a;->a(Lcom/baidu/simeji/components/b; Landroid/content/BroadcastReceiver; Landroid/content/IntentFilter; I)Landroid/content/Intent;
+      goto                    +6h
+      iget-object             v1, v3, Lcom/baidu/simeji/components/b;->i0 Lcom/baidu/simeji/components/b$f;
+      invoke-virtual          v3, v1, v0, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver; Landroid/content/IntentFilter;)Landroid/content/Intent;
+      return-void             
+  .method I0(Lcom/baidu/simeji/components/b$g;)V
+      iput-object             v1, v0, Lcom/baidu/simeji/components/b;->h0 Lcom/baidu/simeji/components/b$g;
+      return-void             
+  .method J0(Lcom/baidu/simeji/components/b$h;)V
+      iput-object             v1, v0, Lcom/baidu/simeji/components/b;->j0 Lcom/baidu/simeji/components/b$h;
+      return-void             
+  .method K0()V
+      const                   v0, 2131624536
+      invoke-virtual          v1, v0, Lcom/baidu/simeji/components/b;->L0(I)V
+      return-void             
+  .method L0(I)V
+      invoke-super            v0, v1, Landroidx/activity/ComponentActivity;->setContentView(I)V
+      return-void             
+  .method onBackPressed()V
+      invoke-virtual          v1, Lcom/baidu/simeji/components/b;->A0()Z
+      move-result             v0
+      if-nez                  v0, +005h
+      invoke-super            v1, Landroidx/activity/ComponentActivity;->onBackPressed()V
+      return-void             
+  .method onCreate(Landroid/os/Bundle;)V
+      invoke-static           Ljava/lang/System;->currentTimeMillis()J
+      move-result-wide        v0
+      iput-wide               v0, v2, Lcom/baidu/simeji/components/b;->l0 J
+      const/4                 v0, 1
+      iput-boolean            v0, v2, Lcom/baidu/simeji/components/b;->f0 Z
+      invoke-virtual          v2, v0, Landroid/app/Activity;->requestWindowFeature(I)Z
+      invoke-static           v3, v2, Lcom/baidu/simeji/components/b;->u0(Landroid/os/Bundle; Landroid/app/Activity;)V
+      invoke-super            v2, v3, Landroidx/fragment/app/j;->onCreate(Landroid/os/Bundle;)V
+      const/4                 v3, 0
+      iput-boolean            v3, v2, Lcom/baidu/simeji/components/b;->c0 Z
+      invoke-virtual          v2, Lcom/baidu/simeji/components/b;->K0()V
+      invoke-virtual          v2, Lcom/baidu/simeji/components/b;->w0()Z
+      move-result             v0
+      if-eqz                  v0, +005h
+      invoke-direct           v2, Lcom/baidu/simeji/components/b;->x0()V
+      invoke-direct           v2, Lcom/baidu/simeji/components/b;->y0()V
+      iput-boolean            v3, v2, Lcom/baidu/simeji/components/b;->e0 Z
+      return-void             
+  .method onDestroy()V
+      iget-object             v0, v1, Lcom/baidu/simeji/components/b;->k0 Ljava/util/List;
+      if-eqz                  v0, +00dh
+      invoke-interface        v0, Ljava/util/List;->size()I
+      move-result             v0
+      if-lez                  v0, +007h
+      iget-object             v0, v1, Lcom/baidu/simeji/components/b;->k0 Ljava/util/List;
+      invoke-interface        v0, Ljava/util/List;->clear()V
+      const/4                 v0, 0
+      iput-object             v0, v1, Lcom/baidu/simeji/components/b;->k0 Ljava/util/List;
+      invoke-super            v1, Landroidx/fragment/app/j;->onDestroy()V
+      invoke-direct           v1, Lcom/baidu/simeji/components/b;->M0()V
+      invoke-direct           v1, Lcom/baidu/simeji/components/b;->N0()V
+      invoke-static           v1, Lcom/baidu/simeji/App;->p(Ljava/lang/Object;)V
+      const/4                 v0, 1
+      iput-boolean            v0, v1, Lcom/baidu/simeji/components/b;->e0 Z
+      return-void             
+  .method onPause()V
+      invoke-super            v0, Landroidx/fragment/app/j;->onPause()V
+      invoke-static           Lcom/preff/kb/common/statistic/StatisticUtil;->disableBatchSendMode()V
+      return-void             
+  .method onRequestPermissionsResult(I [Ljava/lang/String; [I)V
+      invoke-super            v1, v2, v3, v4, Landroidx/fragment/app/j;->onRequestPermissionsResult(I [Ljava/lang/String; [I)V
+      if-eqz                  v3, +027h
+      if-eqz                  v4, +025h
+      array-length            v0, v3
+      if-lez                  v0, +022h
+      array-length            v0, v4
+      if-gtz                  v0, +003h
+      goto                    +1dh
+      const/16                v0, 105
+      if-eq                   v2, v0, +004h
+      if-nez                  v2, +018h
+      const/4                 v2, 0
+      aget                    v4, v4, v2
+      if-nez                  v4, +00bh
+      const                   v4, 200635
+      aget-object             v2, v3, v2
+      invoke-static           v4, v2, Lcom/preff/kb/common/statistic/StatisticUtil;->onEvent(I Ljava/lang/String;)V
+      goto                    +9h
+      const                   v4, 200651
+      aget-object             v2, v3, v2
+      invoke-static           v4, v2, Lcom/preff/kb/common/statistic/StatisticUtil;->onEvent(I Ljava/lang/String;)V
+      return-void             
+  .method onResume()V
+      invoke-super            v3, Landroidx/fragment/app/j;->onResume()V
+      goto                    +ch
+      move-exception          v0
+      const-string            v1, "com/baidu/simeji/components/BaseActivity"
+      const-string            v2, "onResume"
+      invoke-static           v0, v1, v2, Lb7/b;->d(Ljava/lang/Throwable; Ljava/lang/String; Ljava/lang/String;)V
+      invoke-static           v0, Lcom/preff/kb/util/DebugLog;->e(Ljava/lang/Throwable;)V
+      const                   v0, 101099
+      invoke-static           v0, Lcom/preff/kb/common/statistic/StatisticUtil;->onEvent(I)V
+      invoke-static           Lcom/preff/kb/common/statistic/StatisticUtil;->enableBatchMode()V
+      invoke-virtual          v3, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+      move-result-object      v0
+      invoke-virtual          v0, Ljava/lang/Class;->getName()Ljava/lang/String;
+      move-result-object      v0
+      const-string            v1, "Activity"
+      invoke-static           v1, v0, Lcom/baidu/simeji/util/p;->d(Ljava/lang/String; Ljava/lang/String;)V
+      const/4                 v0, 0
+      iput-boolean            v0, v3, Lcom/baidu/simeji/components/b;->c0 Z
+      return-void             
+  .method onSaveInstanceState(Landroid/os/Bundle;)V
+      const/4                 v0, 1
+      iput-boolean            v0, v1, Lcom/baidu/simeji/components/b;->c0 Z
+      invoke-super            v1, v2, Landroidx/activity/ComponentActivity;->onSaveInstanceState(Landroid/os/Bundle;)V
+      return-void             
+  .method onStart()V
+      invoke-super            v1, Landroidx/fragment/app/j;->onStart()V
+      const/4                 v0, 0
+      iput-boolean            v0, v1, Lcom/baidu/simeji/components/b;->c0 Z
+      return-void             
+  .method onStop()V
+      const/4                 v0, 1
+      iput-boolean            v0, v1, Lcom/baidu/simeji/components/b;->c0 Z
+      invoke-super            v1, Landroidx/fragment/app/j;->onStop()V
+      return-void             
+  .method onTitleChanged(Ljava/lang/CharSequence; I)V
+      invoke-super            v0, v1, v2, Landroid/app/Activity;->onTitleChanged(Ljava/lang/CharSequence; I)V
+      iget-object             v2, v0, Lcom/baidu/simeji/components/b;->Z Lz8/a;
+      if-eqz                  v2, +005h
+      invoke-virtual          v2, v1, Lz8/a;->j(Ljava/lang/CharSequence;)V
+      return-void             
+  .method onWindowFocusChanged(Z)V
+      invoke-super            v1, v2, Landroid/app/Activity;->onWindowFocusChanged(Z)V
+      iget-boolean            v0, v1, Lcom/baidu/simeji/components/b;->f0 Z
+      if-eqz                  v0, +00fh
+      if-eqz                  v2, +00dh
+      const/4                 v2, 0
+      iput-boolean            v2, v1, Lcom/baidu/simeji/components/b;->f0 Z
+      new-instance            v2, Lcom/baidu/simeji/components/b$c;
+      invoke-direct           v2, v1, Lcom/baidu/simeji/components/b$c;-><init>(Lcom/baidu/simeji/components/b;)V
+      invoke-static           v2, Lcom/preff/kb/util/HandlerUtils;->runOnUiThread(Ljava/lang/Runnable;)V
+      return-void             
+  .method r0(Landroidx/fragment/app/Fragment;)V
+      invoke-super            v1, v2, Landroidx/fragment/app/j;->r0(Landroidx/fragment/app/Fragment;)V
+      iget-object             v0, v1, Lcom/baidu/simeji/components/b;->k0 Ljava/util/List;
+      if-nez                  v0, +009h
+      new-instance            v0, Ljava/util/ArrayList;
+      invoke-direct           v0, Ljava/util/ArrayList;-><init>()V
+      iput-object             v0, v1, Lcom/baidu/simeji/components/b;->k0 Ljava/util/List;
+      iget-object             v0, v1, Lcom/baidu/simeji/components/b;->k0 Ljava/util/List;
+      invoke-interface        v0, v2, Ljava/util/List;->add(Ljava/lang/Object;)Z
+      return-void             
+  .method setContentView(I)V
+      const/4                 v0, 0
+      invoke-static           v1, v2, v0, Landroid/view/View;->inflate(Landroid/content/Context; I Landroid/view/ViewGroup;)Landroid/view/View;
+      move-result-object      v2
+      iget-object             v0, v1, Lcom/baidu/simeji/components/b;->a0 Landroid/widget/FrameLayout;
+      invoke-virtual          v0, Landroid/view/ViewGroup;->removeAllViews()V
+      iget-object             v0, v1, Lcom/baidu/simeji/components/b;->a0 Landroid/widget/FrameLayout;
+      invoke-virtual          v0, v2, Landroid/view/ViewGroup;->addView(Landroid/view/View;)V
+      return-void             
+  .method setContentView(Landroid/view/View;)V
+      iget-object             v0, v1, Lcom/baidu/simeji/components/b;->a0 Landroid/widget/FrameLayout;
+      invoke-virtual          v0, Landroid/view/ViewGroup;->removeAllViews()V
+      iget-object             v0, v1, Lcom/baidu/simeji/components/b;->a0 Landroid/widget/FrameLayout;
+      invoke-virtual          v0, v2, Landroid/view/ViewGroup;->addView(Landroid/view/View;)V
+      return-void             
+  .method setContentView(Landroid/view/View; Landroid/view/ViewGroup$LayoutParams;)V
+      iget-object             v0, v1, Lcom/baidu/simeji/components/b;->a0 Landroid/widget/FrameLayout;
+      invoke-virtual          v0, Landroid/view/ViewGroup;->removeAllViews()V
+      iget-object             v0, v1, Lcom/baidu/simeji/components/b;->a0 Landroid/widget/FrameLayout;
+      invoke-virtual          v0, v2, v3, Landroid/view/ViewGroup;->addView(Landroid/view/View; Landroid/view/ViewGroup$LayoutParams;)V
+      return-void             
+  .method v0()Lz8/a;
+      iget-object             v0, v1, Lcom/baidu/simeji/components/b;->Z Lz8/a;
+      return-object           v0
+  .method w0()Z
+      const/4                 v0, 1
+      return                  v0
+  .method z0()Z
+      iget-boolean            v0, v1, Lcom/baidu/simeji/components/b;->e0 Z
+      return                  v0
+[32m2026-11-15 17:37:22.828 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36m__init__[0m:[36m8331[0m - [34m[1mDEX None None None[0m
+[32m2026-11-15 17:37:22.828 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36m__init__[0m:[36m511[0m - [34m[1mHeaderItem[0m
+[32m2026-11-15 17:37:22.842 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'HEADER_ITEM'[0m
+[32m2026-11-15 17:37:22.842 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36m__init__[0m:[36m511[0m - [34m[1mHeaderItem[0m
+[32m2026-11-15 17:37:22.846 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'HEADER_ITEM'. Required time 0:00.0042[0m
+[32m2026-11-15 17:37:22.846 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'MAP_LIST'[0m
+[32m2026-11-15 17:37:22.846 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'MAP_LIST'. Required time 0:00.0000[0m
+[32m2026-11-15 17:37:22.846 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'STRING_DATA_ITEM'[0m
+[32m2026-11-15 17:37:22.897 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'STRING_DATA_ITEM'. Required time 0:00.0506[0m
+[32m2026-11-15 17:37:22.905 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'STRING_ID_ITEM'[0m
+[32m2026-11-15 17:37:22.929 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'STRING_ID_ITEM'. Required time 0:00.0238[0m
+[32m2026-11-15 17:37:22.937 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'TYPE_ID_ITEM'[0m
+[32m2026-11-15 17:37:22.947 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'TYPE_ID_ITEM'. Required time 0:00.0096[0m
+[32m2026-11-15 17:37:22.947 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'FIELD_ID_ITEM'[0m
+[32m2026-11-15 17:37:23.173 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'FIELD_ID_ITEM'. Required time 0:00.2257[0m
+[32m2026-11-15 17:37:23.173 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'TYPE_LIST'[0m
+[32m2026-11-15 17:37:23.189 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'TYPE_LIST'. Required time 0:00.0164[0m
+[32m2026-11-15 17:37:23.192 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'PROTO_ID_ITEM'[0m
+[32m2026-11-15 17:37:23.210 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'PROTO_ID_ITEM'. Required time 0:00.0183[0m
+[32m2026-11-15 17:37:23.210 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'METHOD_ID_ITEM'[0m
+[32m2026-11-15 17:37:23.349 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'METHOD_ID_ITEM'. Required time 0:00.1390[0m
+[32m2026-11-15 17:37:23.349 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'CLASS_DATA_ITEM'[0m
+[32m2026-11-15 17:37:23.734 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'CLASS_DATA_ITEM'. Required time 0:00.3843[0m
+[32m2026-11-15 17:37:23.739 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'DEBUG_INFO_ITEM'[0m
+[32m2026-11-15 17:37:23.739 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'DEBUG_INFO_ITEM'. Required time 0:00.0004[0m
+[32m2026-11-15 17:37:23.739 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'CODE_ITEM'[0m
+[32m2026-11-15 17:37:23.841 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'CODE_ITEM'. Required time 0:00.1011[0m
+[32m2026-11-15 17:37:23.841 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ANNOTATION_ITEM'[0m
+[32m2026-11-15 17:37:23.991 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ANNOTATION_ITEM'. Required time 0:00.1503[0m
+[32m2026-11-15 17:37:23.995 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ANNOTATION_SET_ITEM'[0m
+[32m2026-11-15 17:37:24.264 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ANNOTATION_SET_ITEM'. Required time 0:00.2686[0m
+[32m2026-11-15 17:37:24.266 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ANNOTATION_SET_REF_LIST'[0m
+[32m2026-11-15 17:37:24.267 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ANNOTATION_SET_REF_LIST'. Required time 0:00.0006[0m
+[32m2026-11-15 17:37:24.267 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ENCODED_ARRAY_ITEM'[0m
+[32m2026-11-15 17:37:24.270 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ENCODED_ARRAY_ITEM'. Required time 0:00.0026[0m
+[32m2026-11-15 17:37:24.270 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ANNOTATIONS_DIRECTORY_ITEM'[0m
+[32m2026-11-15 17:37:24.285 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ANNOTATIONS_DIRECTORY_ITEM'. Required time 0:00.0147[0m
+[32m2026-11-15 17:37:24.287 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'CLASS_DEF_ITEM'[0m
+[32m2026-11-15 17:37:24.875 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'CLASS_DEF_ITEM'. Required time 0:00.5881[0m
+[32m2026-11-15 17:37:24.876 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36m__init__[0m:[36m8331[0m - [34m[1mDEX None None None[0m
+[32m2026-11-15 17:37:24.876 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36m__init__[0m:[36m511[0m - [34m[1mHeaderItem[0m
+[32m2026-11-15 17:37:24.889 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'HEADER_ITEM'[0m
+[32m2026-11-15 17:37:24.889 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36m__init__[0m:[36m511[0m - [34m[1mHeaderItem[0m
+[32m2026-11-15 17:37:24.894 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'HEADER_ITEM'. Required time 0:00.0045[0m
+[32m2026-11-15 17:37:24.894 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'MAP_LIST'[0m
+[32m2026-11-15 17:37:24.894 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'MAP_LIST'. Required time 0:00.0000[0m
+[32m2026-11-15 17:37:24.894 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'STRING_DATA_ITEM'[0m
+[32m2026-11-15 17:37:24.946 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'STRING_DATA_ITEM'. Required time 0:00.0523[0m
+[32m2026-11-15 17:37:24.954 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'STRING_ID_ITEM'[0m
+[32m2026-11-15 17:37:24.979 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'STRING_ID_ITEM'. Required time 0:00.0249[0m
+[32m2026-11-15 17:37:24.987 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'TYPE_ID_ITEM'[0m
+[32m2026-11-15 17:37:24.998 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'TYPE_ID_ITEM'. Required time 0:00.0114[0m
+[32m2026-11-15 17:37:24.998 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'FIELD_ID_ITEM'[0m
+[32m2026-11-15 17:37:25.090 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'FIELD_ID_ITEM'. Required time 0:00.0917[0m
+[32m2026-11-15 17:37:25.090 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'TYPE_LIST'[0m
+[32m2026-11-15 17:37:25.109 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'TYPE_LIST'. Required time 0:00.0190[0m
+[32m2026-11-15 17:37:25.112 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'PROTO_ID_ITEM'[0m
+[32m2026-11-15 17:37:25.134 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'PROTO_ID_ITEM'. Required time 0:00.0218[0m
+[32m2026-11-15 17:37:25.134 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'METHOD_ID_ITEM'[0m
+[32m2026-11-15 17:37:25.281 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'METHOD_ID_ITEM'. Required time 0:00.1466[0m
+[32m2026-11-15 17:37:25.281 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'CLASS_DATA_ITEM'[0m
+[32m2026-11-15 17:37:25.890 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'CLASS_DATA_ITEM'. Required time 0:00.6088[0m
+[32m2026-11-15 17:37:25.896 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'DEBUG_INFO_ITEM'[0m
+[32m2026-11-15 17:37:25.896 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'DEBUG_INFO_ITEM'. Required time 0:00.0005[0m
+[32m2026-11-15 17:37:25.896 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'CODE_ITEM'[0m
+[32m2026-11-15 17:37:26.000 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'CODE_ITEM'. Required time 0:00.1035[0m
+[32m2026-11-15 17:37:26.000 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ANNOTATION_ITEM'[0m
+[32m2026-11-15 17:37:26.089 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ANNOTATION_ITEM'. Required time 0:00.0892[0m
+[32m2026-11-15 17:37:26.092 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ANNOTATION_SET_ITEM'[0m
+[32m2026-11-15 17:37:26.102 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ANNOTATION_SET_ITEM'. Required time 0:00.0100[0m
+[32m2026-11-15 17:37:26.105 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ANNOTATION_SET_REF_LIST'[0m
+[32m2026-11-15 17:37:26.106 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ANNOTATION_SET_REF_LIST'. Required time 0:00.0019[0m
+[32m2026-11-15 17:37:26.107 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ENCODED_ARRAY_ITEM'[0m
+[32m2026-11-15 17:37:26.120 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ENCODED_ARRAY_ITEM'. Required time 0:00.0136[0m
+[32m2026-11-15 17:37:26.120 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ANNOTATIONS_DIRECTORY_ITEM'[0m
+[32m2026-11-15 17:37:26.138 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ANNOTATIONS_DIRECTORY_ITEM'. Required time 0:00.0171[0m
+[32m2026-11-15 17:37:26.140 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'CLASS_DEF_ITEM'[0m
+[32m2026-11-15 17:37:26.515 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'CLASS_DEF_ITEM'. Required time 0:00.3750[0m
+[32m2026-11-15 17:37:26.517 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36m__init__[0m:[36m8331[0m - [34m[1mDEX None None None[0m
+[32m2026-11-15 17:37:26.517 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36m__init__[0m:[36m511[0m - [34m[1mHeaderItem[0m
+[32m2026-11-15 17:37:26.524 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'HEADER_ITEM'[0m
+[32m2026-11-15 17:37:26.524 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36m__init__[0m:[36m511[0m - [34m[1mHeaderItem[0m
+[32m2026-11-15 17:37:26.527 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'HEADER_ITEM'. Required time 0:00.0022[0m
+[32m2026-11-15 17:37:26.527 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'MAP_LIST'[0m
+[32m2026-11-15 17:37:26.527 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'MAP_LIST'. Required time 0:00.0000[0m
+[32m2026-11-15 17:37:26.527 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'STRING_DATA_ITEM'[0m
+[32m2026-11-15 17:37:26.568 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'STRING_DATA_ITEM'. Required time 0:00.0416[0m
+[32m2026-11-15 17:37:26.574 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'STRING_ID_ITEM'[0m
+[32m2026-11-15 17:37:26.595 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'STRING_ID_ITEM'. Required time 0:00.0204[0m
+[32m2026-11-15 17:37:26.600 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'TYPE_ID_ITEM'[0m
+[32m2026-11-15 17:37:26.605 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'TYPE_ID_ITEM'. Required time 0:00.0046[0m
+[32m2026-11-15 17:37:26.605 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'FIELD_ID_ITEM'[0m
+[32m2026-11-15 17:37:26.658 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'FIELD_ID_ITEM'. Required time 0:00.0524[0m
+[32m2026-11-15 17:37:26.658 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'TYPE_LIST'[0m
+[32m2026-11-15 17:37:27.270 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'TYPE_LIST'. Required time 0:00.6121[0m
+[32m2026-11-15 17:37:27.272 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'PROTO_ID_ITEM'[0m
+[32m2026-11-15 17:37:27.280 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'PROTO_ID_ITEM'. Required time 0:00.0085[0m
+[32m2026-11-15 17:37:27.280 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'METHOD_ID_ITEM'[0m
+[32m2026-11-15 17:37:27.339 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'METHOD_ID_ITEM'. Required time 0:00.0585[0m
+[32m2026-11-15 17:37:27.339 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'CLASS_DATA_ITEM'[0m
+[32m2026-11-15 17:37:27.425 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'CLASS_DATA_ITEM'. Required time 0:00.0856[0m
+[32m2026-11-15 17:37:27.428 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'DEBUG_INFO_ITEM'[0m
+[32m2026-11-15 17:37:27.428 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'DEBUG_INFO_ITEM'. Required time 0:00.0003[0m
+[32m2026-11-15 17:37:27.428 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'CODE_ITEM'[0m
+[32m2026-11-15 17:37:27.472 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'CODE_ITEM'. Required time 0:00.0432[0m
+[32m2026-11-15 17:37:27.472 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ANNOTATION_ITEM'[0m
+[32m2026-11-15 17:37:27.576 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ANNOTATION_ITEM'. Required time 0:00.1041[0m
+[32m2026-11-15 17:37:27.579 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ANNOTATION_SET_ITEM'[0m
+[32m2026-11-15 17:37:27.587 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ANNOTATION_SET_ITEM'. Required time 0:00.0088[0m
+[32m2026-11-15 17:37:27.589 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ANNOTATION_SET_REF_LIST'[0m
+[32m2026-11-15 17:37:27.589 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ANNOTATION_SET_REF_LIST'. Required time 0:00.0003[0m
+[32m2026-11-15 17:37:27.590 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ENCODED_ARRAY_ITEM'[0m
+[32m2026-11-15 17:37:27.606 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ENCODED_ARRAY_ITEM'. Required time 0:00.0165[0m
+[32m2026-11-15 17:37:27.606 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'ANNOTATIONS_DIRECTORY_ITEM'[0m
+[32m2026-11-15 17:37:27.616 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'ANNOTATIONS_DIRECTORY_ITEM'. Required time 0:00.0100[0m
+[32m2026-11-15 17:37:27.617 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7636[0m - [34m[1mStarting parsing map_item 'CLASS_DEF_ITEM'[0m
+[32m2026-11-15 17:37:27.795 +00:00[0m | [34m[1mDEBUG   [0m | [36mandroguard.core.dex[0m:[36mparse[0m:[36m7757[0m - [34m[1mEnd of parsing map_item 'CLASS_DEF_ITEM'. Required time 0:00.1778[0m
