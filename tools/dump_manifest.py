@@ -7,7 +7,22 @@ import zipfile
 from pathlib import Path
 
 
+def atributo(elemento, nombre: str) -> str:
+    """Lee un atributo aunque androguard lo devuelva con espacio de nombres."""
+    for clave, valor in elemento.attrib.items():
+        if clave == nombre or clave.endswith("}" + nombre) or clave.endswith(":" + nombre):
+            return valor
+    return "?"
+
+
 def main() -> int:
+    try:
+        from loguru import logger as loguru_logger
+
+        loguru_logger.remove()
+    except Exception:
+        pass
+
     from androguard.core.axml import AXMLPrinter
 
     ruta = Path(sys.argv[1])
@@ -27,12 +42,12 @@ def main() -> int:
         for elemento in aplicacion:
             if elemento.tag not in ("activity", "activity-alias"):
                 continue
-            nombre = elemento.attrib.get("name", "?")
+            nombre = atributo(elemento, "name")
             categoria = ""
             for filtro in elemento:
                 if filtro.tag != "intent-filter":
                     continue
-                categorias = [c.attrib.get("name", "") for c in filtro if c.tag == "category"]
+                categorias = [atributo(c, "name") for c in filtro if c.tag == "category"]
                 if any("LAUNCHER" in c for c in categorias):
                     categoria = "  <== ICONO EN EL CAJON"
             print(f"{elemento.tag}: {nombre}{categoria}")

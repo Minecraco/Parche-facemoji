@@ -29,6 +29,10 @@ jobs:
         run: gdown "https://drive.google.com/uc?id=${APKM_FILE_ID}" -O facemoji.apkm 2>&1 | tail -1
       - name: Manifiesto
         run: python tools/dump_manifest.py facemoji.apkm > analisis/c2-manifiesto.txt 2>&1 || true
+      - name: Quien hereda de la clase base de ajustes
+        run: python tools/analizar_apk.py facemoji.apkm --subclases '^Lcom/baidu/simeji/components/b;' > analisis/c7-subclases-base.txt 2>&1 || true
+      - name: Quien menciona FaqActivity
+        run: python tools/analizar_apk.py facemoji.apkm --usa-clase 'Lcom/baidu/simeji/settings/FaqActivity;' > analisis/c8-usa-faq.txt 2>&1 || true
       - name: Clase base de la pantalla de ajustes
         run: python tools/analizar_apk.py facemoji.apkm --metodos '^Lcom/baidu/simeji/components/b;' > analisis/c3-base-metodos.txt 2>&1 || true
       - name: Bytecode de la clase base

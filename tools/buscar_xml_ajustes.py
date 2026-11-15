@@ -98,6 +98,13 @@ def main() -> int:
     parser.add_argument("--min-filas", type=int, default=3)
     args = parser.parse_args()
 
+    try:
+        from loguru import logger as loguru_logger
+
+        loguru_logger.remove()
+    except Exception:
+        pass
+
     AXMLPrinter = cargar(
         (
             "androguard.core.axml",
