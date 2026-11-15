@@ -12,7 +12,8 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  # write: el paso final vuelca el registro de Gradle en la rama si la compilacion falla.
+  contents: write
 
 jobs:
   build:
@@ -33,7 +34,10 @@ jobs:
           # El plugin app.morphe.patches se descarga desde GitHub Packages.
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew buildAndroid --no-daemon
+        # set -o pipefail: el `tee` no debe ocultar el codigo de salida de Gradle.
+        run: |
+          set -o pipefail
+          ./gradlew buildAndroid --no-daemon 2>&1 | tee build.log
 
       # Carga los parches desde el .mpp y genera patches-list.json. Esto valida en CI que
       # las declaraciones de parche son correctas (nombres, compatibilidad y extensiones),
@@ -43,6 +47,21 @@ jobs:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./gradlew generatePatchesList --no-daemon
+
+      # La API de Actions no deja leer los registros desde fuera del navegador, asi que si la
+      # compilacion falla se deja el registro de Gradle en la propia rama.
+      - name: Publicar el registro del fallo
+        if: failure()
+        run: |
+          if [ -f build.log ]; then
+            tail -n 300 build.log > build-failure.log
+            rm -f build.log
+            git config user.name "Parche Facemoji"
+            git config user.email "noreply@example.com"
+            git add build-failure.log
+            git commit -m "ci: registro del fallo de compilacion" || true
+            git push origin HEAD || true
+          fi
 
       - name: Upload .mpp
         uses: actions/upload-artifact@v4

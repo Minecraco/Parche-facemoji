@@ -140,3 +140,4 @@ __pycache__/
 # APK de trabajo: nunca se sube al repositorio
 *.apkm
 *.xapk
+build.log
