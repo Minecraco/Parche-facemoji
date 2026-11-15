@@ -41,37 +41,56 @@ es decir `.apkm`). El resto de versiones se aceptan como *experimental*.
 
 | Parche | Por defecto | Qué hace |
 | --- | --- | --- |
-| **Eliminar anuncios** | ✅ Sí | Bloquea la carga y la visualización de anuncios de AdMob (banner, nativo, intersticial, *app open*, recompensado) y de las redes de mediación más habituales (Facebook, Unity Ads, AppLovin). |
+| **Eliminar anuncios** | ✅ Sí | Apaga las **sugerencias patrocinadas** que la app inserta en la barra de sugerencias del teclado. |
+| **Desbloquear VIP** | ✅ Sí | Marca como gratuitas las fuentes de color, las series de stickers, los TextBomb y las frases del teclado Rizz que la app reserva a la suscripción, y da por hechos los desbloqueos por vídeo. |
 | **Desactivar rastreo** | ❌ No | Neutraliza el envío de eventos de Firebase Analytics, Crashlytics, Facebook y AppsFlyer. |
 | **Quitar permiso de ID de publicidad** | ❌ No | Elimina `com.google.android.gms.permission.AD_ID` del manifiesto, así la app no puede leer el identificador de publicidad del dispositivo. |
 
-Los parches se aplican de forma **opcional y tolerante**: si una red publicitaria o un SDK
-no está en tu versión de Facemoji, se ignora en vez de romper el parcheo. El parche de
-anuncios sí falla de forma explícita si no encuentra **ninguna** red conocida, para que no
-te quedes con una app "parcheada" que sigue mostrando anuncios.
+Los parches se aplican de forma **opcional y tolerante**: si un rastreador o un SDK no está en
+tu versión de Facemoji, se ignora en vez de romper el parcheo. Los parches de anuncios y de VIP
+sí fallan de forma explícita si no encuentran **ninguno** de sus puntos de enganche, para que no
+te quedes con una app "parcheada" que sigue igual.
 
-### ⚠️ Estado de verificación
+### 🔍 Qué se ha encontrado en la app real (3.7.0)
 
-Estas huellas (*fingerprints*) se han escrito contra la **API pública de los SDK de terceros**
-que la app incluye, según los metadatos públicos de Facemoji (AdMob, Facebook, Firebase
-Analytics/Crashlytics y AppsFlyer). Eso las hace independientes del código ofuscado de la app y
-resistentes a las actualizaciones, pero **todavía no se han validado contra una APK real**, por
-lo que todas las versiones aparecen como *experimental* en Morphe Manager.
+Los análisis completos están en [`analisis/`](analisis) y se generan con
+`tools/analizar_apk.py` sobre la APK 3.7.0 de APKMirror. Resumen:
 
-Si tu versión falla, abre una incidencia con el mensaje de error y la versión de la app, o
-ejecuta el verificador incluido (ver [docs/VERIFICAR_HUELLAS.md](docs/VERIFICAR_HUELLAS.md)).
+- **La publicidad no es de AdMob.** AdMob solo está como stub de mediación (no existen
+  `BaseAdView`, `InterstitialAd` ni `AdLoader`). La red real es **Pangle/CSJ (ByteDance)**,
+  con unas 2.000 referencias, pero R8 ha renombrado sus clases: no queda ni un nombre estable
+  dentro del SDK al que engancharse.
+- **Lo que sí se puede apagar** es el motor de **sugerencias patrocinadas** del teclado
+  (`com.baidu.simeji.plutus.adsuggestion.AdSuggestionUtils`): sus dos métodos de decisión y las
+  tres configuraciones remotas que los alimentan. Es el anuncio que aparece mientras escribes.
+- **El sistema VIP no está centralizado**: cada catálogo lleva su propia bandera
+  (`CoolFontBean.isVip`, `SeriesStickerItem.isSeriesVip`, `TextBombBean.isVip`, …). Esas
+  banderas tienen nombre propio y son el punto de enganche del parche de VIP.
 
-### 🚧 Pendiente
+Verificación automática contra la APK real (`--comprobar`):
 
-El desbloqueo de **VIP / Pro** y de los temas y fuentes de pago es el siguiente paso y
-necesita la APK real para analizar el bytecode propio de la app (que sí está ofuscado).
-Herramienta lista para cuando la tengas:
-
-```bash
-python3 tools/analizar_apk.py Facemoji.apkm --vip
+```text
+=== Eliminar anuncios ===   => 5/5 huellas disponibles.
+=== Desbloquear VIP ===     => 12/12 huellas disponibles.
+=== Desactivar rastreo ===  => 8/9 huellas disponibles. (falta Facebook, que la app no incluye)
 ```
 
-Detalles y riesgos en [docs/ROADMAP.md](docs/ROADMAP.md).
+### ⚠️ Estado de verificación y limitaciones
+
+- Las huellas se han comprobado contra la **APK 3.7.0 real** (las 15 + 12 + 8 coinciden), pero
+  **no se ha probado en un dispositivo**. Por eso todas las versiones siguen apareciendo como
+  *experimental* en Morphe Manager.
+- **La publicidad a pantalla completa (bienvenida y emergentes) no se elimina**: la sirve Pangle
+  con las clases renombradas y no hay un punto de enganche estable en 3.7.0. El parche de
+  anuncios solo apaga las sugerencias patrocinadas del teclado.
+- **El servidor sigue mandando**: si Facemoji comprueba la suscripción al descargar una fuente o
+  un sticker, la descarga puede fallar aunque el candado ya no se vea.
+- **La app no está ofuscada del todo**: los modelos de datos y los gestores conservan sus nombres
+  (paquete `com.baidu.simeji.*`), pero la capa de UI, el motor de sugerencias por dentro y el SDK de
+  anuncios sí están ofuscados. Los parches solo tocan lo que conserva nombre propio.
+
+Si algo falla, abre una incidencia con el mensaje de error y la versión de la app, o ejecuta el
+verificador incluido (ver [docs/VERIFICAR_HUELLAS.md](docs/VERIFICAR_HUELLAS.md)).
 
 ## 🩹 Lista de parches publicada
 
@@ -107,13 +126,15 @@ Más detalles en [docs/DESARROLLO.md](docs/DESARROLLO.md).
 
 ```text
 patches/src/main/kotlin/app/parchefacemoji/patches/facemoji/
-├── ads/         parche de anuncios + huellas de las redes publicitarias
+├── ads/         parche de anuncios + huellas de las sugerencias patrocinadas
+├── vip/         parche de desbloqueo VIP + huellas de las banderas de pago
 ├── tracking/    parche de analítica + huellas de los rastreadores
 ├── privacy/     cambios de manifiesto (permiso AD_ID)
 └── shared/      compatibilidad de la app y utilidades de hooking
 
 extensions/extension/   código Java que se inyecta en la app (PatchHooks)
-tools/analizar_apk.py   verificador de huellas sobre una APK real
+tools/analizar_apk.py   verificador de huellas y analizador de la APK real
+analisis/               informes del análisis de la 3.7.0 (huellas, clases, bytecode)
 docs/                   documentación de desarrollo y verificación
 ```
 

@@ -52,6 +52,7 @@ jobs:
       # compilacion falla se deja el registro de Gradle en la propia rama.
       - name: Publicar el registro del fallo
         if: failure()
+        continue-on-error: true
         run: |
           if [ -f build.log ]; then
             tail -n 300 build.log > build-failure.log

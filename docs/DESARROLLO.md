@@ -68,6 +68,21 @@ adb logcat -s ParcheFacemoji
 La implementación vive en `shared/Hooks.kt` (`Fingerprint.blockVoidMethods`), que resuelve
 la huella con `matchAllOrNull()`: si el SDK no está en esa versión de la app, se ignora.
 
+## 3 bis. Forzar un valor de retorno (VIP, interruptores)
+
+Muchas comprobaciones de la app no son métodos `void` sino booleanos (`isVip()`, `getEnable()`).
+Para esas están las utilidades de `shared/Hooks.kt`:
+
+| Utilidad | Tipo de retorno | Uso |
+| --- | --- | --- |
+| `forceBoolean(value, surface)` | `Z` | Apagar un interruptor o una comprobación de pago |
+| `forceInt(value, surface)` | `I` | Banderas numéricas (`isVip()I` del teclado Rizz) |
+| `forceBooleanObject(value, surface)` | `Ljava/lang/Boolean;` | Envoltorios (`getVipIsUnLock()`) |
+
+Insertan al principio del método el `const-string` de traza, la llamada a `PatchHooks.logBlocked`
+y el `return` con el valor fijo, así que el cuerpo original nunca se ejecuta. El parche de VIP
+(`vip/UnlockVipPatch.kt`) es el ejemplo más completo.
+
 ## 4. Añadir una red publicitaria nueva
 
 1. Añade la huella en `ads/Fingerprints.kt`:
@@ -80,7 +95,8 @@ la huella con `matchAllOrNull()`: si el SDK no está en esa versión de la app, 
    )
    ```
 
-2. Regístrala en `AD_SURFACES` dentro de `RemoveAdsPatch.kt`.
+2. Regístrala en `AD_SWITCHES` dentro de `RemoveAdsPatch.kt` (o en `VIP_FLAGS` si es una
+   bandera de pago).
 3. Comprueba que existe en la APK real:
 
    ```bash

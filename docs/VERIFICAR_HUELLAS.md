@@ -12,14 +12,20 @@ Solo necesitas Python 3 (sin Java, sin apktool):
 python3 tools/analizar_apk.py Facemoji.apkm --comprobar
 ```
 
-Salida de ejemplo:
+Salida real sobre la 3.7.0:
 
 ```text
 === Eliminar anuncios ===
-  [x] Lcom/google/android/gms/ads/BaseAdView;->loadAd
-  [ ] Lcom/google/android/gms/ads/appopen/AppOpenAd;->show
+  [x] Lcom/baidu/simeji/plutus/adsuggestion/AdSuggestionUtils;->b
+  [x] Lcom/baidu/simeji/plutus/adsuggestion/AdSuggestionUtils;->c
+  [x] Lcom/baidu/simeji/plutus/adsuggestion/AdSuggestionUtils$AdSuggestionSwitch;->getEnable
   ...
-  => 5/10 huellas disponibles.
+  => 5/5 huellas disponibles.
+
+=== Desbloquear VIP ===
+  [x] Lcom/baidu/simeji/coolfont/CoolFontBean;->isVip
+  ...
+  => 12/12 huellas disponibles.
 ```
 
 - `[x]` la huella existe en tu APK: el parche la va a interceptar.
@@ -39,8 +45,33 @@ python3 tools/analizar_apk.py Facemoji.apkm --informe
 ```
 
 Lista AdMob, Facebook Audience Network, Unity Ads, AppLovin, Pangle, ironSource,
-Mintegral, Firebase, Crashlytics, AppsFlyer y Adjust. Si tu APK usa una red que no está en
-`AD_SURFACES`, es el momento de añadirla (ver `docs/DESARROLLO.md`).
+Mintegral, Firebase, Crashlytics, AppsFlyer y Adjust.
+
+En la 3.7.0 el resultado es: Pangle/CSJ ~2.000 referencias, AppsFlyer 414, Crashlytics 400,
+AdMob 67 (solo stub de mediación), Firebase Analytics 36. **Facebook, Unity, AppLovin,
+ironSource, Mintegral, Vungle y Adjust no están.**
+
+## 2 bis. Herramientas de análisis que trae el verificador
+
+Todas necesitan androguard y sirven para localizar objetivos nuevos cuando cambie la versión:
+
+```bash
+# Clases cuyo descriptor coincide con una expresion regular
+python3 tools/analizar_apk.py Facemoji.apkm --clases-regex '^Lcom/baidu/simeji/[^$]*Vip[^$]*;'
+
+# Metodos (con firma y tipo de retorno) de esas clases
+python3 tools/analizar_apk.py Facemoji.apkm --metodos '^Lcom/baidu/simeji/coolfont/CoolFontBean;'
+
+# Metodos por NOMBRE en cualquier clase (util si R8 renombra el paquete pero no el metodo)
+python3 tools/analizar_apk.py Facemoji.apkm --metodos-nombre '(?i)^(is_?vip|is_?pro)[A-Za-z_]*$'
+
+# Quien llama a algo (para encontrar el envoltorio propio de un SDK)
+python3 tools/analizar_apk.py Facemoji.apkm --llamadas 'is_vip_subscriber' \
+    --llamadas-clases '^Lcom/baidu/simeji/'
+
+# Bytecode de una clase, para leer la logica antes de parchearla
+python3 tools/analizar_apk.py Facemoji.apkm --smali '^Lcom/baidu/simeji/plutus/adsuggestion/AdSuggestionUtils;'
+```
 
 ## 3. Ajustar una huella que ya no coincide
 
@@ -61,8 +92,9 @@ cambian el paquete o la firma del método (por ejemplo, un `show()` que pasa a
    ```
 
 3. Actualiza la huella en `patches/src/main/kotlin/app/parchefacemoji/patches/facemoji/ads/Fingerprints.kt`.
-   Si el método ya no devuelve `void`, no puedes usar `return-void`: usa
-   `returnEarly(<valor>)` o intercepta en otro punto.
+   Según lo que devuelva el método, el parche usa una utilidad distinta de `shared/Hooks.kt`:
+   `blockVoidMethods` (void), `forceBoolean` (`Z`), `forceInt` (`I`) o `forceBooleanObject`
+   (`Ljava/lang/Boolean;`).
 
 ## 4. Comprobar en el dispositivo
 
@@ -75,13 +107,14 @@ adb logcat -s ParcheFacemoji
 Deberías ver líneas como:
 
 ```text
-D ParcheFacemoji: Anuncio bloqueado: AdMob: banner
+D ParcheFacemoji: anuncio: Peticion de sugerencias
+D ParcheFacemoji: vip: Fuentes de color: es VIP
 ```
 
 Si el log aparece, la interceptación funciona y solo queda comprobar visualmente que el
 anuncio ya no se muestra. Si no aparece ninguna línea, la huella no coincide en tu versión.
 
-## 5. Localizar el código VIP (para el parche pendiente)
+## 5. Localizar el código VIP
 
 ```bash
 pip install androguard     # recomendado, lista también métodos
@@ -94,7 +127,9 @@ Imprime dos listas:
   (`is_vip`, `vip_status`, `premium_theme`…).
 - **Métodos** cuyo nombre contiene `vip`/`premium`/`isPro`/`subscri` (si hay androguard).
 
-Ese listado es lo que hace falta para escribir el parche de desbloqueo VIP.
+Ese listado es lo que se usó para escribir el parche de desbloqueo VIP. Si cambia la versión,
+vuelve a ejecutar `--comprobar` y, para las huellas que hayan dejado de coincidir, `--metodos`
+sobre la clase afectada para ver su firma nueva.
 
 ## 6. Reportar
 

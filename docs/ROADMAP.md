@@ -2,51 +2,43 @@
 
 ## Hecho
 
-- **Eliminar anuncios**: AdMob (banner, nativo, intersticial, *app open*, recompensado,
-  recompensado intersticial) y mediación (Facebook, Unity Ads, AppLovin).
-- **Desactivar rastreo**: Firebase Analytics, Crashlytics, Facebook, AppsFlyer.
+- **Eliminar anuncios** (parcial): apaga el motor de **sugerencias patrocinadas** del teclado
+  (`AdSuggestionUtils`), que es el anuncio que aparece mientras se escribe.
+- **Desbloquear VIP**: fuentes de color (`CoolFontBean`), series de stickers (`SeriesStickerItem`,
+  `StickerItem`), TextBomb (`TextBombBean`) y frases del teclado Rizz (`RizzConfigInfoDetail`,
+  `RizzConfigInfoDetail2`, `RizzIceBreakerConfigInfoDetail`), incluidos los desbloqueos por vídeo.
+- **Desactivar rastreo**: Firebase Analytics, Crashlytics, AppsFlyer (Facebook no está en la app).
 - **Quitar permiso de ID de publicidad** (`AD_ID`).
 
-## Pendiente: VIP / Pro y contenido de pago
+## Cómo se hizo (3.7.0)
 
-Facemoji vende suscripción VIP y temas/fuentes de pago. Para parchearlo hace falta
-analizar el bytecode **propio** de la app (no el de un SDK), que sí está ofuscado:
+El análisis completo está en [`analisis/`](../analisis). Lo importante:
 
-- La comprobación de VIP dentro de la app (probablemente un `isVip()` / `isPremium()` en
-  un paquete ofuscado de una o dos letras, como `ek`, `a`, `b`…).
-- El estado de compra que llega del servidor y se guarda en `SharedPreferences`/`DataStore`.
-- La lista de temas y fuentes marcados como premium (normalmente por un campo `isVip`
-  o `price > 0` en la respuesta JSON).
+- El `RemoveAdsPatch` original apuntaba a la API pública de AdMob y **no coincidía con nada**
+  (`--comprobar` daba 0/10): la app no usa `BaseAdView`, `InterstitialAd` ni `AdLoader`.
+- La red real es **Pangle/CSJ (ByteDance)**, cuyas clases ha renombrado R8. No hay ningún nombre
+  estable dentro del SDK para engancharse, así que el parche no puede bloquearlo desde dentro.
+- El sistema VIP no está centralizado: cada catálogo lleva su propia bandera `isVip` y esas
+  banderas conservan el nombre, que es lo que explota el parche.
 
-Riesgos que hay que confirmar antes de prometer nada:
+## Pendiente: publicidad a pantalla completa
 
-1. **Entitlement en servidor**: si el servidor decide qué contenido se puede usar, parchear
-   el cliente solo desbloquea la interfaz, no el contenido real.
-2. **Comprobación de firma**: varias apps de este tipo validan la firma del APK antes de
-   conceder privilegios. Habría que añadir `Spoof signature`/`Change package name`.
-3. **Riesgo de baneo o de cuelgues**: interceptar la inicialización de la suscripción puede
-   dejar el flujo de compra en un estado inconsistente.
+Los anuncios de bienvenida y los emergentes los sirve Pangle. Opciones para atacarlos en el futuro:
 
-### Qué hace falta para hacerlo bien
+1. **Encontrar el envoltorio propio de la app** que llama a Pangle. En 3.7.0 no hay llamadas
+   directas (`--llamadas 'openadsdk'` da 0 resultados), así que o se hace por reflexión o vive en
+   clases con nombre de una letra. Habría que seguir el flujo desde
+   `com.baidu.simeji.skins.video.*VideoRewardActivity` con jadx.
+2. **Parchear el arranque del SDK** por firma de método en vez de por clase (los nombres de método
+   de Pangle también se renombraron, así que es frágil).
+3. **Bloquear a nivel de red** (`hosts`/DNS): no es un parche de Morphe, pero es lo único que
+   corta el 100 % de los anuncios sin tocar el bytecode.
 
-- Una **APK/APKM original** de la versión a soportar (no un mod) para obtener las huellas
-  reales. Con ella:
+## Ideas siguientes
 
-  ```bash
-  python3 tools/analizar_apk.py Facemoji.apkm --vip
-  ```
-
-  localiza las cadenas y los métodos candidatos; después se confirman con jadx.
-- Probar en dispositivo: abrir temas premium, teclado y pantalla de cuenta.
-- Decidir el alcance: ¿solo ocultar los avisos de "hazte VIP" o desbloquear los temas?
-
-## Otras ideas (más sencillas)
-
-- **Ocultar los avisos internos de la app** (banner "quitar anuncios", diálogo de valoración).
-  Requiere huellas del código propio, pero suelen ser métodos `void` sin parámetros, fáciles
-  de neutralizar.
-- **Bloquear el diálogo de actualización obligatoria**: mismo enfoque.
-- **Desactivar la analítica por completo** interceptando la inicialización de Firebase
-  (`FirebaseApp.initializeApp`), en lugar de solo los eventos.
-- **Ajustes en la app** (pantalla de preferencias del parche): Morphe permite añadir una
-  pantalla de ajustes propia; útil si algún día hay más de tres parches.
+- **Ajustes en la app** (pantalla de preferencias del parche) para elegir qué banderas VIP se
+  tocan: ahora se tocan todas de golpe.
+- **Compatibilidad de versiones**: cuando cambie la versión, volver a ejecutar
+  `tools/analizar_apk.py --comprobar` para ver qué huellas siguen vivas.
+- **Ocultar avisos internos** (valoración, actualización obligatoria): sus métodos suelen ser
+  `void` sin parámetros y encajan con `blockVoidMethods`.
